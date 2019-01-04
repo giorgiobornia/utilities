@@ -55,6 +55,7 @@ $INSTALL_COMMAND xorg-x11
 $INSTALL_COMMAND xorg-x11-devel # (for Petsc graphical output)
 $INSTALL_COMMAND python
 $INSTALL_COMMAND perl
+$INSTALL_COMMAND swig
 $INSTALL_COMMAND rpm-build
 $INSTALL_COMMAND build
 $INSTALL_COMMAND rpmlint
