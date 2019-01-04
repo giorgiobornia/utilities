@@ -151,6 +151,7 @@ $INSTALL_COMMAND texlive-tikz-cd
 $INSTALL_COMMAND tuxguitar
 $INSTALL_COMMAND audacity #audio editing
 $INSTALL_COMMAND openshot #video editing
+$INSTALL_COMMAND kdenlive #video editing
 $INSTALL_COMMAND libjpeg-progs
 $INSTALL_COMMAND dropbox
 $INSTALL_COMMAND dolphin
