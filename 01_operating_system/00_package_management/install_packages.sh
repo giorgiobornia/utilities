@@ -148,6 +148,7 @@ $INSTALL_COMMAND texlive-tikz-cd
 
 
 # Multimedia packages ====================================================
+$INSTALL_COMMAND imagewriter
 $INSTALL_COMMAND tuxguitar
 $INSTALL_COMMAND audacity #audio editing
 $INSTALL_COMMAND openshot #video editing
