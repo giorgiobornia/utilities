@@ -1,0 +1,295 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"><title>
+Adding Floating Point Numbers
+</title>
+</head><body bgcolor="white">
+<center>
+<h1>
+Adding Floating Point Numbers
+</h1>
+</center>
+
+
+<h3>
+Introduction
+</h3>
+
+    We'll do addition using the <a href="http://www.cs.umd.edu/class/sum2003/cmsc311/Notes/BinMath/byteFloat.html">one byte
+floating point representation</a> discussed in the other class notes.
+IEEE 754 single precision has so many bits to work with, that
+it's simply easier to explain how floating point addition works
+using a small float representation.
+<p>
+    Addition is simple.   Suppose you want to add two floating
+point numbers, <b>X</b> and <b>Y</b>.
+</p><p>
+    For sake of argument, assume the exponent in <b>Y</b> is less
+than or equal to the exponent in <b>X</b>.   Let the exponent
+of <b>Y</b> be <b>y</b> and let the exponent of <b>X</b> be <b>x</b>.
+</p><p>
+    Here's how to add floating point numbers.
+</p><ol>
+   <li> First, convert the two representations to scientific notation.
+  Thus, we explicitly represent the hidden 1.
+<br>
+   </li><li> In order to add, we need the exponents of the two numbers to
+        be the same.  We do this by rewriting <b>Y</b>.  This will
+        result in Y being not normalized, but value is equivalent to
+        the normalized <b>Y</b>.
+<p>
+        Add <b>x - y</b> to <b>Y</b>'s exponent.  Shift the radix
+        point of the mantissa (signficand) <b>Y</b> left by <b>x -
+        y</b> to compensate for the change in exponent.
+<br>
+   </p></li><li> Add the two mantissas of <b>X</b> and the adjusted <b>Y</b>
+        together.   
+<br>
+   </li><li> If the sum in the previous step does not have a single bit
+        of value 1, left of the radix point, then adjust the radix
+        point and exponent until it does.
+<br>
+   </li><li> Convert back to the one byte floating point representation.
+</li></ol>
+<h3>
+Example 1
+</h3>
+    Let's add the following two numbers:
+<p>
+</p><center>
+<table border="1" cellpadding="5">
+<tbody><tr>
+  <td> <b> Variable </b> </td>
+  <td bgcolor="yellow"> <b> sign </b> </td>
+  <td bgcolor="pink"> <b> exponent </b> </td>
+  <td bgcolor="#aaffaa"> <b> fraction </b> </td>
+</tr>
+<tr align="center">
+  <td> <b> X </b> </td>
+  <td> <b> 0 </b> </td>
+  <td> <b> 1001 </b> </td>
+  <td> <b> 110 </b> </td>
+</tr>
+<tr align="center">
+  <td> <b> Y </b> </td>
+  <td> <b> 0 </b> </td>
+  <td> <b> 0111 </b> </td>
+  <td> <b> 000 </b> </td>
+</tr>
+</tbody></table>
+</center>
+<p>
+   Here are the steps again:
+</p><ol>
+   <li> <font color="navy"><b>First, convert the two representations to
+  scientific notation.  Thus, we explicitly represent the hidden
+  1.</b></font>
+<p>
+   In normalized scientific notation, <b>X</b> is <b>1.110 x
+2<sup>2</sup></b>, and <b>Y</b> is <b>1.000 x 2<sup>0</sup></b>.
+</p><p>
+   </p></li><li> <font color="navy"><b>In order to add, we need the exponents of the
+        two numbers to be the same.  We do this by rewriting <b>Y</b>.
+        This will result in Y being not normalized, but value is
+        equivalent to the normalized <b>Y</b>.
+</b></font><p><font color="navy"><b>
+        Add <b>x - y</b> to <b>Y</b>'s exponent.
+        Shift the radix point of the
+        mantissa (signficand) <b>Y</b> left by <b>x - y</b> to compensate
+        for the change in exponent.
+</b>
+</font>
+</p><p>
+   The difference of the exponent is 2.   So, add 2 to <b>Y</b>'s
+exponent, and shift the radix point left by 2.  This results in
+<b>0.0100 x 2<sup>2</sup></b>.   This is still equivalent to
+the old value of <b>Y</b>.  Call this readjusted value, <b>Y'</b>
+</p><p>
+   </p></li><li> <font color="navy"><b>Add the two mantissas of <b>X</b> and the
+        adjusted <b>Y'</b> together.</b></font>
+<p>
+   We add <b>1.110<sub>two</sub></b> to <b>0.01<sub>two</sub></b>.
+The sum is: <b>10.0<sub>two</sub></b>.  The exponent is still the
+exponent of <b>X</b>, which is <b>2</b>.
+</p><p>
+   </p></li><li> <font color="navy"><b>If the sum in the previous step does not
+        have a single bit of value 1, left of the radix point, then
+        adjust the radix point and exponent until it does.</b></font>
+<p>
+   In this case, the sum, <b>10.0<sub>two</sub></b>, has two bits
+left of the radix point.   We need to move the radix point left
+by 1, and increase the exponent by 1 to compensate.
+</p><p>
+   This results in: <b>1.000 x 2<sup>3</sup></b>.
+</p><p>
+   </p></li><li> <font color="navy"><b>Convert back to the one byte floating
+   point representation.</b></font>
+<p>
+</p><center>
+<table border="1" cellpadding="5">
+<tbody><tr align="center">
+  <td> <b> Sum </b> </td>
+  <td bgcolor="yellow"> <b> sign </b> </td>
+  <td bgcolor="pink"> <b> exponent </b> </td>
+  <td bgcolor="#aaffaa"> <b> fraction </b> </td>
+</tr>
+<tr align="center">
+  <td> <b> X + Y </b> </td>
+  <td> <b> 0 </b> </td>
+  <td> <b> 1010 </b> </td>
+  <td> <b> 000 </b> </td>
+</tr>
+</tbody></table>
+</center>
+<p>
+</p></li></ol>
+<h3>
+Example 2
+</h3>
+    Let's add the following two numbers:
+<p>
+</p><center>
+<table border="1" cellpadding="5">
+<tbody><tr>
+  <td> <b> Variable </b> </td>
+  <td bgcolor="yellow"> <b> sign </b> </td>
+  <td bgcolor="pink"> <b> exponent </b> </td>
+  <td bgcolor="#aaffaa"> <b> fraction </b> </td>
+</tr>
+<tr align="center">
+  <td> <b> X </b> </td>
+  <td> <b> 0 </b> </td>
+  <td> <b> 1001 </b> </td>
+  <td> <b> 110 </b> </td>
+</tr>
+<tr align="center">
+  <td> <b> Y </b> </td>
+  <td> <b> 0 </b> </td>
+  <td> <b> 0110 </b> </td>
+  <td> <b> 110 </b> </td>
+</tr>
+</tbody></table>
+</center>
+<p>
+   Here are the steps again:
+</p><ol>
+   <li> <font color="navy"><b>First, convert the two representations to
+  scientific notation.  Thus, we explicitly represent the hidden
+  1.</b></font>
+<p>
+   In normalized scientific notation, <b>X</b> is <b>1.110 x
+2<sup>2</sup></b>, and <b>Y</b> is <b>1.110 x 2<sup>-1</sup></b>.
+</p><p>
+   </p></li><li> <font color="navy"><b>In order to add, we need the exponents of the
+        two numbers to be the same.  We do this by rewriting <b>Y</b>.
+        This will result in Y being not normalized, but value is
+        equivalent to the normalized <b>Y</b>.
+</b></font><p><font color="navy"><b>
+        Add <b>x - y</b> to <b>Y</b>'s exponent.
+        Shift the radix point of the
+        mantissa (signficand) <b>Y</b> left by <b>x - y</b> to compensate
+        for the change in exponent.
+</b>
+</font>
+</p><p>
+   The difference of the exponent is 3.  So, add 3 to <b>Y</b>'s
+exponent, and shift the radix point of <b>Y</b> left by 3.  This
+results in <b>0.00111 x 2<sup>2</sup></b>.  This is still equivalent to
+the old value of <b>Y</b>.  Call this readjusted value, <b>Y'</b>
+</p><p>
+   </p></li><li> <font color="navy"><b>Add the two mantissas of <b>X</b> and the
+        adjusted <b>Y'</b> together.</b></font>
+<p>
+   We add <b>1.110<sub>two</sub></b> to <b>0.00111<sub>two</sub></b>.
+The sum is: <b>1.11111<sub>two</sub></b>.  The exponent is still the
+exponent of <b>X</b>, which is <b>2</b>.
+</p><p>
+   </p></li><li> <font color="navy"><b>If the sum in the previous step does not
+        have a single bit of value 1, left of the radix point, then
+        adjust the radix point and exponent until it does.</b></font>
+<p>
+   In this case, the sum, <b>1.11111<sub>two</sub></b>, has a single
+1 left of the radix point.  So, the sum is normalized.  We do not
+need to adjust anything yet.
+</p><p>
+   So the result is the same as before: <b>1.11111 x 2<sup>3</sup></b>.
+</p><p>
+   </p></li><li> <font color="navy"><b>Convert back to the one byte floating
+   point representation.</b></font>
+<p>
+   We only have 3 bits to represent the fraction.  However, there
+were 5 bits in our answer.   Obviously, it looks like we should
+round, and real floating point hardware would do rounding.
+</p><p>
+   However, for simplicity, we're going to truncate the additional
+two bits.  After truncating, we get <b>1.111 x 2<sup>2</sup></b>.
+We convert this back to floating point.
+</p><p>
+</p><center>
+<table border="1" cellpadding="5">
+<tbody><tr align="center">
+  <td> <b> Sum </b> </td>
+  <td bgcolor="yellow"> <b> sign </b> </td>
+  <td bgcolor="pink"> <b> exponent </b> </td>
+  <td bgcolor="#aaffaa"> <b> fraction </b> </td>
+</tr>
+<tr align="center">
+  <td> <b> X + Y </b> </td>
+  <td> <b> 0 </b> </td>
+  <td> <b> 1010 </b> </td>
+  <td> <b> 111 </b> </td>
+</tr>
+</tbody></table>
+</center>
+<p>
+</p></li></ol>
+      This example illustrates what happens if the exponents are
+separated by too much.  In fact, if the exponent differs by 4 or
+more, then effectively, you are adding 0 to the larger of the two
+numbers.
+<h3>
+Negative Values
+</h3>
+   So far, we've only considered adding two non-negative numbers.
+What happens with negative values?
+<p>
+   If you're doing it on paper, then you proceed with the sum as
+usual.  Just do normal addition or subtraction.
+</p><p>
+   If it's in hardware, you would probably convert the mantissas to
+two's complement, and perform the addition, while keeping track of the
+radix point (read about <a href="http://www.cs.umd.edu/class/sum2003/cmsc311/Notes/Data/fixed.html">fixed point
+representation</a>.
+</p><h3>
+Bias
+</h3>
+   Does the bias representation help us in floating point addition?
+The main difficulty lies in computing the differences in the exponent.
+Still, that's not so bad because we can just do unsigned subtraction.
+For the most part, the bias doesn't pose too many problems.
+<h3>
+Overflow/Underflow
+</h3>
+   It's possible for a result to overflow (a result that's too large
+to be represented) or underflow (smaller in magnitude than the
+smallest denormal, but not zero).   Real hardware has rules to handle
+this.   We won't worry about it much, except to acknowledge that it
+can happen.
+<h3>
+Summary
+</h3>
+   Adding two floating point values isn't so difficult.  It basically
+consists of adjusting the number with the smaller exponent (call this
+<b>Y</b>) to that of the larger (call it <b>X</b>), and shifting the
+radix point of the mantissa of the <b>Y</b> left to compensate.
+<p>
+    Once the addition is done, we may have to renormalize and to
+truncate bits if there are too many bits to be represented.
+</p><p>
+   If the differences in the exponent is too great, then the adding
+<b>X + Y</b> effectively results in <b>X</b>.
+</p><p>
+   Real floating point hardware uses more sophisticated means to round
+the summed result.  We take the simplification of truncating bits if
+there are more bits than can be represented.
+
+</p></body></html>

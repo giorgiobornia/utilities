@@ -1,0 +1,58 @@
+FIRST LESSON: 
+assign.c    : assignment + formatting DONE
+runtime_formatting.c: %*, use the arguments of printf 
+prec.c      : operator precedence & associativity  DONE
+overflow.c  : max positive numbers  DONE
+underflow.c : smallest positive numbers  DONE
+aritm.c     : overflow (inf) of doubles and 
+             "overflow" (negative) of integers      DONE
+fileIO.c    : fopen with r,w,a and fprintf associated    DONE
+
+twoten.c: conversion, rounding
+eps.c  maybe later
+
+
+
+- avoid using "powf"
+  Also, be very careful in the use of "scanf" with double
+- the compiler needs to know EACH and EVERY SYMBOL
+- Show the DEBUGGER.
+
+TODO:
+- Rounding in ASSOCIATIVITY for sum
+- Same underflow for float and double, because of DENORMALIZED numbers
+- Algorithm for conversion of FRACTIONAL numbers to base 2
+
+
+
+----------------------------------------------
+
+
+
+eps.c: Machine precision
+
+eq2algClass.c: solving 2nd order eqn
+eq2algNoCanc.c: solving 2nd order eqn to avoid loss of significance
+
+sum.c: Summing numbers and finding maximum  DONE
+sum_withvect.c: Same as before, but using vectors
+
+grid.c: grid points with C vectors (1d array)
+mat.c: grid points with C matrices (2d array)
+ 
+func.c: compute max and min with EXTERNAL function
+
+-max_mem.c: Esercizio su quanta memoria e' allocabile. DONE
+
+Potrei far vedere:
+- Underflow e numeri DENORMALIZZATI
+- Algoritmo per sqrt(a^2+b^2) per evitare overflow
+  Avoid OVERFLOW/UNDERFLOW,
+  avoid LOSS OF SIGNIFICANCE
+  are all methods to deal with the FINITE NUMBER of DIGITS
+  for the representation of real numbers.
+  All these solutions are ALGORITHMS
+  each of which is characterized by ITS OWN ROUNDING ERRORS.
+   Those that are more optimized are MORE STABLE than the others.
+  STABILITY deals with how a perturbation due to rounding propagates. 
+- Algoritmi di SORT
