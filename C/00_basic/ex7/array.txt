@@ -1,0 +1,53 @@
+/* Array o matrici */
+Consentono di compattare dei dati 
+fra di loro omogenei, riservando
+celle in memoria fra di loro contigue
+e un indirizzamento di tipo indiciale.
+
+Facciamo il caso bidimensionale di una
+matrice A di 3 x 4 = 12 elementi
+
+FORTRAN: A(3,4)
+vengono riservate dodici celle contigue, 
+le dimensioni di ogni cella
+dipendono da A (se intero, in virgola
+mobile con precisione singola o doppia)
+
+     RIGHE(i)     COLONNE (j)
+		  1  2  3  4
+
+        1	  *  *  *  *
+        2	  *  *  *  *
+        3	  *  *  *  *
+
+|01|02|03|04|05|06|07|08|09|10|11|12|
+
+L'ordinamento e' per colonne!!!, quindi
+i dati vengono memorizzati cosi:
+
+A(1,1) -> A(2,1) -> A(3,1) -> A(1,2) ->
+
+...... -> A(3,4)
+
+Il primo indice e' quello che scorre
+piu' velocemente!!!
+
+C: A[3][4]
+
+     RIGHE[i]     COLONNE [j]
+		  0  1  2  3  
+
+        0	  *  *  *  *
+        1	  *  *  *  *
+        2	  *  *  *  *
+
+
+L'ordinamento e' per righe!!!, quindi
+i dati vengono memorizzati cosi:
+
+A[0][0] -> A[0][1] -> A[0][2] -> A[0][3] ->
+
+......  -> A[2][3]
+
+L'ultimo indice (quello piu' a destra) e' 
+quello che scorre piu' velocemente!!!

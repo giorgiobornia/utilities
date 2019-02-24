@@ -1,0 +1,101 @@
+/* Strutture di controllo */
+
+Le strutture di controllo servono per
+poter decidere le operazioni da eseguire
+sulla base dello stato dell'esecuzione
+stessa. Per esempio, ad un certo 
+momento dell'esecuzione del programma
+voglio fare la radice quadrata di un
+numero a, risultato dei miei calcoli
+precedenti. Devo controllare se a > 0,
+se si posso calcolare la sua radice
+quadrata, altrimenti no.
+
+Esiste un teorema (Teorema di Boehm -
+Jacopini) che dimostra che le strutture
+di controllo del C (e di altri linguaggi)
+sono equivalenti a quelle dell'assembler
+basate sulla diretta manipolazione del
+registro contatore (il registro PC).
+Sono inoltre complete, nel senso che sono
+sufficienti per codificare qualsiasi
+algoritmo.
+
+In pratica, queste istruzioni permettono
+di saltare ad istruzioni differenti del
+nostro codice in assembly a seconda 
+dello stato dell'esecuzione.
+
+
+
+
+
+
+
+/* Costrutto: if - else if - else */
+
+if (exp_1) {
+   istruzioni;
+}
+else if (exp_2) {
+   istruzioni;
+}
+else {
+   istruzioni;
+}
+
+
+/* Costrutto: switch */
+
+Sceglie fra diversi blocchi di
+istruzioni sulla base del valore 
+di un'espressione
+
+switch (exp)
+{
+	case val_1:
+	   istruzioni;
+	   break;
+	case val_2:
+	   istruzioni;
+	   break;
+	.....
+	default:
+	   istruzioni;
+	   break;
+}
+
+
+Questo costrutto puo' anche essere
+scritto con il precedente:
+
+if (exp == val_1) {
+   istruzioni;
+}
+else if (exp == val_2) {
+   istruzioni;
+}
+else {
+   istruzioni;
+}
+
+NOTA BENE:
+
+in C se (exp_1) e' di tipo relazionale:
+(2<3) e' vera o TRUE e il risultato  
+e' pari a 1, mentre (2==3) e' falsa o
+FALSE e il risultato e' messo a 0.  
+
+Possiamo generalizzare considerando
+a una generica espressione aritmetica
+o un'assegnazione.
+
+Quindi: 
+
+if (a) 
+
+e' anche 
+
+if (a != 0) 
+ 
+che e' vera se a non e' zero.
