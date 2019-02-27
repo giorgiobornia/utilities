@@ -1,0 +1,2 @@
+
+int difference (int, int);
