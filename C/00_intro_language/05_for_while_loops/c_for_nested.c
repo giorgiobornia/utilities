@@ -22,3 +22,18 @@ main ()
   printf("pippo: %d\n",pippo);
 }
 
+
+
+/*
+raus@birillo --> ./c5c
+i: 1
+     j: 1
+     j: 2
+     fine del ciclo j
+i: 2
+     j: 1
+     j: 2
+     fine del ciclo j
+fine del ciclo i
+
+pippo: 30*/

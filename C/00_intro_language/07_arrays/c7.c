@@ -54,3 +54,29 @@ main ()
   printf("\nValor medio (int): %d\n",media/nt);
   printf("\nValor medio (float): %f\n",(float) (media/nt));
 }
+
+
+
+/*
+raus@birillo --> ./c7
+  i  fib(i)
+-----------
+  0      0
+  1      1
+  2      1
+  3      2
+  4      3
+  5      5
+  6      8
+  7     13
+  8     21
+  9     34
+
+RIGHE(i)    COLONNE(j)
+            0  1  2  3
+
+    0       2  3  4  5
+    1       3  4  5  6
+    2       4  5  6  7
+
+Valor medio: 4.500000*/

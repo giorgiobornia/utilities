@@ -30,3 +30,20 @@ main ()
   printf("\n");
 }
 
+
+
+/*
+raus@birillo --> ./c5b
+Enter your number: 2347
+7432
+7432
+raus@birillo -->
+
+variabile in: 
+si suppone che sia un intero >=0
+(bisognerebbe essere sicuri di non mettere 
+niente altro che cifre!)
+
+Abbiamo usato il ciclo do {...} while, 
+perche' il dato in = 0 e' valido, quindi 
+deve fare almeno un ciclo prima di uscire.*/

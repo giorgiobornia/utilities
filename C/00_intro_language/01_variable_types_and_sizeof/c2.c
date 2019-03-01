@@ -67,3 +67,43 @@ int main()
   printf("bytes per unsigned int: %d \n",
 	 sizeof(unsigned int));
 }
+
+
+/*
+raus:--> gcc -o c2 c2.c
+raus:--> c2
+intero a: 13
+reale  b: 1.321000e+00
+doppia prec. c: 4.433221e+01
+carattere    d: s
+intero e: 23
+reale  f: 1.321000e+00
+
+bytes per intero: 4
+bytes per intero: 4
+bytes per float : 4
+bytes per double: 8
+bytes per char  : 1
+bytes per char  : 1
+indirizzo di a: -1073745068
+indirizzo di b: -1073745072
+indirizzo di c: -1073745080
+indirizzo di d: -1073745081
+indirizzo di e: -1073745088
+indirizzo di f: -1073745092
+
+bytes per long int: 4
+bytes per short int: 2
+bytes per unsigned int: 4
+raus:--> 
+Note:
+- la funzione: sizeof(...) ritorna
+  il numero di bytes dell'argomento
+- variabili (nomi simbolici): a-z, A-Z, 
+  0-9 (ma non come primo carattere)
+- tipi di dati: int, float, double, char
+- &: operatore indirizzo
+- &a: indirizzo in memoria di a
+*/
+
+
