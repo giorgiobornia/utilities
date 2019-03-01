@@ -1,0 +1,15 @@
+#!/bin/bash
+
+. /cineca/prod/Modules/init/bash
+
+gcc -c cclock.c
+
+# CLX
+#g77 -o g77tr_opt -O6 test_trasp.f cclock.o -static
+
+#module load compiler/pgi
+#pgf77 -o pgitr_opt -fast -fastsse -tp p7 test_trasp.f cclock.o -Bstatic
+
+#module unload compiler/pgi
+module load compiler/intel
+ifort -o test1.x -axW -O2 -tpp7  test_trasp.f cclock.o -static 
