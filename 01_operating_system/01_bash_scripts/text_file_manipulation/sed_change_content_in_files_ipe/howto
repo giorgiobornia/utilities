@@ -1,0 +1,14 @@
+This allows inserting certain lines as specified in the 'change.sed' file to files
+
+
+sed -f change.sed < file_to_be_modified.ipe   > result.tmp
+
+The backslash \ are NEWLINES
+
+If the backslash is a character you have to use the \\ double backslash
+
+If you forgot a backslash...
+
+sed 's/pdfobjcompresslevel0/\\pdfobjcompresslevel0/' < ${file} > ${file}.tmp
+
+Remark: single quotes are important in '/../../' 
