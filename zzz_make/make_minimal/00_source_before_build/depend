@@ -1,0 +1,5 @@
+src/main.$(OBJEXT):\
+    src/main.c\
+    include/main.h
+src/sub.$(OBJEXT):\
+    src/sub.c

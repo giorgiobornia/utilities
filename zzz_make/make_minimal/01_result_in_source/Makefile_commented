@@ -1,0 +1,108 @@
+#------------CUSTOMIZABLE MAKEFILE---------------#
+#DEFINITION OF VARIABLES
+#folders
+SRCDIR:= src
+BINDIR:= bin
+# LIBDIR:= lib   #se metto questo devo mettere anche le EXTENSIONS e i FILE NAMES, e anche specificare STATICHE e DINAMICHE
+INCLUDEDIR:= include
+#file extensions (please use only one type!)
+SRCEXT:= c
+OBJEXT:= o
+HDREXT:= h
+#file names
+SOURCES := $(wildcard $(SRCDIR)/*.$(SRCEXT) ) 
+OBJECTS := $(patsubst %.$(SRCEXT),%.$(OBJEXT), $(SOURCES) )
+HEADERS := $(wildcard $INCLUDEDIR)/*.$(HDREXT) )
+BINNAME:= ese
+#nota che quel che ho fatto prima era ben diverso!
+# OBJECTS:= $(SRCDIR)/*.o  cosi' e' Shell-style ma non Make-style! 
+#perche' evidenzia male certi commenti? non interpreta bene certe funzioni
+#compiler and compiler-dependent options
+COMPILER:= gcc
+LINKER:= gcc
+RETURNS:= -o
+COMPILES:= -c
+SEARCHES_FOR_INCLUDE_IN:= -I
+# SEARCHES_FOR_LIB_IN:= -L
+OPTFLAGS = -Wall
+#cleaning and his options
+LETSCLEAN:= rm
+FORCEDLY:= -f
+
+#dependencies
+PERL:= perl
+DEPMAKER = make_dependencies.pl
+
+#LINKING RULE AMONG OBJECTS AND LIBRARIES
+# $(BINNAME) : src/main.o src/sub.o  NON va bene
+# $(BINNAME) : %.o non va bene
+# $(BINNAME) : src/*.o non va bene
+# $(BINNAME) : src/main.o src/sub.o  va bene
+# $(BINNAME) : $(OBJECTS) e' la cosa equivalente grazie alle funzioni wildcard e patsubst
+$(BINNAME) : $(OBJECTS)
+	$(LINKER) $(OBJECTS) $(RETURNS) $(BINDIR)/$(BINNAME)
+
+
+#COMPILING RULE
+#what if we try with that? watch what a mess it does...
+# $(OBJECTS) : $(SOURCES)   # I would like to have a one-to-one dependency from two sequences of the same length, following
+                          #their own order
+%.$(OBJEXT) : %.$(SRCEXT)
+	$(COMPILER) $(OPTFLAGS) $(SEARCHES_FOR_INCLUDE_IN)$(INCLUDEDIR) $(COMPILES) $< $(RETURNS) $@
+#equivalent to:
+# 	$(COMPILER) $(OPTFLAGS) $(SEARCHES_FOR_INCLUDE_IN)$(INCLUDEDIR) $(COMPILES) src/main.c   $(RETURNS) src/main.o
+# 	$(COMPILER) $(OPTFLAGS) $(SEARCHES_FOR_INCLUDE_IN)$(INCLUDEDIR) $(COMPILES) src/sub.c    $(RETURNS) src/sub.o
+
+# # # this is how libmesh does compiling:
+# # # %.$(obj-suffix) : %.c
+# # # 	@echo "Compiling C (in "$(mode)" mode) "$<"..."
+# # # 	@$(libmesh_CC) $(libmesh_CFLAGS) $(libmesh_INCLUDE) -c $< -o $@
+
+#OBJ=OBJ(SRC,HDR) RULE
+include depend
+
+depend:
+	$(PERL) $(DEPMAKER) -I$(INCLUDEDIR) -S"\$$(OBJEXT)" $(SOURCES) > depend
+	@echo "Updated depend"
+
+#
+# Dependencies
+#
+# # # # # # # .depend:
+# # # # # # # 	@$(perl) $(meshdir)/contrib/bin/make_dependencies.pl $(MY_INCLUDE) $(foreach i, $(wildcard $(meshdir)/include/*), -I$(i)) "-S\$$(obj-suffix)" $(srcfiles) > .depend
+# # # # # # # 	@echo "Updated .depend"
+# #perche' devi chiamarlo con un . davanti, vuoi nasconderlo?
+# foreach e' una funzione di MAKE, non di shell ne' di perl
+# $(foreach i, $(wildcard $(meshdir)/include/*)  This is to search on the libmesh headers, but I only want to search in my own headers. That script originally searches also in libmesh headers
+#... maybe not to have an error message...
+#... or better just because you could also think of modifying libmesh headers, since it's open-source!
+#I think that "foreach" can separate strings in a list of words, and then what this command does is to put a -I in front of each word
+#allora, il .depend vecchio da' GIUSTAMENTE la dipendenza di un OGGETTO dai .c e .h
+#invece il mio depend da' solo la dipendenza DEI .c  DAI .c e dai .h
+#questa cosa non va bene perche' mi da' una dipendenza circolare, che infatti il make che non e' stupido mi ha DROPPATO.
+#mi manca il passaggio di mettergli la giusta estensione .o
+#e' possibile che quello script in perl sia tagliato per libmesh allora
+# Se supponi di modificare solo un .h senza modificare un .c, e' chiaro che devi ricompilare il .c perche' il .o puo' essere cambiato.
+#A dire il vero la dipendenza DIRETTA del .o dal .h NON c'e', quindi basterebbe la dipendenza dei .c dai .h!!
+#"-S\$$(obj-suffix)" e' questa la parola chiave. se capisci come mettere questa sei a posto.
+#qualsiasi cosa scrivo mi fa cch, se non scrivo niente mi fa cc solo per il main. Vuol dire che non innesca un ciclo iterativo.
+#sono andato a provare a cambiare nel mio .depend; sembra che -S faccia qualcosa; ma qui tratto "-Seccetera" come una stringa.
+#devo capire bene quali sono gli argomenti di questo comando. Dovrei andare a leggere dentro lo script perl... ma intanto proviamo ad esempio a spostare  "-Seccetera"...
+#con qualsiasi stringa prima dei sources lui fa c-c-h
+# anche se metti "" fa c-c-h
+#se non metti nulla proprio fa sub.c-sub.c e basta, PERCHE'...?!
+#se fai "perl make_dependencies.pl -Iinclude src/gigi.c src/main.c src/sub.c  > depend, lui fa di nuovo c-c-h... quindi vuol dire che gli serve un argomento dopo i -I che gli faccia un lavoro che lui vuole.
+#se fai "perl make_dependencies.pl -Iinclude "-S\$(obj-suffix)" src/gigi.c src/main.c src/sub.c  > depend " lui fa c-c-h per tutti e 3 i file !!!
+#ci dev'essere un modo per fargli capire quel -S
+#era una maledetta C maiuscola mentre a me serve minuscola!
+
+
+
+# -----------------------------------
+#CLEANING OUTPUTS
+.PHONY: clean
+
+clean :
+	$(LETSCLEAN) $(FORCEDLY) $(BINDIR)/$(BINNAME)
+	$(LETSCLEAN) $(FORCEDLY) $(OBJECTS)
+	$(LETSCLEAN) $(FORCEDLY) *~ $(SRCDIR)/*~ $(INCLUDEDIR)/*~ 

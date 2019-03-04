@@ -1,0 +1,48 @@
+cmake_minimum_required(VERSION 2.8.3)
+
+project(qcp)
+
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_LIST_DIR}/cmake-modules/)
+
+
+# ========================================
+# external packages
+# CPLEX
+find_package(CPLEX REQUIRED)
+include_directories(${CPLEX_INCLUDE_DIRS})
+
+
+get_filename_component(CPLEX_LIBRARY_PATH ${CPLEX_LIBRARY} DIRECTORY)  #extract directory
+get_filename_component(CPLEX_CONCERT_LIBRARY_PATH ${CPLEX_CONCERT_LIBRARY} DIRECTORY)
+get_filename_component(CPLEX_ILOCPLEX_LIBRARY_PATH ${CPLEX_ILOCPLEX_LIBRARY} DIRECTORY)
+get_filename_component(CPLEX_CP_LIBRARY_PATH ${CPLEX_CP_LIBRARY} DIRECTORY)
+link_directories(${CPLEX_LIBRARY_PATH} ${CPLEX_CONCERT_LIBRARY_PATH} ${CPLEX_ILOCPLEX_LIBRARY_PATH} ${CPLEX_CP_LIBRARY_PATH}) 
+ 
+get_filename_component(CPLEX_LIBRARY_NAME ${CPLEX_LIBRARY} NAME)  #extract filename without directory
+get_filename_component(CPLEX_CONCERT_LIBRARY_NAME ${CPLEX_CONCERT_LIBRARY} NAME)
+get_filename_component(CPLEX_ILOCPLEX_LIBRARY_NAME ${CPLEX_ILOCPLEX_LIBRARY} NAME)
+get_filename_component(CPLEX_CP_LIBRARY_NAME ${CPLEX_CP_LIBRARY} NAME)
+
+# message(STATUS "LIBS variable " ${MYVAR})
+
+# Threads
+find_package(Threads REQUIRED)
+# ========================================
+
+# ========================================
+# internal library
+set(qcp_src ${CMAKE_CURRENT_LIST_DIR}/src/Funcs_Vars_MIQCP.cpp 
+            ${CMAKE_CURRENT_LIST_DIR}/src/Funcs_Vars_MIQCP.h)
+# preprocessor macros
+add_definitions (-DIL_STD)
+add_definitions (-D_USE_CPLEX_)
+# includes
+include_directories (${PROJECT_SOURCE_DIR}/src/)
+# library
+add_library(Functions SHARED ${qcp_src})
+target_link_libraries(Functions ${CMAKE_THREAD_LIBS_INIT})
+set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib64/)
+link_directories(${LIBRARY_OUTPUT_PATH})
+
+# apps ========================================
+add_subdirectory(apps/)

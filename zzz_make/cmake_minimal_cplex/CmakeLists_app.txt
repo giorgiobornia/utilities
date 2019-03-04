@@ -1,0 +1,9 @@
+cmake_minimum_required(VERSION 2.8.3)
+
+
+add_executable(qcp_exe main.cpp)
+# internal library
+target_link_libraries(qcp_exe libFunctions.so)
+# external libraries
+target_link_libraries(qcp_exe ${CPLEX_LIBRARY_NAME} ${CPLEX_CONCERT_LIBRARY_NAME} ${CPLEX_ILOCPLEX_LIBRARY_NAME} ${CPLEX_CP_LIBRARY_NAME})
+target_link_libraries(qcp_exe ${CMAKE_THREAD_LIBS_INIT})
