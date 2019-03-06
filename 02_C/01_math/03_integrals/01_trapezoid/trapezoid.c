@@ -103,4 +103,3 @@ double f(double x)
 
 	return(result);
 }
-

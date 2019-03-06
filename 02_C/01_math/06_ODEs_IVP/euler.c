@@ -133,4 +133,3 @@ float y(float x)
 	
 	return(result);
 }
-

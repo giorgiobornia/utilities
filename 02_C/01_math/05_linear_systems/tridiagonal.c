@@ -120,4 +120,4 @@ void tridgl(float a[], float b[], float c[], float f[] ,
       	*ier = 0;
       	return;
 }
-
+

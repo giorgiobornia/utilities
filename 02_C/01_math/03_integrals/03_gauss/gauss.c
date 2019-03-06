@@ -193,4 +193,3 @@ double gaussl(double a, double b, int n, double (*f)(double))
 	
 	return(result);
 }
-
