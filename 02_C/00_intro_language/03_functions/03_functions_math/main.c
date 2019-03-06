@@ -1,10 +1,8 @@
 /* #include <math.h> */
 #include <stdio.h>
 #include "mio.h"
-/* --------------------------------- *
- * Scrittura e compilazione di c3.c: *
- * funzioni matematiche e librerie   *
- * --------------------------------- */
+
+
 main()
 
 {
