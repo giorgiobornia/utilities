@@ -1,0 +1,381 @@
+From: <Salvato con Microsoft Internet Explorer 5>
+Subject: Esercitazioni
+Date: Tue, 22 Jun 2004 03:17:56 +0200
+MIME-Version: 1.0
+Content-Type: multipart/related;
+	boundary="----=_NextPart_000_004E_01C45807.838C6C90";
+	type="text/html"
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1409
+
+This is a multi-part message in MIME format.
+
+------=_NextPart_000_004E_01C45807.838C6C90
+Content-Type: text/html;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://xoomer.virgilio.it/roberto-ricci/C/Es8.htm
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD><TITLE>Esercitazioni</TITLE>
+<META http-equiv=3DContent-Type content=3D"text/html; =
+charset=3Dwindows-1252"><LINK=20
+href=3D"http://xoomer.virgilio.it/roberto-ricci/stilind.css" =
+type=3Dtext/css=20
+rel=3Dstylesheet>
+<META content=3D"MSHTML 6.00.2800.1400" name=3DGENERATOR></HEAD>
+<BODY>
+<CENTER>
+<H1 style=3D"BACKGROUND: teal; COLOR: white">ESERCITAZIONI: linguaggio C =
+
+</H1></CENTER>
+<HR style=3D"COLOR: blue">
+
+<CENTER><FONT face=3DArial size=3D1>pagine di <A=20
+href=3D"mailto:roberto_ricci@tin.it"><I>Roberto Ricci </I></A>L.S. =
+"<I>A.=20
+Righi</I>", Bologna. Ultima revisione
+<SCRIPT language=3DJavaScript>=0A=
+<!--=0A=
+=0A=
+function SymError()=0A=
+{=0A=
+  return true;=0A=
+}=0A=
+=0A=
+window.onerror =3D SymError;=0A=
+=0A=
+var SymRealWinOpen =3D window.open;=0A=
+=0A=
+function SymWinOpen(url, name, attributes)=0A=
+{=0A=
+  return (new Object());=0A=
+}=0A=
+=0A=
+window.open =3D SymWinOpen;=0A=
+=0A=
+//-->=0A=
+</SCRIPT>
+
+<SCRIPT language=3DJavascript>
+document.write(document.lastModified)
+</SCRIPT>
+ </FONT></CENTER>
+<HR style=3D"COLOR: blue">
+
+<UL>
+  <LI><A=20
+  =
+href=3D"http://xoomer.virgilio.it/roberto-ricci/C/Es0.htm#indice">INDICE<=
+/A>=20
+  <LI>
+  <OL>
+    <LI><A =
+href=3D"http://xoomer.virgilio.it/roberto-ricci/C/Es8.htm#parte0">Per=20
+    iniziare</A>=20
+    <LI><A=20
+    =
+href=3D"http://xoomer.virgilio.it/roberto-ricci/C/Es8.htm#parte1">Moduli:=
+=20
+    procedure e function; passaggio di parametri per valore </A>
+    <LI><A=20
+    =
+href=3D"http://xoomer.virgilio.it/roberto-ricci/C/Es8.htm#parte2">Record =
+
+    d'attivazione e stack</A>=20
+    <LI><A=20
+    =
+href=3D"http://xoomer.virgilio.it/roberto-ricci/C/Es8.htm#parte3">Passagg=
+io di=20
+    parametri per indirizzo</A>=20
+    <LI><A=20
+    =
+href=3D"http://xoomer.virgilio.it/roberto-ricci/C/Es8.htm#parte4">Moduli =
+
+    ricorsivi</A> </LI></OL>
+  <LI><A =
+href=3D"http://xoomer.virgilio.it/roberto-ricci/C/Es8.zip">Soluzioni=20
+  proposte agli esercizi</A> </LI></UL><BR>&nbsp; <BR>&nbsp; <BR>&nbsp;=20
+<H3 style=3D"BACKGROUND: teal; COLOR: white"><A name=3Dparte0></A>Per=20
+iniziare</H3><BR>&nbsp;=20
+<OL>
+  <LI>Creare sul floppy <TT>A:</TT> con [Tasto Destro]<FONT =
+face=3D"Courier New"=20
+  size=3D+1><U>N</U>uovo|<U>C</U>artella</FONT> una cartella dal nome=20
+  <TT>lab8</TT>=20
+  <LI>Salvare il corrente file in <TT>A:</TT> con il nome <TT>A:Es8</TT> =
+
+  <LI>Usare <FONT face=3D"Courier New" size=3D+1>Riduci a icona</FONT> =
+per mettere=20
+  da parte la finestra sul floppy senza chiuderla=20
+  <LI>Aprire il file <TT>A:Es8.htm</TT> per leggere e seguire il resto=20
+  dell'esercitazione=20
+  <LI>Ridurre le dimensioni della finestra su <TT>A:</TT> che deve =
+restare=20
+  visibile ma consentire la visibilit=E0 di un'altra nuova finestra=20
+</LI></OL><BR>&nbsp; <BR>&nbsp;=20
+<H3 style=3D"BACKGROUND: teal; COLOR: white"><A =
+name=3Dparte1></A>Moduli: procedure=20
+e function; passaggio di parametri per valore</H3><BR>&nbsp;=20
+<OL>
+  <LI>Riprendere il <A=20
+  =
+href=3D"http://xoomer.virgilio.it/roberto-ricci/C/Es3.htm#parte2">program=
+ma per=20
+  il valore assoluto</A> Inserire le istruzioni in un modulo a parte =
+come=20
+  indicato nel programma seguente. Notare la definizione della funzione =
+prima=20
+  del main . E' possibile definire la funzione dopo il main, scrivendo =
+comunque=20
+  prima la dichiarazione della funzione: <TT>float valAss(float)</TT>. =
+<PRE style=3D"BACKGROUND: silver">#include &lt;stdio.h&gt;
+
+float valAss(float x){
+	...
+	...
+        ...
+        return ...
+}
+
+void main(){
+   float num;
+   printf("Introduci un numero: ");
+   scanf("%f",&amp;num);
+   printf("\nIl suo valore assoluto =E8 %f",valAss(num));
+}
+</PRE>
+  <LI>Valutare la seguente function e inserirla in un opportuno =
+programma che la=20
+  richiami per calcolare, letto l'indice <TT>n</TT> e il radicando =
+<TT>a</TT>,=20
+  la radice n-esima di <TT>a</TT> con approssimazione al decimillesimo =
+<PRE>
+float rad(int n, float a){
+    float appross=3D0.00001;
+    float x=3D1;
+    float pot=3D1;
+    while (valAss(a/pot-x)/n &gt; appross){
+	x=3D((n-1)*x + a/pot)/n;
+	pot=3Dpow(x,n-1);
+    }
+    return x;
+}
+</PRE>
+  <LI>Cosa calcola la seguente function? <PRE>
+char f(char c){
+  char cc;
+  if (c&gt;=3D'a' &amp;&amp; c&lt;=3D'z') cc =3D c - ('a'-'A');
+  if (c&gt;=3D'A' &amp;&amp; c&lt;=3D'Z') cc =3D c + 'a'-'A';
+  return cc;
+}
+</PRE></LI></OL><BR>&nbsp; <BR>&nbsp;=20
+<H3 style=3D"BACKGROUND: teal; COLOR: white"><A name=3Dparte2></A>Record =
+
+d'attivazione e stack</H3><BR>&nbsp;=20
+<OL>
+  <LI>
+  <OL>
+    <LI>Redigere nella finestra di Editor del Turbo C++ un programma per =
+
+    calcolare la radice n-esima del valore assoluto di un numero che =
+faccia uso=20
+    delle function <TT>float valAss(float)</TT> e <TT>float =
+rad(int,float)</TT>=20
+    <LI>dopo averlo compilato, eseguirlo servendosi di <FONT =
+face=3D"Courier New"=20
+    size=3D+1><U>D</U>ebug|<U>T</U>race into</FONT> [F7] e poi <FONT=20
+    face=3D"Courier New" size=3D+1><U>V</U>iew|Call <U>s</U>tack</FONT>. =
+
+    Quest'ultimo comando consente di mostrare la sequenza delle chiamate =
+di=20
+    function. Le function chiamate pi=F9 di recenti sono impilate sopra =
+le altre,=20
+    la prima chiamata sta sul fondo. Nella finestra <TT>Call =
+<U>s</U>tack</TT>=20
+    vengono mostrati anche gli argomenti o parametri delle function. =
+</LI></OL>
+  <LI>
+  <OL>
+    <LI>Redigere e compilare il seguente programma <PRE =
+style=3D"BACKGROUND: silver">#include &lt;stdio.h&gt;
+
+int x=3D3;
+
+f(int x){
+	x =3D 1;
+	printf("  %d \n",x);
+	{
+	int x=3D2;
+	printf("    %d \n",x);
+	}
+}
+
+main(){
+	f(x);
+	printf("\n %d",x);
+}
+
+</PRE>
+    <LI>selezionare <FONT face=3D"Courier New" =
+size=3D+1><U>D</U>ebug|Add=20
+    <U>w</U>atch</FONT> e indicare la variabile <TT>x</TT>=20
+    <LI>eseguire con il <FONT face=3D"Courier New"=20
+    size=3D+1><U>D</U>ebug|<U>T</U>race into [F7] </FONT>e seguire la =
+visibilit=E0=20
+    delle variabile <TT>x</TT> <BR>(N.B.: Non =E8 generalmente =
+consigliabile=20
+    utilizzare per le variabili nomi ripetuti in contesti diversi; ci=F2 =
+per=20
+    evitare sovrapposizioni indesiderate). =
+</LI></OL></LI></OL><BR>&nbsp; <BR>&nbsp;=20
+
+<H3 style=3D"BACKGROUND: teal; COLOR: white"><A =
+name=3Dparte3></A>Passaggio di=20
+parametri per indirizzo</H3>
+<OL>
+  <LI>Redigere e compilare il programma con la seguente procedura =
+concepita per=20
+  realizzare uno scambio di valori tra due variabili intere <TT>a</TT> e =
+
+  <TT>b</TT>: <PRE>void scambia(int x, int y){
+	int temp=3Dx;
+	x =3D y;
+	y =3D temp;
+}
+
+</PRE>
+  <LI>fare il watch delle espressioni a e b, x e y ed eseguire con <FONT =
+
+  face=3D"Courier New" size=3D+1><U>D</U>ebug|<U>T</U>race into [F7] =
+</FONT>
+  <LI>constatato che in questo modo (passaggio dei parametri per valore) =
+la=20
+  procedura <TT>scambia</TT> non ha alcun effetto sugli argomenti a e b, =
+
+  modificarla anteponendo l'operatore '&amp;' ai nomi dei parametri =
+(passaggio=20
+  dei parametri per indirizzo) </LI></OL><BR>&nbsp; <BR>&nbsp;=20
+<H3 style=3D"BACKGROUND: teal; COLOR: white"><A name=3Dparte4></A>Moduli =
+
+ricorsivi</H3>
+<OL>
+  <LI>Utilizzare la seguente function ricorsiva per calcolare in modo =
+ricorsivo=20
+  la potenza di un numero e analizzarla anche mediante <FONT =
+face=3D"Courier New"=20
+  size=3D+1><U>V</U>iew|Call <U>s</U>tack</FONT> <PRE>float potR(float =
+x, int n){
+  return (n&gt;0)? x*potR(x,n-1) : 1;
+}
+</PRE>
+  <LI>Analizzare la seguente procedura ricorsiva anche mediante <FONT=20
+  face=3D"Courier New" size=3D+1><U>V</U>iew|Call <U>s</U>tack</FONT> =
+<PRE style=3D"BACKGROUND: silver">#include &lt;stdio.h&gt;
+
+void strRovR(char str[]){
+	char ss=3Dstr[0];
+	if (ss !=3D'\0') {
+		str++;
+		strRovR(str);
+		printf("%c",ss);
+	}
+}
+
+main(){
+	char stringa[]=3D"1234567";
+	strRovR(stringa);
+	printf("=E8 rovescia della stringa %s ",stringa);
+}
+</PRE></LI></OL><BR>&nbsp; <BR>&nbsp; <B>NOTA: Al termine di ogni =
+sessione di=20
+lavoro fare una copia del floppy e poi spegnere il computer con <FONT=20
+face=3D"Courier New" size=3D2>Start/Chiudi sessione/Arresta il =
+sistema</FONT>. </B>
+<HR style=3D"COLOR: blue">
+
+<CENTER><FONT face=3DArial size=3D1>pagine di <A=20
+href=3D"mailto:roberto_ricci@tin.it"><I>Roberto Ricci </I></A>L.S. =
+"<I>A.=20
+Righi</I>", Bologna. Ultima revisione
+<SCRIPT language=3DJavascript>
+document.write(document.lastModified)
+</SCRIPT>
+ </FONT></CENTER>
+<HR style=3D"COLOR: blue">
+
+<SCRIPT language=3DJavaScript>=0A=
+<!--=0A=
+var SymRealOnLoad;=0A=
+var SymRealOnUnload;=0A=
+=0A=
+function SymOnUnload()=0A=
+{=0A=
+  window.open =3D SymWinOpen;=0A=
+  if(SymRealOnUnload !=3D null)=0A=
+     SymRealOnUnload();=0A=
+}=0A=
+=0A=
+function SymOnLoad()=0A=
+{=0A=
+  if(SymRealOnLoad !=3D null)=0A=
+     SymRealOnLoad();=0A=
+  window.open =3D SymRealWinOpen;=0A=
+  SymRealOnUnload =3D window.onunload;=0A=
+  window.onunload =3D SymOnUnload;=0A=
+}=0A=
+=0A=
+SymRealOnLoad =3D window.onload;=0A=
+window.onload =3D SymOnLoad;=0A=
+=0A=
+//-->=0A=
+</SCRIPT>
+</BODY></HTML>
+
+------=_NextPart_000_004E_01C45807.838C6C90
+Content-Type: text/css;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://xoomer.virgilio.it/roberto-ricci/stilind.css
+
+BODY {
+	FONT-SIZE: 10pt; BACKGROUND: url(sfondo.jpeg) fixed; COLOR: #000000; =
+FONT-FAMILY: Verdana,Arial,Helvetica
+}
+TD {
+	FONT-SIZE: 10pt; COLOR: #000000; FONT-FAMILY: Verdana,Arial,Helvetica
+}
+P {
+	FONT-SIZE: 10pt; COLOR: #000000; FONT-FAMILY: Verdana,Arial,Helvetica
+}
+A {
+	COLOR: #000080; TEXT-DECORATION: none
+}
+A:hover {
+	FONT-WEIGHT: bold; COLOR: #008080
+}
+H1 {
+	FONT-SIZE: 24pt; COLOR: #6464ff; FONT-FAMILY: Verdana,Arial,Helvetica
+}
+H2 {
+	FONT-SIZE: 14pt; COLOR: #6464ff; FONT-FAMILY: Verdana,Arial,Helvetica
+}
+H3 {
+	FONT-SIZE: 12pt; COLOR: #6464ff; FONT-FAMILY: Verdana,Arial,Helvetica
+}
+LI {
+	COLOR: #336699; FONT-FAMILY: Verdana,Arial,Helvetica
+}
+.tipo {
+	FONT-WEIGHT: bold; COLOR: #6464ff
+}
+.sotto {
+	FONT-SIZE: 80%; COLOR: #000000
+}
+.aforismi {
+	FONT-WEIGHT: bold; COLOR: #000000; FONT-STYLE: italic
+}
+.firma {
+	FONT-WEIGHT: bold; FONT-SIZE: 80%; FONT-STYLE: italic
+}
+
+------=_NextPart_000_004E_01C45807.838C6C90--

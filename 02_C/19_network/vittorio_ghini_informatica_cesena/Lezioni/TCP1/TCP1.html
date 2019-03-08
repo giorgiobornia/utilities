@@ -1,0 +1,43 @@
+<HTML>
+
+<HEAD> <TITLE> Primo esempio di trasmissione con stream TCP </TITLE> </HEAD>
+<BODY TEXT="#000000" BGCOLOR="#F9E1A4" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000" BACKGROUND="HTML/back.gif">
+
+<H2> <I> <B> Esempio semplice di trasmissione con stream TCP </I> </B> </H2>
+
+......... <A HREF = "./servTCP.c"> servTCP.c </A> ............ server
+TCP <BR>
+......... <A HREF = "./cliTCP.c"> cliTCP.c </A> ............ client TCP
+<BR>
+
+<BR> <B> Scopo:</B> <BR>
+Il client richiede la connessione al server e gli spedisce una stringa.
+<BR>
+Il server riceve la stringa, ne trasla i caratteri di 2, e rispedisce
+al client. <BR>
+Il client riceve la stringa traslata e la stampa. <BR>
+
+<BR>
+ N.B. <B>USO</B> <BR>
+Collocare i due file in due host diversi, ( 
+es.: servTCP.c in host1 e cliTCP.c su host2 ), <BR>
+compilare, <BR>
+eseguire prima servTCP su host1 (es: <B>./servTCP 5001</B>), <BR>
+e poi eseguire cliTCP su host2 
+(es: <B>./cliTCP IP_host1 5001 </B>), <BR>
+<BR>
+
+ N.B. Compilazione <BR>
+--- su linux --- <BR>
+gcc -o servTCP servTCP.c <BR>
+gcc -o cliTCP cliTCP.c <BR>
+--- su Solaris --- <BR>
+gcc -o servTCP -lsocket -lnsl servTCP.c <BR>
+gcc -o cliTCP -lsocket -lnsl cliTCP.c <BR>
+<BR>
+
+<BR> <IMG SRC = "/~ghini/images/line.gif"> <BR>
+
+</BODY>
+
+</HTML>

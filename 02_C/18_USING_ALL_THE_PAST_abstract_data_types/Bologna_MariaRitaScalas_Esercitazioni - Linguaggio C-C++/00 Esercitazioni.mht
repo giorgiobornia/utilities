@@ -1,0 +1,324 @@
+From: <Salvato con Microsoft Internet Explorer 5>
+Subject: Esercitazioni
+Date: Mon, 21 Jun 2004 11:27:19 +0200
+MIME-Version: 1.0
+Content-Type: multipart/related;
+	boundary="----=_NextPart_000_00C7_01C45782.B696AEF0";
+	type="text/html"
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1409
+
+This is a multi-part message in MIME format.
+
+------=_NextPart_000_00C7_01C45782.B696AEF0
+Content-Type: text/html;
+	charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://xoomer.virgilio.it/roberto-ricci/C/Es0.htm
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD><TITLE>Esercitazioni</TITLE>
+<META http-equiv=3DContent-Type content=3D"text/html; =
+charset=3Dwindows-1252"><LINK=20
+href=3D"http://xoomer.virgilio.it/roberto-ricci/stilind.css" =
+type=3Dtext/css=20
+rel=3Dstylesheet>
+<META content=3D"MSHTML 6.00.2800.1400" name=3DGENERATOR></HEAD>
+<BODY>
+<CENTER>
+<H3 style=3D"BACKGROUND: teal; COLOR: white">CORSO DI LAUREA IN =
+INGEGNERIA=20
+GESTIONALE</H3></CENTER>
+<CENTER>
+<H1 style=3D"BACKGROUND: teal; COLOR: white">FONDAMENTI DI=20
+INFORMATICA</H1></CENTER>
+<CENTER>
+<H3 style=3D"BACKGROUND: teal; COLOR: white">Docente: <B>Maria Rita =
+Scalas</B>=20
+prof. straord.</H3></CENTER>
+<CENTER>
+<H1 style=3D"BACKGROUND: teal; COLOR: #fff1a7">Esercitazioni: Linguaggio =
+C /=20
+C++</H1></CENTER>
+<HR style=3D"COLOR: blue">
+
+<CENTER><FONT face=3DArial size=3D1>Tutor: <A=20
+href=3D"mailto:roberto_ricci@tin.it"><I>Roberto Ricci </I></A>L.S. =
+"<I>A.=20
+Righi</I>", Bologna. Ultima revisione
+<SCRIPT language=3DJavaScript>=0A=
+<!--=0A=
+=0A=
+function SymError()=0A=
+{=0A=
+  return true;=0A=
+}=0A=
+=0A=
+window.onerror =3D SymError;=0A=
+=0A=
+var SymRealWinOpen =3D window.open;=0A=
+=0A=
+function SymWinOpen(url, name, attributes)=0A=
+{=0A=
+  return (new Object());=0A=
+}=0A=
+=0A=
+window.open =3D SymWinOpen;=0A=
+=0A=
+//-->=0A=
+</SCRIPT>
+
+<SCRIPT language=3DJavascript>
+document.write(document.lastModified)
+</SCRIPT>
+ </FONT></CENTER>
+<HR style=3D"COLOR: blue">
+
+<P>
+<H2>Per imparare a usare un computer, e per imparare a programmare, =
+bisogna=20
+farlo</H2>
+<UL>
+  <LI>in laboratorio=20
+  <LI>a casa </LI></UL>
+<P></P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>
+<H3>Orari</H3>In laboratorio i due gruppi hanno accesso con la presenza =
+del=20
+tutor il marted=EC dalle ore 15:00 alle ore 18:30=20
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P></P>
+<P>
+<H3>Risorse HW</H3>Il laboratorio =E8 dotato di PC in rete con Windows =
+NT.<BR>Per=20
+avere accesso alle risorse inserire le informazioni del proprio =
+<B>account</B>:=20
+<UL>
+  <LI>username: <FONT size=3D+1><B><TT>fond1eo</TT></B></FONT>=20
+  <LI>password: <FONT size=3D+1><B><TT>oe1fond</TT></B></FONT> =
+</LI></UL>
+<P></P>
+<P>Sull'Hard Disk si pu=F2 scrivere solo sulla cartella C:\Temp.<BR>La =
+cartella=20
+C:\Temp viene cancellata ogni volta che si entra.<BR><B>Morale: portarsi =
+un=20
+floppy disk, anzi due (su uno tenere sempre copia dell'altro)</B> </P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<H3>Risorse SW</H3>
+<P>Il compilatore C che useremo =E8 <A=20
+href=3D"http://community.borland.com/">Borland Turbo C++</A>, un ottimo=20
+compilatore, scaricabile gratuitamente per uso personale nel 2002. Per=20
+esercitarsi a casa =E8 possibile utilizzare qualunque altro compilatore =
+per il=20
+linguaggio C. Forniamo di seguito alcuni altri esempi di compilatori =
+gratuiti.=20
+<UL>
+  <LI><A href=3D"http://www.bloodshed.net/devcpp.html">Dev-Cpp 2</A> =E8 =
+un ambiente=20
+  di programmazione C/C++ completo, per Window e per Linux. GNU GENERAL =
+PUBLIC=20
+  LICENSE=20
+  <LI><A href=3D"http://c-compiler.com/">Miracle C Compiler</A> The =
+compiler is=20
+  shareware, runs under Windows (98/ME/2000/XP) and compiles for the =
+command=20
+  line. Provides a multi-window development environment with integrated =
+compiler=20
+  and linker, and online helpfile documentation. </LI></UL>Altri =
+compilatori C/C++=20
+gratuiti possono essere scaricati da <A=20
+href=3D"http://www.thefreecountry.com/developercity/ccompilers.shtml">the=
+freecountry.com</A>=20
+
+<P></P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>
+<H3>Testi in rete</H3>
+<P></P>
+<UL>
+  <LI>Paola Mello, <B>Fondamenti di Informatica L-A, Lucidi ed =
+Esercizi</B>=20
+  (file pdf) Corso di Laurea in Ingegneria Informatica - Anno Accademico =
+
+  2002/2003, <A=20
+  =
+href=3D"http://lia.deis.unibo.it/Courses/FondA0203-INF/Lucidi.html"><I>ht=
+tp://lia.deis.unibo.it/Courses/FondA0203-INF/Lucidi.html</I></A><BR>
+  <LI>Paolo Marotta, <B>C++: Una panoramica sul linguaggio</B> (guida in =
+linea),=20
+  <A=20
+  =
+href=3D"http://www.programmazione.it/Articles/corso/"><I>http://www.progr=
+ammazione.it/Articles/corso/</I></A><BR>
+  <LI>Juan Souli=E8, <B>Complete C++ Language Tutorial</B> (manuale in =
+inglese),=20
+  <A=20
+  =
+href=3D"http://www.cplusplus.com/doc/tutorial/"><I>http://www.cplusplus.c=
+om/doc/tutorial/</I></A><BR>
+  <LI>Claudio Cicconetti, <B>C++ per tutti ...o quasi</B> (da uno -ex?- =
+studente=20
+  di UniPi),<BR><A=20
+  =
+href=3D"http://cicconetti-homepage.freeweb.org/"><I>http://Cicconetti-Hom=
+epage.freeweb.org</I></A>=20
+  </LI></UL>
+<P></P>
+<P>I testi di queste esercitazioni li troverete anche su: <A=20
+href=3D"http://digilander.libero.it/RobertoRicci">http://digilander.liber=
+o.it/RobertoRicci</A>.=20
+</P>
+<H3>Indice</H3>
+<H3 style=3D"BACKGROUND: #fff1a7">
+<OL>
+  <LI><A =
+href=3D"http://xoomer.virgilio.it/roberto-ricci/C/Es1.htm">Ambiente=20
+  Windows; Ambiente Turbo C; Redazione, compilazione, esecuzione di un=20
+  programma; Debug con trace </A>
+  <LI><A =
+href=3D"http://xoomer.virgilio.it/roberto-ricci/C/Es2.htm">Variabili=20
+  intere, indirizzo e contenuto, istruzione 'printf'; Variabili intere,=20
+  'unsigned' e 'long'; Ripetizione 'for', istruzione 'scanf'</A>=20
+  <LI><A =
+href=3D"http://xoomer.virgilio.it/roberto-ricci/C/Es3.htm">Variabili=20
+  reali; Selezione 'if', espressione condizionale; Condizioni composte,=20
+  operatori !, ||, &amp;&amp;</A>=20
+  <LI><A href=3D"http://xoomer.virgilio.it/roberto-ricci/C/Es4.htm">Basi =
+ottale e=20
+  esadecimale; Numerazione posizionale in base 10 e 2, ripetizione =
+'while';=20
+  Operazioni bit a bit; Debug con watch </A>
+  <LI><A =
+href=3D"http://xoomer.virgilio.it/roberto-ricci/C/Es5.htm">Espressioni e =
+
+  funzioni matematiche; Numeri pseudocasuali; Ripetizione 'do...while',=20
+  annidamento di strutture</A>=20
+  <LI><A =
+href=3D"http://xoomer.virgilio.it/roberto-ricci/C/Es6.htm">Ambito di una =
+
+  variabile e suo tempo di vita; variabili carattere e codice ASCII, =
+conversione=20
+  di tipo; Selezione switch</A>=20
+  <LI><A =
+href=3D"http://xoomer.virgilio.it/roberto-ricci/C/Es7.htm">Costruttore=20
+  'array' e tipo di dati vettore; array di char e stringhe; ordinamento =
+ingenuo=20
+  e "a bolle"</A>=20
+  <LI><A =
+href=3D"http://xoomer.virgilio.it/roberto-ricci/C/Es8.htm">Moduli:=20
+  procedure e function, passaggio di parametri per valore; Record =
+d'attivazione=20
+  e stack; Passaggio di parametri per indirizzo; Moduli ricorsivi </A>
+  <LI><A =
+href=3D"http://xoomer.virgilio.it/roberto-ricci/C/Es9.htm">Variabili=20
+  puntatore; Aritmetica dei puntatori; Array e puntatori </A>
+  <LI><A =
+href=3D"http://xoomer.virgilio.it/roberto-ricci/C/Es10.htm">File binari; =
+
+  File di testo; Strutture </A>
+  <LI><A =
+href=3D"http://xoomer.virgilio.it/roberto-ricci/C/Es11.htm">Strutture=20
+  dinamiche di dati: Liste; Pile; Code; Liste ordinate </A>
+  <LI><A =
+href=3D"http://xoomer.virgilio.it/roberto-ricci/C/Es12.htm">Alberi=20
+  binari; Alberi di ricerca; Alberi generali </A>
+  <LI><A =
+href=3D"http://xoomer.virgilio.it/roberto-ricci/C/filesys.htm">APPENDICE:=
+=20
+  Cenni su Gestione Risorse in Windows</A>=20
+  <LI><A =
+href=3D"http://xoomer.virgilio.it/roberto-ricci/C/TurboC.htm">APPENDICE: =
+
+  Compilatore Borland Turbo C++ 4.5 per Windows</A> </H3>
+  <HR style=3D"COLOR: blue">
+
+  <CENTER><FONT face=3DArial size=3D1>pagine di <A=20
+  href=3D"mailto:roberto_ricci@tin.it"><I>Roberto Ricci </I></A>L.S. =
+"<I>A.=20
+  Righi</I>", Bologna. Ultima revisione
+  <SCRIPT language=3DJavascript>
+document.write(document.lastModified)
+</SCRIPT>
+   </FONT></CENTER>
+  <HR style=3D"COLOR: blue">
+
+  <SCRIPT language=3DJavaScript>=0A=
+<!--=0A=
+var SymRealOnLoad;=0A=
+var SymRealOnUnload;=0A=
+=0A=
+function SymOnUnload()=0A=
+{=0A=
+  window.open =3D SymWinOpen;=0A=
+  if(SymRealOnUnload !=3D null)=0A=
+     SymRealOnUnload();=0A=
+}=0A=
+=0A=
+function SymOnLoad()=0A=
+{=0A=
+  if(SymRealOnLoad !=3D null)=0A=
+     SymRealOnLoad();=0A=
+  window.open =3D SymRealWinOpen;=0A=
+  SymRealOnUnload =3D window.onunload;=0A=
+  window.onunload =3D SymOnUnload;=0A=
+}=0A=
+=0A=
+SymRealOnLoad =3D window.onload;=0A=
+window.onload =3D SymOnLoad;=0A=
+=0A=
+//-->=0A=
+</SCRIPT>
+  </LI></OL></BODY></HTML>
+
+------=_NextPart_000_00C7_01C45782.B696AEF0
+Content-Type: text/css;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://xoomer.virgilio.it/roberto-ricci/stilind.css
+
+BODY {
+	FONT-SIZE: 10pt; BACKGROUND: url(sfondo.jpeg) fixed; COLOR: #000000; =
+FONT-FAMILY: Verdana,Arial,Helvetica
+}
+TD {
+	FONT-SIZE: 10pt; COLOR: #000000; FONT-FAMILY: Verdana,Arial,Helvetica
+}
+P {
+	FONT-SIZE: 10pt; COLOR: #000000; FONT-FAMILY: Verdana,Arial,Helvetica
+}
+A {
+	COLOR: #000080; TEXT-DECORATION: none
+}
+A:hover {
+	FONT-WEIGHT: bold; COLOR: #008080
+}
+H1 {
+	FONT-SIZE: 24pt; COLOR: #6464ff; FONT-FAMILY: Verdana,Arial,Helvetica
+}
+H2 {
+	FONT-SIZE: 14pt; COLOR: #6464ff; FONT-FAMILY: Verdana,Arial,Helvetica
+}
+H3 {
+	FONT-SIZE: 12pt; COLOR: #6464ff; FONT-FAMILY: Verdana,Arial,Helvetica
+}
+LI {
+	COLOR: #336699; FONT-FAMILY: Verdana,Arial,Helvetica
+}
+.tipo {
+	FONT-WEIGHT: bold; COLOR: #6464ff
+}
+.sotto {
+	FONT-SIZE: 80%; COLOR: #000000
+}
+.aforismi {
+	FONT-WEIGHT: bold; COLOR: #000000; FONT-STYLE: italic
+}
+.firma {
+	FONT-WEIGHT: bold; FONT-SIZE: 80%; FONT-STYLE: italic
+}
+
+------=_NextPart_000_00C7_01C45782.B696AEF0--

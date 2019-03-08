@@ -1,0 +1,1153 @@
+From: <Salvato con Microsoft Internet Explorer 5>
+Subject: C / C++
+Date: Tue, 22 Jun 2004 03:20:16 +0200
+MIME-Version: 1.0
+Content-Type: multipart/related;
+	boundary="----=_NextPart_000_0062_01C45807.D6B26F50";
+	type="text/html"
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1409
+
+This is a multi-part message in MIME format.
+
+------=_NextPart_000_0062_01C45807.D6B26F50
+Content-Type: text/html;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://xoomer.virgilio.it/roberto-ricci/C/Es12.htm
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD><TITLE>C / C++</TITLE>
+<META http-equiv=3DContent-Type content=3D"text/html; =
+charset=3Dwindows-1252">
+<META content=3D"MSHTML 6.00.2800.1400" name=3DGENERATOR></HEAD>
+<BODY>
+<CENTER>
+<H1 style=3D"BACKGROUND: teal; COLOR: white">STRUTTURE NON LINEARI=20
+DINAMICHE</H1></CENTER>
+<HR style=3D"COLOR: blue">
+
+<CENTER><FONT face=3DArial size=3D1>pagine di <A=20
+href=3D"mailto:roberto_ricci@tin.it"><I>Roberto Ricci </I></A>L.S. =
+"<I>A.=20
+Righi</I>", Bologna. Ultima revisione
+<SCRIPT language=3DJavaScript>=0A=
+<!--=0A=
+=0A=
+function SymError()=0A=
+{=0A=
+  return true;=0A=
+}=0A=
+=0A=
+window.onerror =3D SymError;=0A=
+=0A=
+var SymRealWinOpen =3D window.open;=0A=
+=0A=
+function SymWinOpen(url, name, attributes)=0A=
+{=0A=
+  return (new Object());=0A=
+}=0A=
+=0A=
+window.open =3D SymWinOpen;=0A=
+=0A=
+//-->=0A=
+</SCRIPT>
+
+<SCRIPT language=3DJavascript>
+document.write(document.lastModified)
+</SCRIPT>
+ </FONT></CENTER>
+<HR style=3D"COLOR: blue">
+
+<UL>
+  <LI><A =
+href=3D"http://xoomer.virgilio.it/roberto-ricci/C/Es0.htm">INDICE</A>=20
+  <LI>
+  <OL>
+    <LI><A=20
+    =
+href=3D"http://xoomer.virgilio.it/roberto-ricci/C/Es12.htm#albina">Alberi=
+=20
+    binari</A>=20
+    <LI><A=20
+    =
+href=3D"http://xoomer.virgilio.it/roberto-ricci/C/Es12.htm#albinari">Albe=
+ri=20
+    binari di ricerca</A>=20
+    <LI><A=20
+    =
+href=3D"http://xoomer.virgilio.it/roberto-ricci/C/Es12.htm#alberi">Alberi=
+=20
+    generali</A> </LI></OL>
+  <LI><A =
+href=3D"http://xoomer.virgilio.it/roberto-ricci/C/Es12.zip">Soluzioni=20
+  proposte</A> </LI></UL><BR>&nbsp; <BR>&nbsp;=20
+<H3 style=3D"BACKGROUND: teal; COLOR: white"><A name=3Dalbina></A>Alberi =
+
+binari</H3><BR>&nbsp;=20
+<P>Definito in modo ricorsivo, un albero binario =E8:=20
+<TABLE>
+  <TBODY>
+  <TR>
+    <TD>
+      <UL>
+        <LI>vuoto=20
+        <LI>un elemento (radice) seguito da due aberi. </LI></UL></TD>
+    <TD><IMG =
+src=3D"http://xoomer.virgilio.it/roberto-ricci/C/albBin.gif">=20
+  </TD></TR></TBODY></TABLE>Ad esempio in figura =E8 rappresentato un =
+albero con=20
+radice 1 e sottoalbero sinistro che contiene i valori 2, 4, 5, 7.<BR>Una =
+tale=20
+struttura dati =E8 rappresentabile bidimensionalmente sfruttando ad =
+esempio righe=20
+e colonne della pagina:=20
+<TABLE width=3D"100%">
+  <TBODY>
+  <TR>
+    <TD>a grafo, come in precedenza: <PRE>    3
+        6
+1  =20
+        5
+    2      =20
+	    7
+	4
+</PRE></TD>
+    <TD>con indentazione: <PRE>1  =20
+    2      =20
+	4
+	    -
+	    7
+        5
+    3
+        6
+</PRE></TD></TR></TBODY></TABLE>Si possono dare anche rappresentazioni=20
+unidimensionali basate su modi diversi di visitare l'albero:=20
+<UL>
+  <LI>preordine (o anticipata o prefissa): considera il valore del nodo=20
+  corrente, visita sottoalbero sinistro, visita sottoalbero destro.=20
+  <LI>in ordine (o simmetrica o infissa): visita sottoalbero sinistro, =
+considera=20
+  il valore del nodo corrente, visita sottoalbero destro.=20
+  <LI>postordine (o posticipata o postfissa): visita sottoalbero =
+sinistro,=20
+  visita sottoalbero destro, considera il valore del nodo corrente, =
+</LI></UL>
+<TABLE width=3D"100%">
+  <TBODY>
+  <TR>
+    <TD width=3D"50%">con parentesi annidate:=20
+      <UL>
+        <LI>preordine: 1(2(4(()7)5)3(6()))=20
+        <LI>in ordine: (((4(7))2(5))1((6)3))=20
+        <LI>postordine: (((()7)45)2(6())3)1 </LI></UL></TD>
+    <TD>con un simbolo per rappresentare l'abero vuoto (una foglia =E8 =
+seguita=20
+      da due alberi vuoti):=20
+      <UL>
+        <LI>preordine: 124*7**5**36***=20
+        <LI>in ordine: *4*7*2*5*1*6*3* ( non =E8 univoca)=20
+        <LI>postordine: ***74**52**6*31 =
+</LI></UL></TD></TR></TBODY></TABLE>Una=20
+implementazione in C basata su puntatori e sull'allocazione dinamica =
+della=20
+memoria =E8 il seguente:=20
+<TABLE>
+  <TBODY>
+  <TR>
+    <TD><PRE>
+typedef struct elemento {
+	 	struct elemento *sin;
+	 	tipoValore value;
+	 	struct elemento *des;
+} nodo;
+
+typedef	nodo *albBin;
+</PRE></TD>
+    <TD vAlign=3Dtop align=3Dmiddle width=3D"30%">o anche meglio</TD>
+    <TD><PRE>
+typedef	struct nodo *albBin;
+
+struct nodo {
+	 	albBin sin;
+	 	tipoValore value;
+	 	albBin des;
+};
+</PRE></TD></TR></TBODY></TABLE>
+<OL>
+  <LI>Per maggiore dimestichezza con la struttura ad albero binario =
+eseguire il=20
+  programma <A =
+href=3D"http://xoomer.virgilio.it/roberto-ricci/C/albBin1.txt"=20
+  target=3D_blank>albBin1.cpp</A> per la lettura di un albero binario di =
+interi e=20
+  la sua visualizzazione sia in forma di grafo sia in preordine in forma =
+
+  unidimensionale=20
+  <LI>Analizzare il programma precedente e aggiungere procedure per la=20
+  visualizzazione dell=92albero in ordine e postordine=20
+  <LI>Realizzare una function che dato un albero binario visualizzi le =
+sue=20
+  foglie, cio=E8 i valori ai nodi privi di sottoalberi=20
+  <LI>Realizzare un programma per leggere una stringa formata di simboli =
+di=20
+  operazione algebrica '+', '*', '-', '/' e lettere - ad es. +*abc, =
+cio=E8 una=20
+  espressione algebrica in forma prefissa - per trasformarla in un =
+albero avente=20
+  come foglie le lettere e visualizzarla in forma infissa e postfissa=20
+  <P>Come eventuale approfondimento </P>
+  <LI>Modificare il programma albBin1.cpp in modo che il tipo di valori=20
+  dell'albero siano stringhe e il carattere '*'indichi che il =
+sottoalbero =E8=20
+  vuoto.=20
+  <LI>Realizzare un programma per leggere un albero di caratteri dato in =
+forma=20
+  unidimensionale in preordine con carattere '*' per sottoalbero vuoto =
+facendo=20
+  uso della function seguente: <PRE>albBin leggePreOrd(stringa &amp;s){
+  albBin p =3D NULL;
+  if (*s !=3D '*') {
+	 p=3D(albBin) malloc(sizeof(nodo));
+	 p-&gt;value=3D*s;
+	 p-&gt;sin=3DleggePreOrd(++s);
+	 p-&gt;des=3DleggePreOrd(++s);
+  }
+  return p;
+}
+</PRE>
+  <LI>Aggiungere al programma precedente una function per la lettura di =
+un=20
+  albero binario di caratteri dato come stringa in postordine con =
+carattere '*'=20
+  per sottoalbero vuoto (suggerimento: realizzare una function iterativa =
+anzich=E9=20
+  ricorsiva e usare una pila per i sottoalberi sinistro e destro)=20
+  <LI>Realizzare un programma per leggere un albero di caratteri dato in =
+forma=20
+  unidimensionale in preordine con parentesi basato ad esempi su una =
+function=20
+  come la seguente: <PRE>albBin leggeInOrd(stringa &amp;s){
+  albBin p =3D NULL;
+  if (*s !=3D '\0'){
+          if (*s =3D=3D '('){
+                  p=3D(albBin) malloc(sizeof(nodoA));
+		          p-&gt;sin=3DleggeInOrd(++s);
+		          p-&gt;value=3D*s;
+		          p-&gt;des=3DleggeInOrd(++s);
+          }else
+                  while (*s =3D=3D ')')
+                      s++;=20
+  }
+  return p;
+}
+</PRE>e aggiungere function per la lettura in ordine e in postordine=20
+  <LI>Realizzare un programma per leggere una stringa formata di simboli =
+di=20
+  operazione algebrica '+', '*', '-', '/' e lettere - ad es. a*b+c, =
+cio=E8 una=20
+  espressione algebrica - per trasformarla in un albero avente come =
+foglie le=20
+  lettere e visualizzarla in forma prefissa e infissa =
+</LI></OL><BR>&nbsp;=20
+<BR>&nbsp; <BR>&nbsp;=20
+<H3 style=3D"BACKGROUND: teal; COLOR: white"><A =
+name=3Dalbinari></A>Alberi binari di=20
+ricerca</H3><BR>&nbsp; La seguente =E8 la descrizione di un algoritmo di =
+ricerca=20
+binaria: <PRE>ripeti
+	confronta il dato con uno a met=E0 della sequenza
+	se il dato =E8 minore=20
+		cerca nella prima met=E0
+	altrimenti=20
+		cerca nella seconda met=E0
+fintantoch=E9 l'hai trovato e ci sono elementi tra i quali cercare =
+ancora
+</PRE>Tale algoritmo =E8 applicabile solo a liste ordinate (la cui =
+manutenzione,=20
+cio=E8 l'inserirmento o la cancellazione degli elementi, ha quindi un =
+costo) ma ha=20
+un'efficienza decisamente maggiore rispetto a una ricerca di tipo =
+sequenziale.=20
+<P>Un albero binario di ricerca (ABR o anche BST) =E8 una struttura dati =
+pi=F9=20
+efficace di una sequenza ordinata per implementare algoritmi di ricerca =
+binaria.=20
+</P>Un ABR, i cui valori si dicono anche chiavi, =E8 tale che:=20
+<TABLE>
+  <TBODY>
+  <TR>
+    <TD>
+      <UL>
+        <LI>nel sottoalbero sinistro le chiavi sono strettamente minori =
+della=20
+        chiave della radice,=20
+        <LI>nel sottoalbero destro le chiavi sono strettamente maggiori =
+della=20
+        chiave della radice. </LI></UL></TD>
+    <TD><IMG =
+src=3D"http://xoomer.virgilio.it/roberto-ricci/C/albBinRic.gif">=20
+  </TD></TR></TBODY></TABLE>Si noti che in un ABR non ci possono essere =
+nodi=20
+diversi con la stessa chiave.=20
+<OL>
+  <LI>Aggiungere nel programma <A=20
+  href=3D"http://xoomer.virgilio.it/roberto-ricci/C/albBin1.txt"=20
+  target=3D_blank>albBin1.cpp</A> una procedura in grado di visualizzare =
+se=20
+  l'albero binario che viene letto =E8 di ricerca crescente. (Come =
+passaggio=20
+  intermedio costruire la lista delle chiavi che si ottiene visitando =
+l'albero=20
+  in ordine, che nel caso di un ABR deve risultare ordinato)=20
+  <LI>Realizzare un programma per la lettura di n numeri interi da =
+inserire in=20
+  un albero binario di ricerca <PRE>se l'albero non =E8 vuoto
+	se il valore di x =E8 uguale a quello della radice=20
+		l'elemento non va inserito perch=E9 gi=E0 presente=20
+	se il valore di x =E8 minore di quello della radice =20
+		se il sottoalbero sinistro =E8 vuoto=20
+			inseriamo x nel sottoalbero sinistro=20
+	se il valore di x =E8 maggiore di quello della radice=20
+			inseriamo x nel sottoalbero destro
+altrimenti
+	creiamo un nodo con i due sottoalberi vuoti
+	inseriamo x come chiave
+</PRE>Aggiungere anche procedure per la visualizzazione in preordine, in =
+
+  ordine e postordine. Notare che la visita in ordine simmetrico di un =
+ABR=20
+  genera una sequenza crescente di tutte le sue chiavi.=20
+  <LI>Aggiungere al programma precedente una function per la ricerca di =
+un=20
+  elemento in un albero binario di ricerca. Ad esempio seguire un =
+algoritmo come=20
+  il seguente: <PRE>Se l'albero =E8 vuoto=20
+	la ricerca termina subito con fallimento.=20
+altrimenti
+	si confronta il valore cercato con quello contenuto nella radice =
+dell'albero:=20
+		Se i due valori coincidono=20
+			la ricerca termina con successo =20
+		Se il valore cercato =E8 minore di quello contenuto nella radice=20
+			la ricerca prosegue ricorsivamente nel sottoalbero sinistro.=20
+		Se =E8 invece maggiore=20
+			la ricerca prosegue nel sottoalbero destro. =20
+</PRE>Nella peggiore della ipotesi la ricerca ha una durata =
+proporzionale alla=20
+  massima profondit=E0 dell'albero. </LI></OL><BR>&nbsp; <BR>&nbsp; =
+<BR>&nbsp;=20
+<H3 style=3D"BACKGROUND: teal; COLOR: white"><A name=3Dalberi></A>Alberi =
+
+generali</H3><BR>&nbsp; <BR>&nbsp;=20
+<P>Definito in modo ricorsivo, un albero =E8:=20
+<UL>
+  <LI>vuoto=20
+  <LI>un elemento (radice) associato a una foresta di (sotto)alberi, =
+cio=E8 una=20
+  lista di sottoalberi. </LI></UL>
+<TABLE width=3D"100%">
+  <TBODY>
+  <TR>
+    <TD width=3D"50%">Ad esempio:<BR>
+      <CENTER><IMG=20
+      =
+src=3D"http://xoomer.virgilio.it/roberto-ricci/C/albGen.gif"></CENTER></T=
+D>
+    <TD>In C si pu=F2 definire un albero generale nel modo seguente: =
+<PRE>typedef int tipoValore;
+
+typedef  struct	nodoA *albero;
+typedef  struct	nodoF *foresta;
+
+struct nodoA{
+	 tipoValore value;
+	 foresta next;
+};
+
+struct nodoF{
+	 albero value;
+	 foresta next;
+};
+</PRE></TD></TR></TBODY></TABLE>
+<OL>
+  <LI>Completare il seguente programma inserendo le opportune =
+definizioni delle=20
+  strutture dei dati, con una function per creare un albero di data =
+radice e con=20
+  data foresta, una function per estrarre la foresta dei sottoalberi, =
+una=20
+  function per estrarre la radice. <PRE style=3D"BACKGROUND: =
+silver">albero creaAlbero(tipoValore, foresta);
+foresta sottoAlberi(albero);
+tipoValore radAlbero(albero);
+
+albero legge(int);
+void visGraf(int, albero);
+
+
+main(){
+	 albero p;
+	 printf("Inserisci numeri interi, '0' per terminare il ramo:\n");
+	 p =3D legge(0);
+	 printf("\nUna visualizzazione come grafo:\n");
+	 visGraf(0,p);
+}
+
+albero legge(int n){
+	tipoValore elem;
+	albero p=3DNULL;
+	printf("\n");
+	int i;
+	for (i=3D0;i&lt;n;i++)
+			printf("  ");
+	printf("? ");
+	scanf("%d",&amp;elem);
+	foresta f=3DNULL;
+	if (elem!=3D0){
+		foresta fAus=3D(foresta) malloc(sizeof(nodoF));
+		fAus-&gt;value=3Dlegge(n+1);
+		while (fAus-&gt;value!=3DNULL){
+			fAus-&gt;next=3Df;
+			f=3DfAus;
+			fAus=3D (foresta) malloc(sizeof(nodoF));
+			fAus-&gt;value=3Dlegge(n+1);
+		}
+		p=3DcreaAlbero(elem,f);
+	}
+	return p;
+}
+
+void visGraf(int n, albero p){
+	 if (p!=3DNULL){
+		int i;
+		for (i=3D0;i&lt;n;i++)
+				printf("   ");
+		printf("%d",p-&gt;value);
+		printf("\n");
+		foresta f=3D sottoAlberi(p);
+		while (f!=3DNULL){
+				visGraf(n+1,f-&gt;value);
+				f=3Df-&gt;next;
+		}
+	 }
+}
+
+</PRE>
+  <LI>aggiungere al programma precedente una function per visualizzare =
+solo le=20
+  foglie dell'albero=20
+  <LI>Qualunque albero pu=F2 esser sempre rappresentato da un albero =
+binario. Ecco=20
+  una rappresentazione dell'albero iniziale mediante un albero =
+binario:<BR><IMG=20
+  =
+src=3D"http://xoomer.virgilio.it/roberto-ricci/C/albGenB.gif"><BR>Complet=
+are il=20
+  seguente programma per realizzare tale possibilit=E0. <PRE =
+style=3D"BACKGROUND: silver">
+albBin legge(int);
+void visGraf(int, albBin);
+void visGrafBin(int, albBin);
+
+main(){
+	printf("Inserisci numeri interi, '0' per terminare il ramo:\n");
+	albBin p=3Dlegge(0);
+	printf("\nUna visualizzazione come grafo:\n");
+	visGraf(0,p);
+	printf("\nUna visualizzazione come albero binario:\n");
+	visGrafBin(0,p);
+}
+
+
+
+albBin legge(int n){
+	tipoValore elem;
+	albBin p=3DNULL;
+	printf("\n");
+	int i;
+	for (i=3D0;i&lt;n;i++)
+			printf("  ");
+	printf("? ");
+	scanf("%d",&amp;elem);
+	if (elem!=3D0){
+		p=3D(albBin) malloc(sizeof(nodo));
+		p-&gt;value=3D elem;
+		p-&gt;sin=3Dlegge(n+1);
+		p-&gt;des=3Dlegge(n);
+	}
+	return p;
+}
+
+void visGraf(int n, albBin p){
+	 if (p!=3DNULL){
+		int i;
+		for (i=3D0;i&lt;n;i++)
+				printf("   ");
+		printf("%d",p-&gt;value);
+		printf("\n");
+		visGraf(n+1,p-&gt;sin);
+		visGraf(n,p-&gt;des);
+	 }
+}
+</PRE></LI></OL>
+<HR style=3D"COLOR: blue">
+
+<CENTER><FONT face=3DArial size=3D1>pagine di <A=20
+href=3D"mailto:roberto_ricci@tin.it"><I>Roberto Ricci </I></A>L.S. =
+"<I>A.=20
+Righi</I>", Bologna. Ultima revisione
+<SCRIPT language=3DJavascript>
+document.write(document.lastModified)
+</SCRIPT>
+ </FONT></CENTER>
+<HR style=3D"COLOR: blue">
+
+<SCRIPT language=3DJavaScript>=0A=
+<!--=0A=
+var SymRealOnLoad;=0A=
+var SymRealOnUnload;=0A=
+=0A=
+function SymOnUnload()=0A=
+{=0A=
+  window.open =3D SymWinOpen;=0A=
+  if(SymRealOnUnload !=3D null)=0A=
+     SymRealOnUnload();=0A=
+}=0A=
+=0A=
+function SymOnLoad()=0A=
+{=0A=
+  if(SymRealOnLoad !=3D null)=0A=
+     SymRealOnLoad();=0A=
+  window.open =3D SymRealWinOpen;=0A=
+  SymRealOnUnload =3D window.onunload;=0A=
+  window.onunload =3D SymOnUnload;=0A=
+}=0A=
+=0A=
+SymRealOnLoad =3D window.onload;=0A=
+window.onload =3D SymOnLoad;=0A=
+=0A=
+//-->=0A=
+</SCRIPT>
+</BODY></HTML>
+
+------=_NextPart_000_0062_01C45807.D6B26F50
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Location: http://xoomer.virgilio.it/roberto-ricci/C/albBin.gif
+
+R0lGODdhnwCiAPcAAAAAAAAAQAAAgAAA/wAgAAAgQAAggAAg/wBAAABAQABAgABA/wBgAABgQABg
+gABg/wCAAACAQACAgACA/wCgAACgQACggACg/wDAAADAQADAgADA/wD/AAD/QAD/gAD//yAAACAA
+QCAAgCAA/yAgACAgQCAggCAg/yBAACBAQCBAgCBA/yBgACBgQCBggCBg/yCAACCAQCCAgCCA/yCg
+ACCgQCCggCCg/yDAACDAQCDAgCDA/yD/ACD/QCD/gCD//0AAAEAAQEAAgEAA/0AgAEAgQEAggEAg
+/0BAAEBAQEBAgEBA/0BgAEBgQEBggEBg/0CAAECAQECAgECA/0CgAECgQECggECg/0DAAEDAQEDA
+gEDA/0D/AED/QED/gED//2AAAGAAQGAAgGAA/2AgAGAgQGAggGAg/2BAAGBAQGBAgGBA/2BgAGBg
+QGBggGBg/2CAAGCAQGCAgGCA/2CgAGCgQGCggGCg/2DAAGDAQGDAgGDA/2D/AGD/QGD/gGD//4AA
+AIAAQIAAgIAA/4AgAIAgQIAggIAg/4BAAIBAQIBAgIBA/4BgAIBgQIBggIBg/4CAAICAQICAgICA
+/4CgAICgQICggICg/4DAAIDAQIDAgIDA/4D/AID/QID/gID//6AAAKAAQKAAgKAA/6AgAKAgQKAg
+gKAg/6BAAKBAQKBAgKBA/6BgAKBgQKBggKBg/6CAAKCAQKCAgKCA/6CgAKCgQKCggKCg/6DAAKDA
+QKDAgKDA/6D/AKD/QKD/gKD//8AAAMAAQMAAgMAA/8AgAMAgQMAggMAg/8BAAMBAQMBAgMBA/8Bg
+AMBgQMBggMBg/8CAAMCAQMCAgMCA/8CgAMCgQMCggMCg/8DAAMDAQMDAgMDA/8D/AMD/QMD/gMD/
+//8AAP8AQP8AgP8A//8gAP8gQP8ggP8g//9AAP9AQP9AgP9A//9gAP9gQP9ggP9g//+AAP+AQP+A
+gP+A//+gAP+gQP+ggP+g///AAP/AQP/AgP/A////AP//QP//gP///yH5BAAAAAAALAAAAACfAKIA
+AAj/AP8JHEiwoMGDCBMqXMiwocOHECNKnEixosWLGDNq3Mixo8ePIEOKHEmypMmTKFOqXMmypcuX
+MGPKnEmzps2bOHPq3Mmzp8+fQIMKHToSgFEARJNSNKq0KUSmTqMuhCq1qkGqVrP+w6q1KteuUb+C
+bSp2bNKyZoMePZoWKNK2Tt/CVSp36lycdRnmvQtzr16+Mv02FAz4JOHBhVkedrg48cfGiB2bhMxY
+MknKDzFblqg582aPnZ9+3hg6YunRBU+bRl1RNWfWr1G6ljx7KezIKmvz1d36dkLeFoGPFR7cN0Hi
+F5FLVZ7cOPPmsJ9jlK52J3Wf1zNm17ldO+3qhbtzWRQfk/z4u+Y7pjeOmz3N9e7jn0Vrk+3utT3X
+ws89kH7gt/6BFeB7+ylWIGcHpoTfTwmuZB9PAwrY4F+0TaiQXBaKRFWGCOmH3oLWeSjfiCR2xWFs
+aZ34W4cp/7q1olkqsviigAzaRSN27VkVY2qVabUjjz3qiKNnWf0oUGhGigbhREkSaZ1tyy0JZVxS
+9kYld97RVWVxWmKpUZMy4nUeUTsiByaQYqpHZk7MnXkkmyG5uVWacbpIJ0hnqphdkg++h1qfJSoo
+Z2IRBvoYiBUC2heAGYonIoH9TVholnhh2KCiGk4qm6X/daffiUxpWqeo2pF6mamgHbkeqnNxqph8
+n64K66eTQTVoS6yahiiJuRrq66/ABitsi8PKVqxhxyKb7GXLlnQroc0WFa200+JZbZ3XPpZtqtuq
+2S1p344ZLqXjclkudOdama6667brLnePvvtbvPKGOWe9ThHia6O+FPK7r7/2AnzQs4ARjA+ewAgn
+rPDCDDfs8MMlBQQAOw==
+
+------=_NextPart_000_0062_01C45807.D6B26F50
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Location: http://xoomer.virgilio.it/roberto-ricci/C/albBinRic.gif
+
+R0lGODdhnwCiAPcAAAAAAAAAQAAAgAAA/wAgAAAgQAAggAAg/wBAAABAQABAgABA/wBgAABgQABg
+gABg/wCAAACAQACAgACA/wCgAACgQACggACg/wDAAADAQADAgADA/wD/AAD/QAD/gAD//yAAACAA
+QCAAgCAA/yAgACAgQCAggCAg/yBAACBAQCBAgCBA/yBgACBgQCBggCBg/yCAACCAQCCAgCCA/yCg
+ACCgQCCggCCg/yDAACDAQCDAgCDA/yD/ACD/QCD/gCD//0AAAEAAQEAAgEAA/0AgAEAgQEAggEAg
+/0BAAEBAQEBAgEBA/0BgAEBgQEBggEBg/0CAAECAQECAgECA/0CgAECgQECggECg/0DAAEDAQEDA
+gEDA/0D/AED/QED/gED//2AAAGAAQGAAgGAA/2AgAGAgQGAggGAg/2BAAGBAQGBAgGBA/2BgAGBg
+QGBggGBg/2CAAGCAQGCAgGCA/2CgAGCgQGCggGCg/2DAAGDAQGDAgGDA/2D/AGD/QGD/gGD//4AA
+AIAAQIAAgIAA/4AgAIAgQIAggIAg/4BAAIBAQIBAgIBA/4BgAIBgQIBggIBg/4CAAICAQICAgICA
+/4CgAICgQICggICg/4DAAIDAQIDAgIDA/4D/AID/QID/gID//6AAAKAAQKAAgKAA/6AgAKAgQKAg
+gKAg/6BAAKBAQKBAgKBA/6BgAKBgQKBggKBg/6CAAKCAQKCAgKCA/6CgAKCgQKCggKCg/6DAAKDA
+QKDAgKDA/6D/AKD/QKD/gKD//8AAAMAAQMAAgMAA/8AgAMAgQMAggMAg/8BAAMBAQMBAgMBA/8Bg
+AMBgQMBggMBg/8CAAMCAQMCAgMCA/8CgAMCgQMCggMCg/8DAAMDAQMDAgMDA/8D/AMD/QMD/gMD/
+//8AAP8AQP8AgP8A//8gAP8gQP8ggP8g//9AAP9AQP9AgP9A//9gAP9gQP9ggP9g//+AAP+AQP+A
+gP+A//+gAP+gQP+ggP+g///AAP/AQP/AgP/A////AP//QP//gP///yH5BAAAAAAALAAAAACfAKIA
+AAj/AP8JHEiwoMGDCBMqXMiwocOHECNKnEixosWLGDNq3Mixo8ePIEOKHEmypMmTKFOqXMmypcuX
+MGPKnEmzps2bOHPq3Mmzp8+fQIMKHUq0qNGjSJMqXcq0IoCnUJsuhRpVqlIABLFalap161SvTbuC
+TSp2rNGyZouiTTt0LdudYt2+zSl3Ls+6AvHaZak3796ZTyH2/TtycEHDhD0iPpxY5WKDjxs7zRhZ
+csTKBzFbZqg58+aOgRV/1th5YenPp02PnlwyNWHXDWHPlR17tUPat22rbomba2/Bv8nSDH7WJvG2
+OI8DVc7aMnOLz+n6jF4z9PS/1Enbzb6RO9+j3lOGVOc4Xvdu88bR3yyv3jN4qmDZQ4c/Vj5F+yfx
+X7a+typdqvqZFBh/OvmXlnUE/jdbVwlK9xaCASoUYWFaNShTVROSBOB/BvaX4T8fOpZhiCh1OJxz
+Fv9e2B5gCZG4nYQr5ndejCL15WJ9D93olWE6QpfcZfH9KFGPQApZZFgOTkRkbutdtOSM1Tn5lZE+
+IvWha08yliRGWQ4Uomxdgrhld8iNSeZyBYZE5JeFXWfmRy6SqJyccMn45kodUjfihfT5VWKTMYWG
+IJ5RGsdemPkdGqN9Fab4Gn4mbgYpojV6CZOjFEbq0oYvcVoig5P2yVuj4oGqHoSfkooeqqliKhmr
+ra44YHaNUqqhq4qZCmhisKbHq667PqopizReWmygxxqbLG/Lbtrsd88SGq1j04pXrbXX2pmthtsK
+2C2337YZbqXjgmTrg+Wam66667a7HK7uciZqvEMeenmuWfDSK+G98Q2rb475/otQwAJDxm9YDBa8
+n78KDjfs8MMQRyzxxBRXHG9AADs=
+
+------=_NextPart_000_0062_01C45807.D6B26F50
+Content-Type: image/gif
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://xoomer.virgilio.it/roberto-ricci/C/albGen.gif
+
+<!-- saved from url=3D(0022)http://internet.e-mail -->=0A=
+<html>=0A=
+<head>=0A=
+ <title>SPAZIO WEB - Errore</title>=0A=
+<link rel=3Dstylesheet href=3D"http://xoom.virgilio.it/style/all.css" =
+type=3D"text/css">=0A=
+<META HTTP-EQUIV=3DRefresh CONTENT=3D"5;URL=3Dhttp://xoom.virgilio.it/">=0A=
+</head>=0A=
+<body bgcolor=3D"#ffffff" link=3D"#990000" vlink=3D"#9f6c6c" =
+alink=3D"#990000" marginheight=3D"3" topmargin=3D"0">=0A=
+<center>=0A=
+=0A=
+<!-- HEADER -->=0A=
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"760" =
+bgcolor=3D"#FF9900">=0A=
+<tr><td colspan=3D"17" height=3D"1" bgcolor=3D"#ffffff"><spacer =
+type=3D"block" height=3D"1"></td></tr>=0A=
+<tr>=0A=
+<td width=3D"1" bgcolor=3D"#FFCC00" rowspan=3D"2"><spacer type=3D"block" =
+width=3D"1"></td>=0A=
+<td align=3D"center" width=3D"71"><a =
+href=3D"http://notizie.virgilio.it/informazione/home/index.html?pmk=3DTSs=
+pw" class=3D"hd">News</a></td>=0A=
+=0A=
+<td class=3D"hd" width=3D"2"><spacer type=3D"block" width=3D"2"></td>=0A=
+<td align=3D"center" width=3D"144"><a =
+href=3D"http://pb.virgilio.it/virgilio/index.html?pmk=3DTSspw" =
+class=3D"hd">PagineBianche.it</a></td>=0A=
+<td class=3D"hd" width=3D"2"><spacer type=3D"block" width=3D"2"></td>=0A=
+<td align=3D"center" width=3D"127"><a =
+href=3D"http://pg.virgilio.it/pg/cgi/pgsearch.cgi?cb=3Dk?pmk=3DTSspw" =
+class=3D"hd">PagineGialle.it</a></td>=0A=
+<td class=3D"hd" width=3D"2"><spacer type=3D"block" width=3D"2"></td>=0A=
+<td align=3D"center" width=3D"85"><a =
+href=3D"http://search.virgilio.it/search/home/index.html?pmk=3DTSspw" =
+class=3D"hd">Ricerca</a></td>=0A=
+<td class=3D"hd" width=3D"2"><spacer type=3D"block" width=3D"2"></td>=0A=
+<td align=3D"center" width=3D"93"><a =
+href=3D"http://directory.virgilio.it/dir/home/index.html?pmk=3DTSspw" =
+class=3D"hd">Tutti i siti</a></td>=0A=
+<td class=3D"hd" width=3D"2"><spacer type=3D"block" width=3D"2"></td>=0A=
+<td align=3D"center" width=3D"97"><a =
+href=3D"http://mappe.virgilio.it/tcol/home.jsp?pmk=3DTSspw" =
+class=3D"hd">TuttoCitt&agrave;</a></td>=0A=
+<td class=3D"hd" width=3D"2"><spacer type=3D"block" width=3D"2"></td>=0A=
+<td align=3D"center" width=3D"61"><a =
+href=3D"http://mail.virgilio.it/mail/home/index.html?pmk=3DTSspw" =
+class=3D"hd">Mail</a></td>=0A=
+=0A=
+<td class=3D"hd" width=3D"2"><spacer type=3D"block" width=3D"2"></td>=0A=
+<td align=3D"center" width=3D"66"><a =
+href=3D"http://tin.virgilio.it/?pmk=3DTSspw" class=3D"hd">Tin.it</a></td>=0A=
+<td width=3D"1" bgcolor=3D"#FFCC00" rowspan=3D"2"><spacer type=3D"block" =
+width=3D"1"></td>=0A=
+</tr>=0A=
+=0A=
+<tr><td colspan=3D"15" height=3D"1" bgcolor=3D"#D68019"><spacer =
+type=3D"block" height=3D"1"></td></tr>=0A=
+</table>=0A=
+=0A=
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"760">=0A=
+<tr><td height=3D"4" colspan=3D"3"><spacer type=3D"block" =
+height=3D"4"></td></tr>=0A=
+<tr>=0A=
+<td width=3D"125"><a href=3D"http://www.virgilio.it/"><img =
+src=3D"http://images.virgilio.it/news/v_logo.gif" border=3D"0" =
+alt=3D"Virgilio" width=3D"123" height=3D"60"></a></td>=0A=
+<td width=3D"150" align=3D"center"><a =
+href=3D"http://tin.virgilio.it/"><img =
+src=3D"http://directory.xoom.virgilio.it/images/l_tin.jpg" border=3D"0" =
+width=3D"100" height=3D"37"></a></td>=0A=
+<td align=3D"right" width=3D"485"><!-- ACTIVEADV BEGIN BANNER =
+VERSION-4.1-->=0A=
+<SCRIPT language=3D"JavaScript1.1">=0A=
+   bust =3D Math.floor(1000000*Math.random());=0A=
+   document.write('<SCR' + 'IPT LANGUAGE=3D"JavaScript1.1" =
+SRC=3D"http://adv.virgilio.it/js.ng/site=3Dvirg&adsize=3D468x60&subsite=3D=
+comu&sez=3Dxoom&pos=3D1&bust=3D'+bust+'?">\n');=0A=
+   document.write('</SCR' + 'IPT>\n');=0A=
+</SCRIPT>=0A=
+=0A=
+</td></tr>=0A=
+<tr><td width=3D"760" height=3D"8" =
+background=3D"http://images.virgilio.it/news/filetti_header2.gif" =
+colspan=3D"3"><spacer type=3D"block" height=3D"8"></td></tr>=0A=
+</table>=0A=
+<!-- /HEADER -->=0A=
+=0A=
+=0A=
+<!-- PATH -->=0A=
+<table cellpadding=3D"2" cellspacing=3D"0" border=3D"0" width=3D"760">=0A=
+<tr><tr><td class=3D"path" width=3D"580" bgcolor=3D"#efefef"><a =
+href=3D"http://xoom.virgilio.it" class=3D"path">Home</a> > =
+<b>Errore</b></td>=0A=
+<td width=3D"180" class=3D"path" bgcolor=3D"#efefef" =
+align=3D"right"></td></tr>=0A=
+</table>=0A=
+<!-- /PATH -->=0A=
+=0A=
+<!-- TABLE GENERAL -->=0A=
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"760">=0A=
+<tr>=0A=
+=0A=
+<!-- TITOLO -->=0A=
+<td width=3D"175" valign=3D"top">=0A=
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"175">=0A=
+<tr><td><a href=3D"http://xoom.virgilio.it/"><img =
+src=3D"http://directory.xoom.virgilio.it/images/tit_spazioweb.gif" =
+width=3D"173" height=3D"45" vspace=3D"3" border=3D"0" alt=3D"Spazio =
+Web"></a></td></tr>=0A=
+<tr><td height=3D"9"><spacer type=3D"block" height=3D"9"></td></tr>=0A=
+</table>=0A=
+</td>=0A=
+<!-- /TITOLO -->=0A=
+=0A=
+<!-- SPAZIATURA 20px -->=0A=
+<td width=3D"20" valign=3D"top"><spacer type=3D"block" width=3D"20"></td>=0A=
+<!-- /SPAZIATURA 20px -->=0A=
+=0A=
+<!-- TESTO ERRORE -->=0A=
+<td width=3D"565" valign=3D"top">=0A=
+=0A=
+<table width=3D"470" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=0A=
+<tr><td valign=3D"top">=0A=
+=0A=
+=0A=
+<b><font face=3D"Verdana, Arial, Helvetica, sans-serif" size=3D"3"><font =
+size=3D"6" color=3D"#CC0000">Ooops</font><font class=3D"tit"> la pagina =
+non pu&ograve; essere trovata!<br><br></font></b></td>=0A=
+</tr>=0A=
+<tr>=0A=
+<td valign=3D"top"><br><br>=0A=
+<font class=3D"cat">Cause possibili:</font><br>- La pagina &egrave; =
+momentaneamente offline per allestimento.<br>- Indirizzo non corretto. =
+(Attenzione ricordati le lettere maiuscole e minuscole!)<br>- La =
+suddetta pagina non esiste pi&ugrave;.</font><br><br>=0A=
+<br><br>=0A=
+    </td>=0A=
+      </tr>=0A=
+=0A=
+=0A=
+<!-- <tr>=0A=
+<table>=0A=
+     <td align=3D"left" valign=3D"middle" width=3D"130"><img =
+src=3D"http://xoom.virgilio.it/images/label_cerca.gif" border=3D"0" =
+width=3D"125" height=3D"15" alt=3D"Cerca in Spazio Web" vspace=3D"2" =
+hspace=3D"4"></td>=0A=
+     <td align=3D"center" valign=3D"middle">=0A=
+=0A=
+<form action=3D"http://search.xoom.virgilio.it/search/cgi/search.cgi" =
+method=3D"GET" name=3D"search" target=3D"_top">=0A=
+<INPUT TYPE=3D"text" style=3D"width: 170" NAME=3D"qs" SIZE=3D"15" =
+MAXLENGHT=3D"300" value=3D""></td>=0A=
+<td align=3D"center" valign=3D"middle"><input border=3D"0" =
+type=3D"image" src=3D"http://images.virgilio.it/news/cerca.gif" =
+alt=3D"Trova" hspace=3D"10" width=3D"58" height=3D"21"></td>=0A=
+</form>=0A=
+</table>=0A=
+<br><br><br>=0A=
+     </tr>=0A=
+-->=0A=
+=0A=
+=0A=
+</table>=0A=
+=0A=
+</td>=0A=
+=0A=
+=0A=
+=0A=
+=0A=
+</tr>=0A=
+=0A=
+</table>=0A=
+<!-- /TABLE GENERAL -->=0A=
+ <br><br><br><br>=0A=
+<br><br><br><br>=0A=
+=0A=
+<br>=0A=
+<!-- pop under --><!-- AdvProd: Tag PopUnder - inizio -->=0A=
+<script language=3D"JavaScript" =
+src=3D"http://adimg.virgilio.it/jsc/advCookie.js"></script>=0A=
+<script language=3D"JavaScript1.1">=0A=
+=0A=
+// parametri cookie=0A=
+var advNomeCookie =3D "ADVPopUnder";=0A=
+var advDominioCookie =3D ".virgilio.it";=0A=
+=0A=
+// procedura=0A=
+var advCookieVenduto =3D "1";=0A=
+var advDataCookie =3D "";=0A=
+=0A=
+// Controllo cookie=0A=
+advPresenza =3D advControllaSessione(advNomeCookie);=0A=
+if (advPresenza=3D=3D"0")=0A=
+{=0A=
+	bust =3D Math.floor(1000000*Math.random());=0A=
+	document.write('<SCR' + 'IPT LANGUAGE=3D"JavaScript1.1" =
+SRC=3D"http://adv.virgilio.it/js.ng/site=3Dvirg&subsite=3Dcomu&pos=3D53&s=
+pec=3Dpopunder&bust=3D'+bust+'?">\n');=0A=
+	document.write('</SCR' + 'IPT>\n');=0A=
+}=0A=
+</script>=0A=
+<!-- AdvProd: Tag PopUnder - fine -->=0A=
+<!-- FOOTER -->=0A=
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"760" =
+class=3D"bag">=0A=
+<tr><td height=3D"1" width=3D"760"><spacer type=3D"block" =
+height=3D"1"></td></tr>=0A=
+<tr>=0A=
+<td align=3D"center" height=3D"35" class=3D"tfooter" =
+bgcolor=3D"#ffffff">1997-2004 Matrix Spa. Virgilio non &egrave; =
+collegato ai siti recensiti e non &egrave; responsabile del loro =
+contenuto<br>=0A=
+=0A=
+<a href=3D"http://help.virgilio.it/assistenza/index.jsp?id=3D4085" =
+class=3D"lbla">Help</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a =
+href=3D"http://www.virgilio.it/supporto/scrivi/index.html?pmk=3DHPHelp" =
+class=3D"lbla">Scrivi</a></td>=0A=
+</tr>=0A=
+<tr><td height=3D"1"><spacer type=3D"block" height=3D"1"></td></tr>=0A=
+<tr><td height=3D"4" bgcolor=3D"#ff9900"><spacer type=3D"block" =
+height=3D"4"></td></tr>=0A=
+</table>=0A=
+<!-- FINE FOOTER -->=0A=
+<!-- FINE FOOTER -->=0A=
+<!-- START RedMeasure V4 - Java v1.1  Revision: 1.8 -->=0A=
+<!-- COPYRIGHT 2000 Red Sheriff Limited -->=0A=
+=0A=
+<script language=3D"JavaScript"><!--=0A=
+var pCid=3D"it_Matrix-it_0";=0A=
+var w0=3D1;=0A=
+var refR=3Descape(document.referrer);=0A=
+if (refR.length>=3D252) refR=3DrefR.substring(0,252)+"...";=0A=
+//--></script>=0A=
+<script language=3D"JavaScript1.1"><!--=0A=
+var w0=3D0;=0A=
+//--></script>=0A=
+=0A=
+<script language=3D"JavaScript1.1" =
+src=3D"http://server-it.imrworldwide.com/a1.js">=0A=
+</script>=0A=
+<script language=3D"JavaScript"><!--=0A=
+if(w0){=0A=
+var imgN=3D'<img =
+src=3D"http://server-it.imrworldwide.com/cgi-bin/count?ref=3D'+=0A=
+	refR+'&cid=3D'+pCid+'" width=3D1 height=3D1>';=0A=
+if(navigator.userAgent.indexOf('Mac')!=3D-1){document.write(imgN);=0A=
+}else{=0A=
+	document.write('<applet code=3D"Measure.class" '+=0A=
+	'codebase=3D"http://server-it.imrworldwide.com/"'+'width=3D1 =
+height=3D2>'+=0A=
+	'<param name=3D"ref" value=3D"'+refR+'">'+'<param name=3D"cid" =
+value=3D"'+pCid+=0A=
+	'"><textflow>'+imgN+'</textflow></applet>');=0A=
+	}=0A=
+}=0A=
+document.write("<COMMENT>");=0A=
+//-->=0A=
+</script>=0A=
+<noscript>=0A=
+<img =
+src=3D"http://server-it.imrworldwide.com/cgi-bin/count?cid=3Dit_Matrix-it=
+_0" width=3D1 height=3D1>=0A=
+</noscript>=0A=
+</COMMENT>=0A=
+=0A=
+<!-- END RedMeasure V4 --> =0A=
+=0A=
+=0A=
+=0A=
+</center>=0A=
+</body>=0A=
+</HTML>
+------=_NextPart_000_0062_01C45807.D6B26F50
+Content-Type: image/gif
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://xoomer.virgilio.it/roberto-ricci/C/albGenB.gif
+
+<!-- saved from url=3D(0022)http://internet.e-mail -->=0A=
+<html>=0A=
+<head>=0A=
+ <title>SPAZIO WEB - Errore</title>=0A=
+<link rel=3Dstylesheet href=3D"http://xoom.virgilio.it/style/all.css" =
+type=3D"text/css">=0A=
+<META HTTP-EQUIV=3DRefresh CONTENT=3D"5;URL=3Dhttp://xoom.virgilio.it/">=0A=
+</head>=0A=
+<body bgcolor=3D"#ffffff" link=3D"#990000" vlink=3D"#9f6c6c" =
+alink=3D"#990000" marginheight=3D"3" topmargin=3D"0">=0A=
+<center>=0A=
+=0A=
+<!-- HEADER -->=0A=
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"760" =
+bgcolor=3D"#FF9900">=0A=
+<tr><td colspan=3D"17" height=3D"1" bgcolor=3D"#ffffff"><spacer =
+type=3D"block" height=3D"1"></td></tr>=0A=
+<tr>=0A=
+<td width=3D"1" bgcolor=3D"#FFCC00" rowspan=3D"2"><spacer type=3D"block" =
+width=3D"1"></td>=0A=
+<td align=3D"center" width=3D"71"><a =
+href=3D"http://notizie.virgilio.it/informazione/home/index.html?pmk=3DTSs=
+pw" class=3D"hd">News</a></td>=0A=
+=0A=
+<td class=3D"hd" width=3D"2"><spacer type=3D"block" width=3D"2"></td>=0A=
+<td align=3D"center" width=3D"144"><a =
+href=3D"http://pb.virgilio.it/virgilio/index.html?pmk=3DTSspw" =
+class=3D"hd">PagineBianche.it</a></td>=0A=
+<td class=3D"hd" width=3D"2"><spacer type=3D"block" width=3D"2"></td>=0A=
+<td align=3D"center" width=3D"127"><a =
+href=3D"http://pg.virgilio.it/pg/cgi/pgsearch.cgi?cb=3Dk?pmk=3DTSspw" =
+class=3D"hd">PagineGialle.it</a></td>=0A=
+<td class=3D"hd" width=3D"2"><spacer type=3D"block" width=3D"2"></td>=0A=
+<td align=3D"center" width=3D"85"><a =
+href=3D"http://search.virgilio.it/search/home/index.html?pmk=3DTSspw" =
+class=3D"hd">Ricerca</a></td>=0A=
+<td class=3D"hd" width=3D"2"><spacer type=3D"block" width=3D"2"></td>=0A=
+<td align=3D"center" width=3D"93"><a =
+href=3D"http://directory.virgilio.it/dir/home/index.html?pmk=3DTSspw" =
+class=3D"hd">Tutti i siti</a></td>=0A=
+<td class=3D"hd" width=3D"2"><spacer type=3D"block" width=3D"2"></td>=0A=
+<td align=3D"center" width=3D"97"><a =
+href=3D"http://mappe.virgilio.it/tcol/home.jsp?pmk=3DTSspw" =
+class=3D"hd">TuttoCitt&agrave;</a></td>=0A=
+<td class=3D"hd" width=3D"2"><spacer type=3D"block" width=3D"2"></td>=0A=
+<td align=3D"center" width=3D"61"><a =
+href=3D"http://mail.virgilio.it/mail/home/index.html?pmk=3DTSspw" =
+class=3D"hd">Mail</a></td>=0A=
+=0A=
+<td class=3D"hd" width=3D"2"><spacer type=3D"block" width=3D"2"></td>=0A=
+<td align=3D"center" width=3D"66"><a =
+href=3D"http://tin.virgilio.it/?pmk=3DTSspw" class=3D"hd">Tin.it</a></td>=0A=
+<td width=3D"1" bgcolor=3D"#FFCC00" rowspan=3D"2"><spacer type=3D"block" =
+width=3D"1"></td>=0A=
+</tr>=0A=
+=0A=
+<tr><td colspan=3D"15" height=3D"1" bgcolor=3D"#D68019"><spacer =
+type=3D"block" height=3D"1"></td></tr>=0A=
+</table>=0A=
+=0A=
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"760">=0A=
+<tr><td height=3D"4" colspan=3D"3"><spacer type=3D"block" =
+height=3D"4"></td></tr>=0A=
+<tr>=0A=
+<td width=3D"125"><a href=3D"http://www.virgilio.it/"><img =
+src=3D"http://images.virgilio.it/news/v_logo.gif" border=3D"0" =
+alt=3D"Virgilio" width=3D"123" height=3D"60"></a></td>=0A=
+<td width=3D"150" align=3D"center"><a =
+href=3D"http://tin.virgilio.it/"><img =
+src=3D"http://directory.xoom.virgilio.it/images/l_tin.jpg" border=3D"0" =
+width=3D"100" height=3D"37"></a></td>=0A=
+<td align=3D"right" width=3D"485"><!-- ACTIVEADV BEGIN BANNER =
+VERSION-4.1-->=0A=
+<SCRIPT language=3D"JavaScript1.1">=0A=
+   bust =3D Math.floor(1000000*Math.random());=0A=
+   document.write('<SCR' + 'IPT LANGUAGE=3D"JavaScript1.1" =
+SRC=3D"http://adv.virgilio.it/js.ng/site=3Dvirg&adsize=3D468x60&subsite=3D=
+comu&sez=3Dxoom&pos=3D1&bust=3D'+bust+'?">\n');=0A=
+   document.write('</SCR' + 'IPT>\n');=0A=
+</SCRIPT>=0A=
+=0A=
+</td></tr>=0A=
+<tr><td width=3D"760" height=3D"8" =
+background=3D"http://images.virgilio.it/news/filetti_header2.gif" =
+colspan=3D"3"><spacer type=3D"block" height=3D"8"></td></tr>=0A=
+</table>=0A=
+<!-- /HEADER -->=0A=
+=0A=
+=0A=
+<!-- PATH -->=0A=
+<table cellpadding=3D"2" cellspacing=3D"0" border=3D"0" width=3D"760">=0A=
+<tr><tr><td class=3D"path" width=3D"580" bgcolor=3D"#efefef"><a =
+href=3D"http://xoom.virgilio.it" class=3D"path">Home</a> > =
+<b>Errore</b></td>=0A=
+<td width=3D"180" class=3D"path" bgcolor=3D"#efefef" =
+align=3D"right"></td></tr>=0A=
+</table>=0A=
+<!-- /PATH -->=0A=
+=0A=
+<!-- TABLE GENERAL -->=0A=
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"760">=0A=
+<tr>=0A=
+=0A=
+<!-- TITOLO -->=0A=
+<td width=3D"175" valign=3D"top">=0A=
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"175">=0A=
+<tr><td><a href=3D"http://xoom.virgilio.it/"><img =
+src=3D"http://directory.xoom.virgilio.it/images/tit_spazioweb.gif" =
+width=3D"173" height=3D"45" vspace=3D"3" border=3D"0" alt=3D"Spazio =
+Web"></a></td></tr>=0A=
+<tr><td height=3D"9"><spacer type=3D"block" height=3D"9"></td></tr>=0A=
+</table>=0A=
+</td>=0A=
+<!-- /TITOLO -->=0A=
+=0A=
+<!-- SPAZIATURA 20px -->=0A=
+<td width=3D"20" valign=3D"top"><spacer type=3D"block" width=3D"20"></td>=0A=
+<!-- /SPAZIATURA 20px -->=0A=
+=0A=
+<!-- TESTO ERRORE -->=0A=
+<td width=3D"565" valign=3D"top">=0A=
+=0A=
+<table width=3D"470" border=3D"0" cellspacing=3D"0" cellpadding=3D"0">=0A=
+<tr><td valign=3D"top">=0A=
+=0A=
+=0A=
+<b><font face=3D"Verdana, Arial, Helvetica, sans-serif" size=3D"3"><font =
+size=3D"6" color=3D"#CC0000">Ooops</font><font class=3D"tit"> la pagina =
+non pu&ograve; essere trovata!<br><br></font></b></td>=0A=
+</tr>=0A=
+<tr>=0A=
+<td valign=3D"top"><br><br>=0A=
+<font class=3D"cat">Cause possibili:</font><br>- La pagina &egrave; =
+momentaneamente offline per allestimento.<br>- Indirizzo non corretto. =
+(Attenzione ricordati le lettere maiuscole e minuscole!)<br>- La =
+suddetta pagina non esiste pi&ugrave;.</font><br><br>=0A=
+<br><br>=0A=
+    </td>=0A=
+      </tr>=0A=
+=0A=
+=0A=
+<!-- <tr>=0A=
+<table>=0A=
+     <td align=3D"left" valign=3D"middle" width=3D"130"><img =
+src=3D"http://xoom.virgilio.it/images/label_cerca.gif" border=3D"0" =
+width=3D"125" height=3D"15" alt=3D"Cerca in Spazio Web" vspace=3D"2" =
+hspace=3D"4"></td>=0A=
+     <td align=3D"center" valign=3D"middle">=0A=
+=0A=
+<form action=3D"http://search.xoom.virgilio.it/search/cgi/search.cgi" =
+method=3D"GET" name=3D"search" target=3D"_top">=0A=
+<INPUT TYPE=3D"text" style=3D"width: 170" NAME=3D"qs" SIZE=3D"15" =
+MAXLENGHT=3D"300" value=3D""></td>=0A=
+<td align=3D"center" valign=3D"middle"><input border=3D"0" =
+type=3D"image" src=3D"http://images.virgilio.it/news/cerca.gif" =
+alt=3D"Trova" hspace=3D"10" width=3D"58" height=3D"21"></td>=0A=
+</form>=0A=
+</table>=0A=
+<br><br><br>=0A=
+     </tr>=0A=
+-->=0A=
+=0A=
+=0A=
+</table>=0A=
+=0A=
+</td>=0A=
+=0A=
+=0A=
+=0A=
+=0A=
+</tr>=0A=
+=0A=
+</table>=0A=
+<!-- /TABLE GENERAL -->=0A=
+ <br><br><br><br>=0A=
+<br><br><br><br>=0A=
+=0A=
+<br>=0A=
+<!-- pop under --><!-- AdvProd: Tag PopUnder - inizio -->=0A=
+<script language=3D"JavaScript" =
+src=3D"http://adimg.virgilio.it/jsc/advCookie.js"></script>=0A=
+<script language=3D"JavaScript1.1">=0A=
+=0A=
+// parametri cookie=0A=
+var advNomeCookie =3D "ADVPopUnder";=0A=
+var advDominioCookie =3D ".virgilio.it";=0A=
+=0A=
+// procedura=0A=
+var advCookieVenduto =3D "1";=0A=
+var advDataCookie =3D "";=0A=
+=0A=
+// Controllo cookie=0A=
+advPresenza =3D advControllaSessione(advNomeCookie);=0A=
+if (advPresenza=3D=3D"0")=0A=
+{=0A=
+	bust =3D Math.floor(1000000*Math.random());=0A=
+	document.write('<SCR' + 'IPT LANGUAGE=3D"JavaScript1.1" =
+SRC=3D"http://adv.virgilio.it/js.ng/site=3Dvirg&subsite=3Dcomu&pos=3D53&s=
+pec=3Dpopunder&bust=3D'+bust+'?">\n');=0A=
+	document.write('</SCR' + 'IPT>\n');=0A=
+}=0A=
+</script>=0A=
+<!-- AdvProd: Tag PopUnder - fine -->=0A=
+<!-- FOOTER -->=0A=
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"760" =
+class=3D"bag">=0A=
+<tr><td height=3D"1" width=3D"760"><spacer type=3D"block" =
+height=3D"1"></td></tr>=0A=
+<tr>=0A=
+<td align=3D"center" height=3D"35" class=3D"tfooter" =
+bgcolor=3D"#ffffff">1997-2004 Matrix Spa. Virgilio non &egrave; =
+collegato ai siti recensiti e non &egrave; responsabile del loro =
+contenuto<br>=0A=
+=0A=
+<a href=3D"http://help.virgilio.it/assistenza/index.jsp?id=3D4085" =
+class=3D"lbla">Help</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a =
+href=3D"http://www.virgilio.it/supporto/scrivi/index.html?pmk=3DHPHelp" =
+class=3D"lbla">Scrivi</a></td>=0A=
+</tr>=0A=
+<tr><td height=3D"1"><spacer type=3D"block" height=3D"1"></td></tr>=0A=
+<tr><td height=3D"4" bgcolor=3D"#ff9900"><spacer type=3D"block" =
+height=3D"4"></td></tr>=0A=
+</table>=0A=
+<!-- FINE FOOTER -->=0A=
+<!-- FINE FOOTER -->=0A=
+<!-- START RedMeasure V4 - Java v1.1  Revision: 1.8 -->=0A=
+<!-- COPYRIGHT 2000 Red Sheriff Limited -->=0A=
+=0A=
+<script language=3D"JavaScript"><!--=0A=
+var pCid=3D"it_Matrix-it_0";=0A=
+var w0=3D1;=0A=
+var refR=3Descape(document.referrer);=0A=
+if (refR.length>=3D252) refR=3DrefR.substring(0,252)+"...";=0A=
+//--></script>=0A=
+<script language=3D"JavaScript1.1"><!--=0A=
+var w0=3D0;=0A=
+//--></script>=0A=
+=0A=
+<script language=3D"JavaScript1.1" =
+src=3D"http://server-it.imrworldwide.com/a1.js">=0A=
+</script>=0A=
+<script language=3D"JavaScript"><!--=0A=
+if(w0){=0A=
+var imgN=3D'<img =
+src=3D"http://server-it.imrworldwide.com/cgi-bin/count?ref=3D'+=0A=
+	refR+'&cid=3D'+pCid+'" width=3D1 height=3D1>';=0A=
+if(navigator.userAgent.indexOf('Mac')!=3D-1){document.write(imgN);=0A=
+}else{=0A=
+	document.write('<applet code=3D"Measure.class" '+=0A=
+	'codebase=3D"http://server-it.imrworldwide.com/"'+'width=3D1 =
+height=3D2>'+=0A=
+	'<param name=3D"ref" value=3D"'+refR+'">'+'<param name=3D"cid" =
+value=3D"'+pCid+=0A=
+	'"><textflow>'+imgN+'</textflow></applet>');=0A=
+	}=0A=
+}=0A=
+document.write("<COMMENT>");=0A=
+//-->=0A=
+</script>=0A=
+<noscript>=0A=
+<img =
+src=3D"http://server-it.imrworldwide.com/cgi-bin/count?cid=3Dit_Matrix-it=
+_0" width=3D1 height=3D1>=0A=
+</noscript>=0A=
+</COMMENT>=0A=
+=0A=
+<!-- END RedMeasure V4 --> =0A=
+=0A=
+=0A=
+=0A=
+</center>=0A=
+</body>=0A=
+</HTML>
+------=_NextPart_000_0062_01C45807.D6B26F50--

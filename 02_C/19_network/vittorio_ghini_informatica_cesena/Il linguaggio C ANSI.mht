@@ -1,0 +1,323 @@
+From: <Salvato con Microsoft Internet Explorer 5>
+Subject: Il linguaggio C ANSI
+Date: Fri, 11 Jun 2004 01:25:47 +0200
+MIME-Version: 1.0
+Content-Type: multipart/related;
+	boundary="----=_NextPart_000_0000_01C44F53.05FB1F40";
+	type="text/html"
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1409
+
+This is a multi-part message in MIME format.
+
+------=_NextPart_000_0000_01C44F53.05FB1F40
+Content-Type: text/html;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.cs.unibo.it/people/faculty/ghini/didattica/sistemi1/c.html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD><TITLE>Il linguaggio C ANSI</TITLE>
+<META http-equiv=3DContent-Type content=3D"text/html; =
+charset=3Diso-8859-1">
+<META content=3D"MSHTML 6.00.2800.1400" name=3DGENERATOR></HEAD>
+<BODY text=3D#000000 vLink=3D#551a8b aLink=3D#ff0000 link=3D#0000ee =
+bgColor=3D#f9e1a4=20
+background=3D"">
+<CENTER>
+<H1>Il linguaggio C </H1></CENTER>
+<CENTER>
+<H3>ciclo di lezioni sviluppato da Vittorio Ghini <BR>all'interno del =
+corso di=20
+"Sistemi 1" <BR>del CdL in Scienze dell'Informazione, sede di Cesena=20
+<BR>Universita' degli Studi di Bologna <BR>tenuto negli a.a. 1999-2000 e =
+
+2000-2001 <BR>dal Prof. Marco Roccetti </H3></CENTER>
+<H2><I><B>Appunti delle Lezioni <IMG=20
+src=3D"http://www.cs.unibo.it/people/faculty/ghini/images/c_h/homework50.=
+gif">=20
+</I></B></H2>......... <A=20
+href=3D"http://www.cs.unibo.it/people/faculty/ghini/didattica/sistemi1/c0=
+01.pdf">c001.pdf=20
+</A>............ Introduzione: il linguaggio C e i Compilatori =
+<BR>......... <A=20
+href=3D"http://www.cs.unibo.it/people/faculty/ghini/didattica/sistemi1/c0=
+02.pdf">c002.pdf=20
+</A>............ Le Variabili e i moduli C <BR>......... <A=20
+href=3D"http://www.cs.unibo.it/people/faculty/ghini/didattica/sistemi1/mi=
+stery.c">mistery.c=20
+</A>............ Un esempio da NON seguire <BR>......... <A=20
+href=3D"http://www.cs.unibo.it/people/faculty/ghini/didattica/sistemi1/c0=
+03.pdf">c003.pdf=20
+</A>............ Costanti, Operatori, Valutaz. Espress., Controllo del =
+flusso di=20
+Istruzioni <BR>......... <A=20
+href=3D"http://www.cs.unibo.it/people/faculty/ghini/didattica/sistemi1/c0=
+04.pdf">c004.pdf=20
+</A>............ Struct, Puntatori, Arrays, Puntatori di Puntatori, =
+Funzioni=20
+<BR>Attenzione, nel file c004.pdf e' stata aggiunta la pagina =
+107<BR>riguardante=20
+l'ordine di valutazione degli argomenti passati alle funzioni. =
+<BR><BR>.........=20
+<A=20
+href=3D"http://www.cs.unibo.it/people/faculty/ghini/didattica/sistemi1/c0=
+05.pdf">c005.pdf=20
+</A>............ Puntatori a funzione, funzioni ad argomenti variabili, =
+I/O in=20
+C. <BR>......... <A=20
+href=3D"http://www.cs.unibo.it/people/faculty/ghini/didattica/sistemi1/c0=
+06.pdf">c006.pdf=20
+</A>............ Errno, eof, I/O a blocchi, Riga di Comando e I/O a =
+basso=20
+livello <BR>......... <A=20
+href=3D"http://www.cs.unibo.it/people/faculty/ghini/didattica/sistemi1/c0=
+08.pdf">c008.pdf=20
+</A>............ Funzioni di libreria <BR>......... <A=20
+href=3D"http://www.cs.unibo.it/people/faculty/ghini/didattica/sistemi1/TC=
+PIPS1.pdf">TCPIPS1.pdf=20
+</A>..... I/O tramite Rete mediante socket TCP/IP <BR>......... <A=20
+href=3D"http://www.cs.unibo.it/people/faculty/ghini/didattica/sistemi1/ve=
+t.c">vet.c=20
+</A>................... esempio con vettori <BR>......... <A=20
+href=3D"http://www.cs.unibo.it/people/faculty/ghini/didattica/sistemi3//T=
+CP1/TCP1.html">TCP1.html</A>=20
+......... Codice C dell'esempio di comunicazione con stream TCP (per =
+Unix)=20
+<BR>......... <A=20
+href=3D"http://www.cs.unibo.it/people/faculty/ghini/didattica/sistemi1/tr=
+ee.c">tree.c=20
+</A>.................. esempio con alberi binari <BR>......... <A=20
+href=3D"http://www.cs.unibo.it/people/faculty/ghini/didattica/sistemi1/lo=
+admat1.c">loadmat1.c=20
+</A>.......... esempio con matrici (a puntatori) e lettura da file =
+<BR>.........=20
+<A=20
+href=3D"http://www.cs.unibo.it/people/faculty/ghini/didattica/sistemi1/in=
+1.txt">in1.txt=20
+</A>................. file di input per esempio lettura da file =
+<BR>......... <A=20
+href=3D"http://www.cs.unibo.it/people/faculty/ghini/didattica/sistemi1/TC=
+P1win/TCP1win.html">TCP1win.html</A>=20
+..... Esempio di comunicazione con stream TCP con i socket per Windows =
+(95)=20
+<BR>......... <A=20
+href=3D"http://www.cs.unibo.it/people/faculty/ghini/didattica/sistemi1/UD=
+P1win/UDP1win.html">UDP1win.html</A>=20
+.... Esempio di comunicazione con Datagram UDP con i socket per Windows =
+(95)=20
+<BR>......... <A=20
+href=3D"http://www.cs.unibo.it/people/faculty/ghini/didattica/sistemi1/wi=
+nserial/winserial.zip">winserial.zip</A>=20
+........ Esempio di comunicazione via seriale in Windows<BR>
+<H2><I><B>Esercizi d'esame </I></B></H2>......... <A=20
+href=3D"http://www.cs.unibo.it/people/faculty/ghini/didattica/sistemi1/es=
+ame1c.pdf">esame1c.pdf=20
+</A>....... Esercizio d'esame - 8 giugno 2000 - ricerca su albero =
+binario=20
+<BR>......... <A=20
+href=3D"http://www.cs.unibo.it/people/faculty/ghini/didattica/sistemi1/es=
+ame2c.pdf">esame2c.pdf=20
+</A>....... Esercizio d'esame - 11 luglio 2000 - ricerca su lista =
+<BR>.........=20
+<A=20
+href=3D"http://www.cs.unibo.it/people/faculty/ghini/didattica/sistemi1/es=
+ame3c.pdf">esame3c.pdf=20
+</A>....... Esercizio d'esame - 13 settembre 2000 - inserimento in testa =
+in una=20
+lista <BR>......... <A=20
+href=3D"http://www.cs.unibo.it/people/faculty/ghini/didattica/sistemi1/es=
+ame4c.pdf">esame4c.pdf=20
+</A>....... Esercizio d'esame - 11 ottobre 2000 - inserimento in coda in =
+una=20
+lista <BR>......... <A=20
+href=3D"http://www.cs.unibo.it/people/faculty/ghini/didattica/sistemi1/es=
+ame5c.pdf">esame5c.pdf=20
+</A>....... Esercizio d'esame - 14 dicembre 2000 - inserimento ordinato =
+in una=20
+lista <BR>......... <A=20
+href=3D"http://www.cs.unibo.it/people/faculty/ghini/didattica/sistemi1/es=
+ame6c.pdf">esame6c.pdf=20
+</A>....... Esercizio d'esame - 15 febbraio 2001 - eliminazione di un =
+elemento=20
+da una lista <BR>......... <A=20
+href=3D"http://www.cs.unibo.it/people/faculty/ghini/didattica/sistemi1/es=
+ame7c.pdf">esame7c.pdf=20
+</A>....... Esercizio d'esame - 20 giugno 2001 - inserimento ordinato in =
+un=20
+albero binario <BR>......... <A=20
+href=3D"http://www.cs.unibo.it/people/faculty/ghini/didattica/sistemi1/es=
+ame8c.pdf">esame8c.pdf=20
+</A>....... Esercizio d'esame - 16 luglio 2001 - deallocazione nodi in =
+un albero=20
+binario <BR>......... <A=20
+href=3D"http://www.cs.unibo.it/people/faculty/ghini/didattica/sistemi1/es=
+ame9c.pdf">esame9c.pdf=20
+</A>....... Esercizio d'esame - 3 settembre 2001 - modifica foglie in un =
+albero=20
+binario <BR>
+<H4><I><B>Software </I></B></H4>......... <A=20
+href=3D"http://radiolab.csr.unibo.it/vittorio/tc/tc1.zip">tc1.zip</A>=20
+................ (un vecchio compilatore C solo per DOS, a 16 bit) =
+<BR><BR>N.B.=20
+Segnalazioni di eventuali errori sono gradite e bene accette <IMG=20
+src=3D"http://www.cs.unibo.it/people/faculty/ghini/images/c_h/calvin13.gi=
+f"> <BR>
+<H4>........ In Costruzione </H4>........ ultima modifica: venerdi 27 =
+aprile=20
+2001 <BR>.................. aggiunta file winserial.zip (esempio =
+comunicazione=20
+via seriale)<BR><BR>........ giovedi 26 aprile 2001 =
+<BR>..................=20
+aggiunta file TCPIP.pdf (socket TCP/IP) <BR>........ venerdi 12 gennaio =
+2001=20
+<BR>.................. correzione file c004.pdf (slide 86)=20
+<BR>.................. correzione file c003.pdf (slides 66, 71, 73) =
+<BR>........=20
+domenica 3 dicembre 2000 <BR>.................. correzione file c003.pdf =
+(slide=20
+43, 44) <BR>........ venerdi 24 novembre 2000 <BR>.................. =
+aggiunta=20
+file esame4c.pdf <BR>.................. correzione file c002.pdf (slide =
+24, 26,=20
+34)=20
+<H4></H4><BR><IMG=20
+src=3D"http://www.cs.unibo.it/people/faculty/ghini/images/line.gif">=20
+<BR></BODY></HTML>
+
+------=_NextPart_000_0000_01C44F53.05FB1F40
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Location: http://www.cs.unibo.it/people/faculty/ghini/images/c_h/homework50.gif
+
+R0lGODlhyABdAIAAAAAAAP///ywAAAAAyABdAAAC/4yPqcvtD6OUwNSJs968+w8GwBWW5omm4UhW
+7qjG8kx7cEPW+s7P+XLrCYdEzU8RLCqXTNEj2YxKaUfk9IpNVRMvqCULDjO2SFbQLE6HvWOz262O
+S8nlt12OX9K5LAScnRcoA9jWZ3FjKKg4iGEHd7i3KGkU6YTG13I5udlR6YgIaUnISYpDceDol1lZ
+2op4hvpyKOJCi9qK2/gWC3NW1QebK1z3SasJCHU0Olx6N3H8ZcvKvOisGy29TL35qc2H6bQ9nDod
+elsrPl6MXcdum77dTXeRQ+8NL/monNj7VVuOT1A3YrP+aAqIC5iqel14oXOHkJPCMrH8/bgYMR8Q
+a/7RXhkL9y1jnl2QUnGpaIzfLJFxFL66eJBXwT8dBy5MxDKGSlkOvHiUVlKmz3n3cj5DB4zjylCG
+QGXz86RkF5xGO/WjKfVm0kwzfwY9KeodyKocdvVicwmmL3ti2Q2MCZVsWYMpZRbsSjKlvL184crd
+uFXUurtLvxZFQfWvXiso24Kc2rdokmlcFcfFMXlxi7EqIu+1HPKZ4Ik473g+LQ90mwyJlz6CWu4s
+ar+qDzu+VTHxQ7vfZtNWzTnqa84TYYeGqRc18DGNRv8LfRJj4XC+Wy+XnEx2X+KNa/peXug09OZg
+x76cDR7wx6Z5zybnq16VVPHpezbMZhryZ8r2vv+Tsg2CbLgBgd92/M0XmSJDAfSBdhCdox98FPSn
+nEBt7VaDdkglVyB81oVXoYXv8KSDWRwaFqFSR6FXTW4bUvHaL8V4WF2IIx3jHoOUkMiQMx5FGBxm
+NeLxYXQAsiZLipcBtUpxEGjomRxF2jcINEIuBBsa9Qzooo1SAnTkiv9U9tRwDj2EVZf0pTOlVVcN
+9Z5uWp7jj3z+qRHmdCckddt51C24W0MMxflZGlvoqNNW1vTz5z6Mutgbi0TSQ16iqZ3pXY+PLqlm
+gllkR9gpjGgpI08UahXkapJeEVNmT+R5CqngzLQeqmot5tx2a1TmVASIiklqWopSCiGiq2IhaFr/
+ovmQ4mRQXkjopdEOBsawTz2pRbCWcChhR9ecqWu19zFJhpklbHabkHPiFluSa65Ra15c/uqrsBKS
+xGs7FDVrk6Hgcmleia1OZVxYKhmH0ZjvwsuRdOki5l5cB734EcBXYckvtWIQbPC8AX7Ip8TQEMuc
+nea9uXC18caJ5Qb4OurTVxaNghxxlB4r7mYRi7XpUULBCXNpqZYnX0gZm2TCy2Eitai2SEIJqjK5
+jjiPz7l2O5df8tb1qoM3haULjhfCBVl8hUzbFNpbZ22vNm7jlyl1T/NDItX70XXljp66Ke8y6DKm
+8LYX1/3kcDFSOBg56wRao4qVasbxRj05RKe3090VPrFBjPbHbcqFIvh5c1CvHSpjla8UWJtaSZe4
+a0PyHSWSoJtWMoG52ennYeZqCPDsoZ9cGqB7l9U1VTSbDK61Yf/yGOKNu4oNW+7gPLdJaWN6HFCE
+yp003Wr32+eSQq+OdYOH3kz713X7WBh7qke6qopNF409Jr+triY462pGdNozksu5y2EOe+bKivnI
+RwzV2SR3HcPVxOjnO7s9Kjt5GhQPpJUo35kFfZpbC/mQdrHkVfB+f7mP1yDFFY3Zb0awqg9B7nee
+Q7kwHjOsoQ0zUAAAOw==
+
+------=_NextPart_000_0000_01C44F53.05FB1F40
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Location: http://www.cs.unibo.it/people/faculty/ghini/images/c_h/calvin13.gif
+
+R0lGODlhZABdAPcAAAAAAAAAMwAAZgAAmQAAzAAA/zMAADMAMzMAZjMAmTMAzDMA/2YAAGYAM2YA
+ZmYAmWYAzGYA/5kAAJkAM5kAZpkAmZkAzJkA/8wAAMwAM8wAZswAmcwAzMwA//8AAP8AM/8AZv8A
+mf8AzP8A/wAzAAAzMwAzZgAzmQAzzAAz/zMzADMzMzMzZjMzmTMzzDMz/2YzAGYzM2YzZmYzmWYz
+zGYz/5kzAJkzM5kzZpkzmZkzzJkz/8wzAMwzM8wzZswzmcwzzMwz//8zAP8zM/8zZv8zmf8zzP8z
+/wBmAABmMwBmZgBmmQBmzABm/zNmADNmMzNmZjNmmTNmzDNm/2ZmAGZmM2ZmZmZmmWZmzGZm/5lm
+AJlmM5lmZplmmZlmzJlm/8xmAMxmM8xmZsxmmcxmzMxm//9mAP9mM/9mZv9mmf9mzP9m/wCZAACZ
+MwCZZgCZmQCZzACZ/zOZADOZMzOZZjOZmTOZzDOZ/2aZAGaZM2aZZmaZmWaZzGaZ/5mZAJmZM5mZ
+ZpmZmZmZzJmZ/8yZAMyZM8yZZsyZmcyZzMyZ//+ZAP+ZM/+ZZv+Zmf+ZzP+Z/wDMAADMMwDMZgDM
+mQDMzADM/zPMADPMMzPMZjPMmTPMzDPM/2bMAGbMM2bMZmbMmWbMzGbM/5nMAJnMM5nMZpnMmZnM
+zJnM/8zMAMzMM8zMZszMmczMzMzM///MAP/MM//MZv/Mmf/MzP/M/wD/AAD/MwD/ZgD/mQD/zAD/
+/zP/ADP/MzP/ZjP/mTP/zDP//2b/AGb/M2b/Zmb/mWb/zGb//5n/AJn/M5n/Zpn/mZn/zJn//8z/
+AMz/M8z/Zsz/mcz/zMz/////AP//M///Zv//mf//zP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAANcALAAAAABkAF0A
+QAj+AK8JHEiwoMGDCBMqXMiwoUNWXQIRnDVLlqxArK4hYuVIFitWMRyKFAlNYKArVjIKtNJR1jWK
+h1oiQsQloRVEFQ9FjGFR1iMZVlyOhLXIidCChhaFSRgjBppCR0dakSEDEJcVrGa1lCVjxR6OUa89
+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
+
+------=_NextPart_000_0000_01C44F53.05FB1F40
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Location: http://www.cs.unibo.it/people/faculty/ghini/images/line.gif
+
+R0lGODdhQgIGAPMAAMvLy8vLmMuYmJmZmZmZZplmZmZmZqqqqoiIiHd3d1VVVURERAAAAAAAAAAA
+AAAAACwAAAAAQgIGAAAE/jAlk5AdmAx0TghHMhxjMAjDB3pAMFVXhnFeOJYnprIuZSEYGQ0kInlM
+qF2g9foBhR0ixohMfXg92HOgGUqpuR2vGePOojYwygpaZn9B8zBdqiqZPji0Jrp5wldub2VdUV84
+SVdjeVsaG2hFiDqBeFpxhXx+H4BtlU5BmFKanFhkjY+Qo4krbqagZ5lqk52DW3KpRn+ri1qnc32y
+dx+ue7GSKk4IMAoaBwImEhfPJgQdAF0Ibk7Lzc7Q0pvV1l3aP8vMI88DMCebXOMb5eYW6N7rMdPv
+B9fxLQHb9JqpiwYknzh+FuQpCzjCHjuDHfaRawGQoUNwJvQhVLgQQb2B/vjCwcvmr+JHaA9FStxA
+8t88j91AFlS5smVFmOm+zcx4cKLLlyfvPYFYU5BJgRlTUhtpE2hMne2WjlSoJahSqRspHs0pFAPR
+rB+22uv6VYMKVnWuFBDwbJoJIARcNgxAIIEYE0d2rA3gdgOXsEA81L07V29bFSz/XhBsV9GfvCD2
+un2rODBdCYQhH1h7eBNcuVEGK8J7NnJnynFBXyac1jRfxBfiLl7tmLTh17Arl6jbGK1mzrhRg2ac
+ufTm035TzxaNtvXx4IllW2Ye0bba08KXYx7tvIDk3NLnUn9s/Lvnv6rHZ/yNPHn63tW7Y3evHT55
+veaz22Lzwd8BBQcQ/kCAAimgYJYAAZqwSQF98CcICAAOWKAZfHUQVwoDMBhEaYL8FyCBfJlRYIIY
+ajiLCv5FCGKIB5JoAoMNlpZigBKyOOKFC8Z4lj8Qfjhhiy5mqOOOV6j4ow4I4ijkhjIW6eMHBt6o
+oJBD9uekgCBGWSGOL1b5oIc1aolgkCY62KGRNkpZopdnPmnjllPCyCSKTj4ppotdzmnllVlSOKaS
+ZXI4Y5hctAgom4OueOehXs5op58kSpBANW1sYsACQBhggDoWGICAD/z9JQGleQ2gKaamcvrpp+wg
+FteoNZxlKqqbvrUqq0C46sKkaCB2aabqsOQpqLruSqqvtNYqLK6h/r7Ka6UmnAqsrcO2Go6xsSI7
+7bLM6gprttHSGmyn3V6LLbSzZqosucR6+2yp0qZKLa65XgsrtOFuS2651GALbrryzrBqu/2eCy+q
+AbNbQbMG+/prwgNb2++9kAG87qfV1jsxr/8+rOyyBKNHsbYYXJyxFYaAgAA2VrBBY2AD+BeAd8Ds
+sHJiLV8hIMw8emBiXgfcnNgmOhMQGAky/3xW0CwTDYKARt+QdINA33yB009HjXQgNE9hM8s5Z82z
+EkpfsXLTCordUMxc1/z10GnTqDXbbZRZNdou7yw112WrDLbTL+/dttdmCwg3ynp3QLfPbhd+eNFz
+Tx3E3YcjHjnfI40zjTPgidNdd+ZnP6624IwT7vjVcUM99ueTv436JIFv3UYEADs=
+
+------=_NextPart_000_0000_01C44F53.05FB1F40--

@@ -1,0 +1,544 @@
+From: <Salvato con Microsoft Internet Explorer 5>
+Subject: Esercitazioni
+Date: Tue, 22 Jun 2004 03:19:53 +0200
+MIME-Version: 1.0
+Content-Type: text/html;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://xoomer.virgilio.it/roberto-ricci/C/Es11.htm
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1409
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD><TITLE>Esercitazioni</TITLE>
+<META http-equiv=3DContent-Type content=3D"text/html; =
+charset=3Dwindows-1252">
+<META content=3D"MSHTML 6.00.2800.1400" name=3DGENERATOR></HEAD>
+<BODY>
+<CENTER>
+<H1 style=3D"BACKGROUND: teal; COLOR: white">STRUTTURE LINEARI=20
+DINAMICHE</H1></CENTER>
+<HR style=3D"COLOR: blue">
+
+<CENTER><FONT face=3DArial size=3D1>pagine di <A=20
+href=3D"mailto:roberto_ricci@tin.it"><I>Roberto Ricci </I></A>L.S. =
+"<I>A.=20
+Righi</I>", Bologna. Ultima revisione
+<SCRIPT language=3DJavaScript>=0A=
+<!--=0A=
+=0A=
+function SymError()=0A=
+{=0A=
+  return true;=0A=
+}=0A=
+=0A=
+window.onerror =3D SymError;=0A=
+=0A=
+var SymRealWinOpen =3D window.open;=0A=
+=0A=
+function SymWinOpen(url, name, attributes)=0A=
+{=0A=
+  return (new Object());=0A=
+}=0A=
+=0A=
+window.open =3D SymWinOpen;=0A=
+=0A=
+//-->=0A=
+</SCRIPT>
+
+<SCRIPT language=3DJavascript>
+document.write(document.lastModified)
+</SCRIPT>
+ </FONT></CENTER>
+<HR style=3D"COLOR: blue">
+
+<UL>
+  <LI><A =
+href=3D"http://xoomer.virgilio.it/roberto-ricci/C/Es0.htm">INDICE</A>=20
+  <LI>
+  <OL>
+    <LI><A=20
+    =
+href=3D"http://xoomer.virgilio.it/roberto-ricci/C/Es11.htm#liste">Liste</=
+A>=20
+    <LI><A=20
+    =
+href=3D"http://xoomer.virgilio.it/roberto-ricci/C/Es11.htm#pile">Pile</A>=
+=20
+    <LI><A=20
+    =
+href=3D"http://xoomer.virgilio.it/roberto-ricci/C/Es11.htm#code">Code</A>=
+=20
+    <LI><A=20
+    =
+href=3D"http://xoomer.virgilio.it/roberto-ricci/C/Es11.htm#sequenze">List=
+e=20
+    ordinate</A> </LI></OL>
+  <LI><A =
+href=3D"http://xoomer.virgilio.it/roberto-ricci/C/Es11.zip">Soluzioni=20
+  proposte</A> </LI></UL><BR>&nbsp; <BR>&nbsp; <BR>&nbsp;=20
+<P>I tipi di dati implementati in C con l'allocazione dinamica della =
+memoria=20
+heap si dicono strutture dinamiche: insiemi, liste, pile, code, =
+sequenze,=20
+alberi, grafi, stringhe senza limiti di lunghezza, numeri interi il cui =
+numero=20
+delle cifre non =E8 fissato a priori, ...<BR>La function della libreria =
+stdlib.h=20
+(o anche alloc.h) <PRE><FONT color=3Dred>void *malloc(int</FONT> n<FONT =
+color=3Dred>);</FONT>
+</PRE>=E8 essenziale per la costruzione di strutture dinamiche poich=E9 =
+restituisce=20
+un puntatore a un blocco di n bytes nella memoria heap oppure NULL se =
+non c'=E8=20
+abbastanza spazio.=20
+<P></P><BR>&nbsp; <BR>&nbsp;=20
+<H3 style=3D"BACKGROUND: teal; COLOR: white"><A=20
+name=3Dliste></A>Liste</H3><BR>&nbsp; Con una definizione ricorsiva, che =
+viene=20
+naturale, una lista =E8=20
+<UL>
+  <LI>vuota;=20
+  <LI>un valore, di un certo tipo di dati, seguito da una lista. =
+</LI></UL>Come=20
+ogni tipo di dato astratto, il tipo lista =E8 definito concretamente in =
+base a=20
+alle operazioni primitive che si possono eseguire sugli oggetti di quel =
+tipo:=20
+costruzione (della lista vuota o della lista con data testa e data =
+coda),=20
+selezione (della testa, della coda), valutazione (dell'essere vuota o =
+meno).<BR>
+<P>Mentre gli "array" sono dati ad accesso <I>casuale</I>, =E8 cio=E8 =
+possibile=20
+accedere in maniera diretta a un singolo elemento, una lista =E8 un dato =
+ad=20
+accesso <I>sequenziale</I>, cio=E8 bisogna scorrere necessariamente =
+tutti gli=20
+elementi che lo precedono. In C le liste non sono strutture predefinite =
+ma si=20
+usano array o, meglio ancora, puntatori. Usando questi ultimi si pu=F2 =
+dire che=20
+una lista =E8=20
+<UL>
+  <LI>NULL, la lista vuota=20
+  <LI>una struttura detta 'nodo' formata da un valore e da un puntatore =
+al nodo=20
+  successivo della lista. </LI></UL>
+<CENTER>Ad esempio per definire una lista di interi:</CENTER>
+<TABLE width=3D"100%">
+  <TBODY>
+  <TR>
+    <TD width=3D"33%" bgColor=3Dyellow><PRE>typedef struct elemento {
+    int value;
+    struct elemento *next;
+} nodo;
+
+typedef nodo *listaInt;
+</PRE></TD>
+    <TD width=3D"33%">oppure </TD>
+    <TD width=3D"33%" bgColor=3Dyellow><PRE>typedef struct nodo =
+*listaInt;
+
+struct nodo {
+    int value;
+    listaInt next;
+};
+</PRE></TD></TR></TBODY></TABLE>
+<OL>
+  <LI>Come introduzione alle liste, redigere ed eseguire un programma =
+con il=20
+  seguente blocco d'istruzioni <PRE style=3D"BACKGROUND: silver">main() =
+{
+	// creazione della lista lst vuota
+	listaInt lst=3DNULL;
+
+	visualizza(lst);
+
+	// inserimento in lst di un nodo  con valore 1
+	lst=3D(listaInt) malloc(sizeof(nodo));
+	lst-&gt;value=3D1;
+	lst-&gt;next=3DNULL;
+
+	visualizza(lst);
+
+	// inserimento in lst di un nodo in fondo con valore 2
+	listaInt lstAus=3Dlst;
+	lstAus-&gt;next=3D(listaInt) malloc(sizeof(nodo));
+	lstAus=3DlstAus-&gt;next;
+	lstAus-&gt;value=3D2;
+	lstAus-&gt;next=3DNULL;
+
+
+	visualizza(lst);
+
+	// inserimento in lst di un nodo in testa con valore 3
+	lstAus=3D(listaInt) malloc(sizeof(nodo));
+	lstAus-&gt;value=3D3;
+	lstAus-&gt;next=3Dlst;
+	lst=3DlstAus;
+
+	visualizza(lst);
+}
+</PRE>dove la procedura visualizza =E8 definita da <PRE>void =
+visualizza(listaInt lst){
+	// visualizzazione della lista lst
+	printf("\n\n");
+	while (lst!=3DNULL){
+			printf("[%d|_]---&gt; ", lst-&gt;value);
+			lst =3D lst-&gt;next;
+		}
+	printf(" NULL");
+}
+</PRE>
+  <LI>Realizzare un programma che, dopo aver letto il valore di n, =
+costruisca=20
+  una lista n di interi con inserimenti in fondo.=20
+  <LI>Realizzare una function per la lettura di n interi con inserimento =
+in=20
+  fondo=20
+  <LI>Aggiungere una function per ordinare una lista con metodo =
+bubblesort <PRE>esegui
+	scorrendo dal primo al penultimo nodo
+		se un valore e il valore del nodo seguente sono in ordine sbagliato=20
+			scambiali=20
+fintantoch=E9 avvengono scambi
+</PRE>
+  <LI>Aggiungere una function per eliminare i doppioni da una lista =
+ordinata <PRE>punta con P1 al primo nodo della lista ordinata data
+fintantoch=E9 P1 non punta a NULLA
+	punta con P2 al nodo che segue quello puntato da P1
+	fintantoch=E9 P2 non punta a NULLA e i valori puntati da P1 e P2 sono =
+uguali
+			fai scorrere P2 al prossimo nodo=20
+	elimina dalla lista i doppioni ponendo il nodo puntato da P2 come =
+seguente del nodo puntato da P1
+	fai scorrere P1 ponendolo uguale a P2
+</PRE></LI></OL><BR>&nbsp; <BR>&nbsp; <BR>&nbsp;=20
+<H3 style=3D"BACKGROUND: teal; COLOR: white"><A =
+name=3Dpile></A>Pile</H3><BR>&nbsp;=20
+Una pila =E8 una struttura nella quale poter essenzialmente: inserire un =
+elemento=20
+(push), togliere l'elemento inserito per ultimo (pop), vedere l'ultimo =
+elemento=20
+inserito (top).<BR>Come esempio concreto si pu=F2 pensare a una pila di =
+piatti: si=20
+pu=F2 inserire un altro piatto sopra tutti gli altri, si pu=F2 =
+prelevarne a partire=20
+dalla sommit=E0, si pu=F2 vedere il piatto sopra tutti.=20
+<OL>
+  <LI>Completare il seguente testo, che implementa mediante puntatori =
+una pila=20
+  di numeri interi, in un programma per leggere una pila di interi e=20
+  visualizzarla. <PRE style=3D"BACKGROUND: silver">typedef struct =
+elemento {
+    int value;
+    struct elemento *next;
+} nodo;
+
+typedef nodo *pilaInt;
+
+pilaInt push(int e, pilaInt p) {=20
+	pilaInt pAus;
+	pAus =3D (pilaInt) malloc(sizeof(nodo));
+	pAus-&gt;value =3D e;=20
+	pAus-&gt;next =3D p;
+	return pAus;=20
+}
+
+pilaInt pop(pilaInt p) {=20
+	return (p!=3DNULL)? p-&gt;next: NULL;=20
+}
+
+int top(pilaInt p) {=20
+	return p-&gt;value;=20
+}
+
+void visualizza(pila p){
+    printf("\n\n\n");
+	 while(p!=3DNULL){
+		  printf("\n%d",p-&gt;value);
+		  p=3Dp-&gt;next;
+	 }
+	 printf("\nNULL");
+}
+</PRE>
+  <LI>Realizzare una function per invertire una pila=20
+  <LI>Realizzare una function per sovrapporre una pila a un'altra pila=20
+  <LI>Mediante una pila controllare se una data espressione algebrica ha =
+
+  parentesi inserite correttamente. Per questo inserire '(' nella pila =
+ogni=20
+  volta che lo si incontra e togliere quello appena inserito quando =
+s'incontra=20
+  ')'. </LI></OL><BR>&nbsp; <BR>&nbsp; <BR>&nbsp;=20
+<H3 style=3D"BACKGROUND: teal; COLOR: white"><A =
+name=3Dcode></A>Code</H3><BR>&nbsp;=20
+La coda =E8 una struttura nella quale poter essenzialmente: inserire un =
+valore in=20
+coda (enqueue), estrarre la testa (dequeue), leggere la testa.=20
+<P>Anche questa come le precedenti strutture si pu=F2 realizzare =
+mediante array=20
+piuttosto che con puntatori.<BR>In questo caso un uso "ingenuo" degli =
+array=20
+comporta una certa inefficienza. In particolare l'estrazione consiste=20
+semplicemente nel rendere inutilizzabili i primi elementi dell'array, =
+con=20
+inutile occupazione di memoria.<BR>
+<OL>
+  <LI>Redigere, completare ed eseguire il seguente programma che =
+implementa una=20
+  coda mediante lo strattagemma degli 'array circolari' (si osservi che =
+in=20
+  questo modo la struttura non =E8 dinamica). <PRE style=3D"BACKGROUND: =
+silver">#include &lt;stdio.h&gt;
+
+#define N 50
+
+typedef int tipoValore;
+
+typedef struct {
+	int inizio;
+	tipoValore valore[N];
+	int fine;
+} coda;
+
+typedef enum{false,true} boolean;
+
+boolean vuota(coda);
+boolean piena(coda);
+
+coda insert(coda, tipoValore);
+coda extract(coda);
+tipoValore testa(coda);
+
+coda legge();
+void visualizza(coda);
+
+
+main(){
+	 coda p;
+	 p =3D legge();
+	 visualizza(p);
+	 printf("\nprimo: %d",testa(p));
+	 printf("\nrimanenti: ");
+	 visualizza(extract(p));
+}
+
+boolean vuota(coda c){
+	return ((c.inizio+1)%(N+1)=3D=3Dc.fine)? true: false;
+}
+
+boolean piena(coda c){
+	return (c.inizio=3D=3Dc.fine)? true: false;
+}
+
+coda insert(coda c, tipoValore elem) {
+	if (!piena(c)){
+			c.valore[c.fine]=3Delem;
+			c.fine=3D(c.fine+1)%(N+1);
+	}
+	return c;
+}
+
+coda extract(coda c) {
+	if (!vuota(c))
+			c.inizio=3D(c.inizio+1)%(N+1);
+	return c;
+}
+
+tipoValore testa(coda c) {
+		return c.valore[(c.inizio+1)%(N+1)];
+}
+</PRE>
+  <LI>Redigere ed eseguire un programma che rappresenti una coda =
+mediante=20
+  puntatori <PRE>typedef int tipoValore;
+
+typedef struct elemento {
+	 tipoValore value;
+	 struct elemento *next;
+} nodo;
+
+typedef nodo *coda;
+</PRE>
+  <LI>Redigere ed eseguire un programma pi=F9 efficiente che utilizzi, =
+oltre a un=20
+  puntatore alla testa della struttura, anche un puntatore all'ultimo =
+nodo. <PRE style=3D"BACKGROUND: silver">typedef int tipoValore;
+
+typedef struct elemento {
+    tipoValore value;
+    struct elemento *next;
+} nodo;
+
+typedef struct{
+	nodo *first;
+	nodo *last;
+} coda;
+
+
+coda insert(coda pc, tipoValore elem) {
+	nodo *pnAus;
+	pnAus=3D(nodo *) malloc(sizeof(nodo));
+	pnAus-&gt;value=3Delem;
+	pnAus-&gt;next=3DNULL;
+	if (pc.first=3D=3DNULL){
+			pc.first=3DpnAus;
+			pc.last=3DpnAus;
+	} else{
+			(pc.last)-&gt;next=3DpnAus;
+			pc.last=3DpnAus;
+	}
+	return pc;
+}
+
+coda extract(coda p) {
+	 p.first=3D(p.first)-&gt;next;
+	 return p;
+}
+
+tipoValore primo(coda p){
+	 return (p.first)-&gt;value;
+}
+tipoValore ultimo(coda p){
+	 return (p.last)-&gt;value;
+}
+</PRE>
+  <LI>Redigere, completare ed eseguire il seguente programma per =
+implementare la=20
+  struttura coda mediante liste circolari: <PRE style=3D"BACKGROUND: =
+silver">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+typedef int tipoValore;
+
+typedef struct elemento {
+	 tipoValore value;
+	 struct elemento *next;
+} nodo;
+
+typedef nodo *queue;
+
+
+tipoValore first(queue c){
+	 return (c-&gt;next)-&gt;value;
+}
+
+tipoValore last(queue c){
+	 return c-&gt;value;
+}
+
+queue enqueue(queue c,tipoValore elem) {
+	queue pAus=3D(queue) malloc(sizeof(nodo));
+	pAus-&gt;value=3Delem;
+	if (c!=3DNULL){
+		pAus-&gt;next=3Dc-&gt;next;
+		c-&gt;next=3DpAus;
+		c=3Dc-&gt;next;
+	}else{
+		pAus-&gt;next=3DpAus;;
+		c=3DpAus;
+	}
+	return c;
+}
+
+queue dequeue(queue c) {
+	if (c!=3DNULL)
+		if (c!=3Dc-&gt;next)
+			c-&gt;next=3D(c-&gt;next)-&gt;next;
+		else
+			c=3DNULL;
+	return c;
+}
+</PRE></LI></OL><BR>&nbsp; <BR>&nbsp; <BR>&nbsp;=20
+<H3 style=3D"BACKGROUND: teal; COLOR: white"><A =
+name=3Dsequenze></A>Liste=20
+ordinate</H3><BR>&nbsp; La sequenza =E8 una struttura dati dinamica =
+caratterizzata=20
+essenzialmente dalla possibilit=E0 di associare a ogni elemento una =
+posizione,=20
+quindi rende possibile inserire un elemento in posizione data, eliminare =
+
+l'elemento in posizione data, leggere l'elemento un posizione =
+data.<BR>In una=20
+sequenza ordinata -o lista ordinata- la posizione =E8 implicita nella =
+scelta del=20
+criterio d'ordinamento e quindi la struttura =E8 caratterizzata dalla =
+possibilit=E0=20
+di inserire elementi ordinatamente ed eliminarli.=20
+<OL>
+  <LI>Redigere ed eseguire un programma per leggere e visualizzare liste =
+
+  ordinate crescenti di numeri interi. E' suggerita nel seguito la =
+modalit=E0=20
+  d'implementazione mediante puntatori e fornita una function per =
+l'inserimento.=20
+<PRE>typedef int tipoValore;
+
+typedef struct elemento {
+	 tipoValore value;
+	 struct elemento *next;
+} nodo;
+
+typedef nodo *seqOrd;
+
+seqOrd ins(tipoValore ele, seqOrd lst){
+	seqOrd lstAus=3D(seqOrd) malloc(sizeof(nodo));
+	lstAus-&gt;value=3Dele;
+	if (lst!=3DNULL &amp;&amp; ele&gt;lst-&gt;value){
+		seqOrd lst1=3Dlst, lst2=3Dlst-&gt;next;
+		while (lst2!=3DNULL &amp;&amp; ele&gt;lst2-&gt;value){
+			lst1=3Dlst2;
+			lst2=3Dlst2-&gt;next;
+		}
+		lstAus-&gt;next=3Dlst2;
+		lst1-&gt;next=3DlstAus;
+	}else{
+			lstAus-&gt;next=3Dlst;
+			lst=3DlstAus;
+	}
+	return lst;
+}
+</PRE>
+  <LI>Realizzare un programma per effettuare la ricerca di un dato in =
+una=20
+  sequenza ordinata crescente ed eliminarlo. </LI></OL>
+<HR style=3D"COLOR: blue">
+
+<CENTER><FONT face=3DArial size=3D1>pagine di <A=20
+href=3D"mailto:roberto_ricci@tin.it"><I>Roberto Ricci </I></A>L.S. =
+"<I>A.=20
+Righi</I>", Bologna. Ultima revisione
+<SCRIPT language=3DJavascript>
+document.write(document.lastModified)
+</SCRIPT>
+ </FONT></CENTER>
+<HR style=3D"COLOR: blue">
+
+<SCRIPT language=3DJavaScript>=0A=
+<!--=0A=
+var SymRealOnLoad;=0A=
+var SymRealOnUnload;=0A=
+=0A=
+function SymOnUnload()=0A=
+{=0A=
+  window.open =3D SymWinOpen;=0A=
+  if(SymRealOnUnload !=3D null)=0A=
+     SymRealOnUnload();=0A=
+}=0A=
+=0A=
+function SymOnLoad()=0A=
+{=0A=
+  if(SymRealOnLoad !=3D null)=0A=
+     SymRealOnLoad();=0A=
+  window.open =3D SymRealWinOpen;=0A=
+  SymRealOnUnload =3D window.onunload;=0A=
+  window.onunload =3D SymOnUnload;=0A=
+}=0A=
+=0A=
+SymRealOnLoad =3D window.onload;=0A=
+window.onload =3D SymOnLoad;=0A=
+=0A=
+//-->=0A=
+</SCRIPT>
+</BODY></HTML>
