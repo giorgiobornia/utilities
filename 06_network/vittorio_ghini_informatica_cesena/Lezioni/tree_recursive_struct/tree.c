@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct s_NODO{
+typedef struct s_NODO {
    double	x;
    s_NODO	*destra;
    s_NODO	*sinistra;
