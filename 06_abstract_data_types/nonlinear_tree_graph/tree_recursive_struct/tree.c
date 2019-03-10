@@ -3,10 +3,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct s_NODO {
-   double	x;
-   s_NODO	*destra;
-   s_NODO	*sinistra;
+typedef pippo; //with this it compiles
+
+typedef struct pippo {
+   double x;
+   pippo *destra;
+   pippo *sinistra;
    }  NODO;
 
 #define FMAX 1000000.0
