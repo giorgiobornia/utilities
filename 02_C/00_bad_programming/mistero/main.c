@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
  /* Operator Precedence: if you open a round parenthesis somewhere the compiler tells you where he expects that to be closed. That is a method to figure out the precedences in a given code */
 
@@ -28,41 +29,37 @@ else if (t >= 3) { a_1 = 1; }
 
 int a_2;  
 
- if (t < b )        { a_2 = main(t+1, b, a); }
+ if (t < b )        { a_2 = main(t+1, b, a); } //increase t until t == b
  else  if (t >= b)  { a_2 = 3; }
 
 
  int a_3;
-
-if ( main(-94, -27 + t, a ) && t == 2 ) { a_3 = ( b < 13 ?  main(2, b+1, "%s %d %d\n" ) : 9 ); }  /*watch out because here commutativity of && is not valid!*/
-else                                    { a_3 = 16; }
+ int mainmin94 = main(-94, -27 + t, a );
+     if ( mainmin94 && t == 2 && b < 13)  { a_3 = main(2, b+1, "%s %d %d\n" ); } 
+else if ( mainmin94 && t == 2 && b >= 13) { a_3 = 9;  }
+else                                      { a_3 = 16; }
 
  
 return_int = ( a_1, a_2, a_3 );  /*What is this operation?*/
-
-//this always returns 16, except for the last time when it returns 9
+//this always returns 16, except for the last time when it returns 9.. but in debug mode it returns 011...
 
 }
 
 
 else if (t < -72) {
 // Here it generates the char to start from in the below -61 main call
-//                       On the /first/second/third/fourth/fifth/sixth/seventh/eighth/ninth/tenth/eleventh/twelfth/ day of Christmas my true love gave to me /twelve drummers drumming, /eleven pipers piping, /ten lords a-leaping 
-return_int = main(b, t, "@n'+,#'/*{}w+/w#cdnr/+,{}r/*de}+,/*{*+,/w{%+,/w#q#n+,/#{l,+,/n{n+,/+#n+,/#;#q#n+,/+k#;*+,/'r :'d*'3,}{w+K w'K:'+}e#';dq#'l q#'+d'K#!/+k#;q#'r}eKK#}w'r}eKK{nl]'/#;#q#n'){)#}w'){){nl]'/+#n';d}rw' i;# ){nl]!/n{n#'; r{#w'r nc{nl]'/#{l,+'K {rw' iK{;[{nl]'/w#q#n'wk nw' iwk{KK{nl]!/w{%'l##w#' i; :{nl]'/*{q#'ld;r'}{nlwb!/*de}'c ;;{nl'-{}rw]'/+,}##'*}#nc,',#nw]'/+kd'+e}+;#'rdq#w! nr'/ ') }+}{rl#'{n' ')# }'+}##(!!/");
-    
+//                       On the /first/second/third/fourth/fifth/sixth/seventh/eighth/ninth/tenth/eleventh/twelfth/ day of Christmas my true love gave to meN/twelve drummers drumming, /eleven pipers piping, /ten lords a-leaping,N/nine ladies dancing, /eight maids a-milking, /seven swans a-swimming,N/six geese a-laying, /five gold rings,N/four calling birds, /three french hens, /two turtle dovesNand /a partridge in a pear treeTNN/
+return_int = main(b, t, "@n'+,#'/*{}w+/w#cdnr/+,{}r/*de}+,/*{*+,/w{%+,/w#q#n+,/#{l,+,/n{n+,/+#n+,/#;#q#n+,/+k#;*+,/'r :'d*'3,}{w+K w'K:'+}e#';dq#'l q#'+d'K#!/+k#;q#'r}eKK#}w'r}eKK{nl]'/#;#q#n'){)#}w'){){nl]'/+#n';d}rw' i;# ){nl]!/n{n#'; r{#w'r nc{nl]'/#{l,+'K {rw' iK{;[{nl]'/w#q#n'wk nw' iwk{KK{nl]!/w{%'l##w#' i; :{nl]'/*{q#'ld;r'}{nlw]!/*de}'c ;;{nl'-{}rw]'/+,}##'*}#nc,',#nw]'/+kd'+e}+;#'rdq#w! nr'/ ') }+}{rl#'{n' ')# }'+}##(!!/");  //I think ( terminates, maybe  
 }
 
-else if ( -72 <= t && t < -50) { while (a[0] != b) {  //he compares the ASCII number with the number that you want
-    a = a + 1; } 
+else if ( -72 <= t && t < -50) { if (t != -61) abort(); //I observed it reaches here always with this number, not with others. It may come from more than one calling point, though
+                                 while (a[0] != b) { a = a + 1; }  //he compares the ASCII number with the number that you want
                                  char char_out = a[31];  
                                  return_int = putchar(char_out);
-                                   if (t != -61) abort(); //it reaches here always with this number, not with others. It may come from more than one calling point, though
 }
 /* This putchar is the command that prints to terminal!!! Without this, the program has no output. The calls are such that the char on pos. 31 is always the right one to print to terminal! */
 
-// else if ( -72 <= t && t < -50 && b != a[0]) {  return_int = main(-65, b , a + 1);  }  /*If b != a[0], increase the pointer of a until b == a[0], so that you get to print above */
-
-else if ( -50 <= t &&  t < 0)               {  while (a[0] != '/') a = a + 1;  return_int = main(t + 1, b , a + 1); }
+else if ( -50 <= t &&  t < 0)               {  while (a[0] != '/') a = a + 1;  return_int = main(t + 1, b , a + 1); }  //this goes where a starts with /
 
 else if ( t == 1 )                          {  return_int = main(2, 2, "%s"); }
 

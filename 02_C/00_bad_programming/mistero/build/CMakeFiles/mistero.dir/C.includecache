@@ -9,4 +9,6 @@
 /home/gbornia/software/utilities/02_C/00_bad_programming/mistero/main.c
 stdio.h
 -
+stdlib.h
+-
 
