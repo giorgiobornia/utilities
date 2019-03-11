@@ -13,6 +13,8 @@ int main(int t, int b, char * a)
 
 int return_int;
 
+//the initial value of t is 1
+//the initial value of b is random
 
 if (1 < t) { /* t = 2, 3, ... */
     
@@ -38,19 +40,23 @@ else                                    { a_3 = 16; }
  
 return_int = ( a_1, a_2, a_3 );  /*What is this operation?*/
 
+//this always returns 16, except for the last time when it returns 9
+
 }
 
 
 else if (t < -72) {
-
+// Here it generates the char to start from in the below -61 main call
 return_int = main(b, t, "@n'+,#'/*{}w+/w#cdnr/+,{}r/*de}+,/*{*+,/w{%+,/w#q#n+,/#{l,+,/n{n+,/+#n+,/#;#q#n+,/+k#;*+,/'r :'d*'3,}{w+K w'K:'+}e#';dq#'l q#'+d'K#!/+k#;q#'r}eKK#}w'r}eKK{nl]'/#;#q#n'){)#}w'){){nl]'/+#n';d}rw' i;# ){nl]!/n{n#'; r{#w'r nc{nl]'/#{l,+'K {rw' iK{;[{nl]'/w#q#n'wk nw' iwk{KK{nl]!/w{%'l##w#' i; :{nl]'/*{q#'ld;r'}{nlwb!/*de}'c ;;{nl'-{}rw]'/+,}##'*}#nc,',#nw]'/+kd'+e}+;#'rdq#w! nr'/ ') }+}{rl#'{n' ')# }'+}##(!!/");
     
 }
- 
 
-else if ( -72 <= t && t < -50) { while (b != a[0]) a = a + 1; 
+else if ( -72 <= t && t < -50) { while (a[0] != b) {  //he compares the ASCII number with the number that you want
+    a = a + 1; } 
                                  char char_out = a[31];  
-                                 return_int = putchar(char_out); }
+                                 return_int = putchar(char_out);
+                                   if (t != -61) abort(); //it reaches here always with this number, not with others. It may come from more than one calling point, though
+}
 /* This putchar is the command that prints to terminal!!! Without this, the program has no output. The calls are such that the char on pos. 31 is always the right one to print to terminal! */
 
 // else if ( -72 <= t && t < -50 && b != a[0]) {  return_int = main(-65, b , a + 1);  }  /*If b != a[0], increase the pointer of a until b == a[0], so that you get to print above */
@@ -59,8 +65,13 @@ else if ( -50 <= t &&  t < 0)               {  while (a[0] != '/') a = a + 1;  r
 
 else if ( t == 1 )                          {  return_int = main(2, 2, "%s"); }
 
-else /* t == 0 */                           {  return_int = ( (a[0] == '/') || main(0, main(-61, a[0], "!ek;dc i@bK'(q)-[w]*%n+r3#l,{}:\nuwloca-O;m .vpbks,fxntdCeghiry"), a + 1) ); } /*Are both parts of the || evaluated or if the first is true the second is not even evaluated? No, it is short-circuited, going from left to right! */
-
+else if ( t == 0 )                          {  if (a[0] == '/') { return_int = 1; }
+                                               else {
+                                                   int char_that_I_want_to_start_from = a[0];
+                                                   int main_inner = main(-61, char_that_I_want_to_start_from, "!ek;dc i@bK'(q)-[w]*%n+r3#l,{}:\nuwloca-O;m .vpbks,fxntdCeghiry");  //\n is half-way through, from here I pick the chars to be printed
+                                                   return_int = (0 || main(0, main_inner, a + 1) ); 
+                                            } /*Are both parts of the || evaluated or if the first is true the second is not even evaluated? No, it is short-circuited, going from left to right! */
+                                            }
 
 return return_int;
 

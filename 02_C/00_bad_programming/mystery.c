@@ -1,3 +1,4 @@
+/* Ian Phillips - Obfuscated C code */
 #include <stdio.h>
 
 main(t,_,a)char *a;
