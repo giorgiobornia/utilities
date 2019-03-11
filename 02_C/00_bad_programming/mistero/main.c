@@ -18,7 +18,9 @@ if (1 < t) { /* t = 2, 3, ... */
     
  int a_1;   
 
-if ( t < 3 )     { a_1 = main(-79, -13, a + main(-87, 1 - b, main(-86, 0, a+1 ) + a) );  } 
+if ( t < 3 )     { int b_1 =     main(-86, 0, a+1 ) + a;
+                   int b_2 = a + main(-87, 1 - b, b_1);
+                       a_1 =     main(-79, -13, b_2 );  } 
 else if (t >= 3) { a_1 = 1; }
 
 
@@ -53,11 +55,11 @@ else if ( -72 <= t && t < -50) { while (b != a[0]) a = a + 1;
 
 // else if ( -72 <= t && t < -50 && b != a[0]) {  return_int = main(-65, b , a + 1);  }  /*If b != a[0], increase the pointer of a until b == a[0], so that you get to print above */
 
-else if ( -50 <= t &&  t < 0)               {  return_int = main( (a[0] == '/') + t, b , a + 1); }
+else if ( -50 <= t &&  t < 0)               {  while (a[0] != '/') a = a + 1;  return_int = main(t + 1, b , a + 1); }
 
 else if ( t == 1 )                          {  return_int = main(2, 2, "%s"); }
 
-else /* t == 0 */                           {  return_int = ( (a[0] == '/') || main(0, main(-61, a[0], "!ek;dc i@bK'(q)-[w]*%n+r3#l,{}:\nuwloca-O;m .vpbks,fxntdCeghiry"), a+1) ); } /*Are both parts of the || evaluated or if the first is true the second is not even evaluated?*/
+else /* t == 0 */                           {  return_int = ( (a[0] == '/') || main(0, main(-61, a[0], "!ek;dc i@bK'(q)-[w]*%n+r3#l,{}:\nuwloca-O;m .vpbks,fxntdCeghiry"), a + 1) ); } /*Are both parts of the || evaluated or if the first is true the second is not even evaluated? No, it is short-circuited, going from left to right! */
 
 
 return return_int;
