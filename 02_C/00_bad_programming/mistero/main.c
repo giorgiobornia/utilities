@@ -11,7 +11,7 @@ int main(int t, int b, char * a)
 {
     
 
-int myout;
+int return_int;
 
 
 if (1 < t) { /* t = 2, 3, ... */
@@ -34,32 +34,33 @@ if ( main(-94, -27 + t, a ) && t == 2 ) { a_3 = ( b < 13 ?  main(2, b+1, "%s %d 
 else                                    { a_3 = 16; }
 
  
-myout = ( a_1, a_2, a_3 );  /*What is this operation?*/
+return_int = ( a_1, a_2, a_3 );  /*What is this operation?*/
 
 }
 
 
 else if (t < -72) {
 
-myout = main(b, t, "@n'+,#'/*{}w+/w#cdnr/+,{}r/*de}+,/*{*+,/w{%+,/w#q#n+,/#{l,+,/n{n+,/+#n+,/#;#q#n+,/+k#;*+,/'r :'d*'3,}{w+K w'K:'+}e#';dq#'l q#'+d'K#!/+k#;q#'r}eKK#}w'r}eKK{nl]'/#;#q#n'){)#}w'){){nl]'/+#n';d}rw' i;# ){nl]!/n{n#'; r{#w'r nc{nl]'/#{l,+'K {rw' iK{;[{nl]'/w#q#n'wk nw' iwk{KK{nl]!/w{%'l##w#' i; :{nl]'/*{q#'ld;r'}{nlwb!/*de}'c ;;{nl'-{}rw]'/+,}##'*}#nc,',#nw]'/+kd'+e}+;#'rdq#w! nr'/ ') }+}{rl#'{n' ')# }'+}##(!!/");
+return_int = main(b, t, "@n'+,#'/*{}w+/w#cdnr/+,{}r/*de}+,/*{*+,/w{%+,/w#q#n+,/#{l,+,/n{n+,/+#n+,/#;#q#n+,/+k#;*+,/'r :'d*'3,}{w+K w'K:'+}e#';dq#'l q#'+d'K#!/+k#;q#'r}eKK#}w'r}eKK{nl]'/#;#q#n'){)#}w'){){nl]'/+#n';d}rw' i;# ){nl]!/n{n#'; r{#w'r nc{nl]'/#{l,+'K {rw' iK{;[{nl]'/w#q#n'wk nw' iwk{KK{nl]!/w{%'l##w#' i; :{nl]'/*{q#'ld;r'}{nlwb!/*de}'c ;;{nl'-{}rw]'/+,}##'*}#nc,',#nw]'/+kd'+e}+;#'rdq#w! nr'/ ') }+}{rl#'{n' ')# }'+}##(!!/");
     
 }
  
 
-else if ( -72 <= t && t < -50 && b == a[0]) { char char_out = a[31];  
-                                               myout = putchar(char_out); }
+else if ( -72 <= t && t < -50) { while (b != a[0]) a = a + 1; 
+                                 char char_out = a[31];  
+                                 return_int = putchar(char_out); }
 /* This putchar is the command that prints to terminal!!! Without this, the program has no output. The calls are such that the char on pos. 31 is always the right one to print to terminal! */
 
-else if ( -72 <= t && t < -50 && b != a[0]) {  myout = main(-65, b , a + 1);  }
+// else if ( -72 <= t && t < -50 && b != a[0]) {  return_int = main(-65, b , a + 1);  }  /*If b != a[0], increase the pointer of a until b == a[0], so that you get to print above */
 
-else if ( -50 <= t &&  t < 0)               {  myout = main((a[0] == '/') + t, b , a + 1); }
+else if ( -50 <= t &&  t < 0)               {  return_int = main( (a[0] == '/') + t, b , a + 1); }
 
-else if ( t == 1 )                          {  myout = ( main(2, 2, "%s") ); }
+else if ( t == 1 )                          {  return_int = main(2, 2, "%s"); }
 
-else /* t == 0 */                           {  myout = ( (a[0] == '/') || main(0, main(-61, a[0], "!ek;dc i@bK'(q)-[w]*%n+r3#l,{}:\nuwloca-O;m .vpbks,fxntdCeghiry"), a+1) ); }
+else /* t == 0 */                           {  return_int = ( (a[0] == '/') || main(0, main(-61, a[0], "!ek;dc i@bK'(q)-[w]*%n+r3#l,{}:\nuwloca-O;m .vpbks,fxntdCeghiry"), a+1) ); } /*Are both parts of the || evaluated or if the first is true the second is not even evaluated?*/
 
 
-return myout;
+return return_int;
 
 
 }
