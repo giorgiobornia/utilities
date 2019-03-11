@@ -1,0 +1,7 @@
+/home/gbornia/software/utilities/02_C/00_bad_programming/mistero/build/CMakeFiles/install/strip.dir
+/home/gbornia/software/utilities/02_C/00_bad_programming/mistero/build/CMakeFiles/edit_cache.dir
+/home/gbornia/software/utilities/02_C/00_bad_programming/mistero/build/CMakeFiles/rebuild_cache.dir
+/home/gbornia/software/utilities/02_C/00_bad_programming/mistero/build/CMakeFiles/mistero.dir
+/home/gbornia/software/utilities/02_C/00_bad_programming/mistero/build/CMakeFiles/list_install_components.dir
+/home/gbornia/software/utilities/02_C/00_bad_programming/mistero/build/CMakeFiles/install/local.dir
+/home/gbornia/software/utilities/02_C/00_bad_programming/mistero/build/CMakeFiles/install.dir

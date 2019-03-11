@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/home/gbornia/software/utilities/02_C/00_bad_programming/mistero/build",
+  "command": "/usr/bin/cc   -g   -o CMakeFiles/mistero.dir/main.c.o   -c /home/gbornia/software/utilities/02_C/00_bad_programming/mistero/main.c",
+  "file": "/home/gbornia/software/utilities/02_C/00_bad_programming/mistero/main.c"
+}
+]

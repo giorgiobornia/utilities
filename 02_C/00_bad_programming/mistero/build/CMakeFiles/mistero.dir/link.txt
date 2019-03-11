@@ -1,0 +1,1 @@
+/usr/bin/cc -g   CMakeFiles/mistero.dir/main.c.o  -o mistero 
