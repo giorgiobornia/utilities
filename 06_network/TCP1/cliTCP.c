@@ -6,6 +6,8 @@
    cliTCP 130.136.2.7 5001 
    */
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -108,8 +110,7 @@ int main(int argc, char *argv[])
   while( (len>nread) && ((n=read(socketfd, &(buf[nread]), len-nread )) >0))
   {
      nread+=n;
-     printf("read effettuata, risultato n=%d  len=%d nread=%d
-len-nread=%d\n", n, len, nread, len-nread );
+     printf("read effettuata, risultato n=%d  len=%d nread=%d len-nread=%d\n", n, len, nread, len-nread );
      fflush(stdout);
 
   }

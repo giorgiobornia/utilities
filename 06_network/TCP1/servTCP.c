@@ -10,6 +10,9 @@
 
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -87,8 +90,8 @@ int main(int argc, char *argv[])
   /* wait for data */
   nread=0;
   printf ("read()\n");
-  while( (n=read(newsocketfd, &(buf[nread]), MAXSIZE )) >0) {
-     nread+=n;
+  while( (n = read(newsocketfd, &(buf[nread]), MAXSIZE )) >0) {
+     nread += n;
      if(buf[nread-1]=='\0')
         break; /* fine stringa */
   }
@@ -105,7 +108,7 @@ int main(int argc, char *argv[])
   /* scrittura */
   nwrite=0;
   printf ("write()\n");
-  while( (n=write(newsocketfd, &(buf[nwrite]), nread-nwrite)) >0 )
+  while( (n = write(newsocketfd, &(buf[nwrite]), nread-nwrite)) >0 )
      nwrite+=n;
   if(n<0) {
     char msgerror[1024];
