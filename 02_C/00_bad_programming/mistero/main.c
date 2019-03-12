@@ -21,6 +21,7 @@ int print_to_terminal(char * a)  {
  char transl[62] = "!ek;dc i@bK'(q)-[w]*%n+r3#l,{}:\nuwloca-O;m .vpbks,fxntdCeghiry"; 
  //31+31 chars, \n is half-way through, from the second part we pick the char to be printed //here is the translation between our encryption alphabet and the human alphabet
  
+// printf("The current position in the big string is %d", &a[0]);
  
     int char_that_I_want_encrypted = a[0];
     if (char_that_I_want_encrypted != '/') {
@@ -44,11 +45,10 @@ int print_to_terminal(char * a)  {
  
  
 int parse_encrypted_code(int t, int b, char * a)  {
-    
+//basically here the string pointer "a" changes every time as a position in the "encrypt" string     
 
 //                   On the /first/second/third/fourth/fifth/sixth/seventh/eighth/ninth/tenth/eleventh/twelfth/ day of Christmas my true love gave to meN/twelve drummers drumming, /eleven pipers piping, /ten lords a-leaping,N/nine ladies dancing, /eight maids a-milking, /seven swans a-swimming,N/six geese a-laying, /five gold rings,N/four calling birds, /three french hens, /two turtle dovesNand /a partridge in a pear treeTNN/
 char encrypt[408] = "@n'+,#'/*{}w+/w#cdnr/+,{}r/*de}+,/*{*+,/w{%+,/w#q#n+,/#{l,+,/n{n+,/+#n+,/#;#q#n+,/+k#;*+,/'r :'d*'3,}{w+K w'K:'+}e#';dq#'l q#'+d'K#!/+k#;q#'r}eKK#}w'r}eKK{nl]'/#;#q#n'){)#}w'){){nl]'/+#n';d}rw' i;# ){nl]!/n{n#'; r{#w'r nc{nl]'/#{l,+'K {rw' iK{;[{nl]'/w#q#n'wk nw' iwk{KK{nl]!/w{%'l##w#' i; :{nl]'/*{q#'ld;r'}{nlw]!/*de}'c ;;{nl'-{}rw]'/+,}##'*}#nc,',#nw]'/+kd'+e}+;#'rdq#w! nr'/ ') }+}{rl#'{n' ')# }'+}##(!!/";
-
 
 
 int return_int /*= 1*/;
@@ -58,22 +58,24 @@ if (1 < t) {
     
 
 //this t == 2 is reached only at the beginning of each paragraph    
-if ( t == 2 )    { int b_1 =     parse_encrypted_code(-86,     0, a+1 ) + a;
-                   int b_2 = a + parse_encrypted_code(-87, 1 - b, b_1 );
-                                 parse_encrypted_code(-79,   -13, b_2 );  
-    
+if ( t == 2 )    {
+    parse_encrypted_code(-86,     0, a+1 );   //On the
+    parse_encrypted_code(-87, 1 - b, a+1 );   //First-second
+    parse_encrypted_code(-79,   -13, a+1 );   //day of Christmas
 } 
 
 
 //this is reached only at the beginning of the 2nd line of each paragraph, and it loops over the subsequent rows 
- if (t < b )     {  parse_encrypted_code(t+1, b, a); } //increase t until t == b
+ if (t < b )     {  
+     parse_encrypted_code(t+1, b, a); //from the 2nd row
+}
 
  int b_in = -27 + t;
- int mainmin94 = parse_encrypted_code(-94, b_in, a ); 
+ parse_encrypted_code(-94, b_in, a );
  
-     if (t == 2 && mainmin94 && b < 13)  { return_int = parse_encrypted_code(2, b+1, "%s %d %d\n" ); } //it stays here and increases b until b == 13
-else if (t == 2 && mainmin94 && b >= 13) { return_int = 9;  }
-else                                     { return_int = 16; }
+     if (t == 2 && b < 13)  { return_int = parse_encrypted_code(2, b+1, "%s %d %d\n" ); } //it stays here and increases b until b == 13
+else if (t == 2 && b >= 13) { return_int = 9;  }
+else                        { return_int = 16; }
 
 }
 
@@ -115,11 +117,6 @@ else if (             t == -1)               {
 }
 
 
-// this part is responsible to print the FIRST THREE PARAGRAPHS!
-else if ( t == 1 )                          {  
-    return_int = parse_encrypted_code(2, 2, "%s"); 
-    }
-
 
 return return_int;
 
@@ -131,11 +128,13 @@ return return_int;
 
  int main() {
   
-    char * ch = NULL;
-    int seed_t = 1;
-    int seed_b = 5;
-    return parse_encrypted_code(seed_t,seed_b,ch);
-     
+//     char ch[2]; ch[0] = "%"; ch[1] = "s";
+    char * ch = "%s"; //his is a way to initialize the string
+    int seed_t = 2;
+    int seed_b = 2;
+    int result = parse_encrypted_code(seed_t,seed_b,ch);
+
+    return result;
  }
 
 
