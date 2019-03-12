@@ -54,8 +54,9 @@ char encrypt[408] = "@n'+,#'/*{}w+/w#cdnr/+,{}r/*de}+,/*{*+,/w{%+,/w#q#n+,/#{l,+
 int return_int /*= 1*/;
 
 
-if (1 < t) {
+if (1 < t) {  //t min = 2, t max = 13
     
+printf("t = %d",t);
 
 //this t == 2 is reached only at the beginning of each paragraph    
 if ( t == 2 )    {
@@ -73,9 +74,9 @@ if ( t == 2 )    {
  int b_in = -27 + t;
  parse_encrypted_code(-94, b_in, a );
  
-     if (t == 2 && b < 13)  { return_int = parse_encrypted_code(2, b+1, "%s %d %d\n" ); } //it stays here and increases b until b == 13
-else if (t == 2 && b >= 13) { return_int = 9;  }
-else                        { return_int = 16; }
+ if (t == 2 && b < 13)  {
+     parse_encrypted_code(2, b+1, "%s %d %d\n" ); 
+}
 
 }
 
@@ -89,11 +90,12 @@ else if (t < -72) {
           if (b > 0) abort();
 // printf("q"); //this goes to -50,1
 //     printf("B%d",b);
-          return_int = parse_encrypted_code(b, t, encrypt);  //this ultimately sends to "t == -1"
+          parse_encrypted_code(b, t, encrypt);  //this ultimately sends to "t == -1"
           
     }
- else if (b == 0)  return_int = print_to_terminal(encrypt); //this prints "On the " only   
-
+ else if (b == 0)  {
+     print_to_terminal(encrypt); //this prints "On the " only   
+   }
 }
 
 
@@ -106,13 +108,14 @@ else if ( -50 <= t &&  t < -1)               { // Based on the "t" value, this e
     
     a = skip_one_slash(a);
 
-    t = t+1; return_int = parse_encrypted_code(t, 307 , a ); 
+    t = t+1; 
+    parse_encrypted_code(t, 307 , a ); 
     
 }
 
 else if (             t == -1)               {  
         a = skip_one_slash(a);
-          return_int = print_to_terminal(a);  //this prints everything except "On the "
+        print_to_terminal(a);  //this prints everything except "On the "
     
 }
 
