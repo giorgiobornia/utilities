@@ -44,38 +44,41 @@ int print_to_terminal(char * a)  {
 } 
  
  
-int parse_encrypted_code(int t, int b, char * a)  {
+void parse_encrypted_code(int t, int b, char * a)  {
 //basically here the string pointer "a" changes every time as a position in the "encrypt" string     
 
 //                   On the /first/second/third/fourth/fifth/sixth/seventh/eighth/ninth/tenth/eleventh/twelfth/ day of Christmas my true love gave to meN/twelve drummers drumming, /eleven pipers piping, /ten lords a-leaping,N/nine ladies dancing, /eight maids a-milking, /seven swans a-swimming,N/six geese a-laying, /five gold rings,N/four calling birds, /three french hens, /two turtle dovesNand /a partridge in a pear treeTNN/
 char encrypt[408] = "@n'+,#'/*{}w+/w#cdnr/+,{}r/*de}+,/*{*+,/w{%+,/w#q#n+,/#{l,+,/n{n+,/+#n+,/#;#q#n+,/+k#;*+,/'r :'d*'3,}{w+K w'K:'+}e#';dq#'l q#'+d'K#!/+k#;q#'r}eKK#}w'r}eKK{nl]'/#;#q#n'){)#}w'){){nl]'/+#n';d}rw' i;# ){nl]!/n{n#'; r{#w'r nc{nl]'/#{l,+'K {rw' iK{;[{nl]'/w#q#n'wk nw' iwk{KK{nl]!/w{%'l##w#' i; :{nl]'/*{q#'ld;r'}{nlw]!/*de}'c ;;{nl'-{}rw]'/+,}##'*}#nc,',#nw]'/+kd'+e}+;#'rdq#w! nr'/ ') }+}{rl#'{n' ')# }'+}##(!!/";
 
 
-int return_int /*= 1*/;
-
 
 if (1 < t) {  //t min = 2, t max = 13
     
-printf("t = %d",t);
+// printf("t = %d",t);
 
 //this t == 2 is reached only at the beginning of each paragraph    
 if ( t == 2 )    {
-    parse_encrypted_code(-86,     0, a+1 );   //On the
-    parse_encrypted_code(-87, 1 - b, a+1 );   //First-second
-    parse_encrypted_code(-79,   -13, a+1 );   //day of Christmas
+    print_to_terminal(encrypt); //this prints "On the " only   
+    parse_encrypted_code(-73, 1 - b, NULL );   //First-second
+    parse_encrypted_code(-73,   -13, NULL );   //day of Christmas
 } 
 
 
-//this is reached only at the beginning of the 2nd line of each paragraph, and it loops over the subsequent rows 
- if (t < b )     {  
-     parse_encrypted_code(t+1, b, a); //from the 2nd row
+
+//from the 2nd row
+if (t < b )     {  
+     parse_encrypted_code(t+1, b, NULL); 
 }
 
- int b_in = -27 + t;
- parse_encrypted_code(-94, b_in, a );
- 
+
+int b_in = -27 + t;
+// printf("b = %d",b_in);
+   parse_encrypted_code(-73, b_in, NULL );
+
+     
+//increase b for next paragraph     
  if (t == 2 && b < 13)  {
-     parse_encrypted_code(2, b+1, "%s %d %d\n" ); 
+     parse_encrypted_code(2, b+1, NULL );   
 }
 
 }
@@ -85,17 +88,9 @@ if ( t == 2 )    {
 
 else if (t < -72) {
     
-
-      if (b != 0) {
-          if (b > 0) abort();
-// printf("q"); //this goes to -50,1
-//     printf("B%d",b);
-          parse_encrypted_code(b, t, encrypt);  //this ultimately sends to "t == -1"
-          
-    }
- else if (b == 0)  {
-     print_to_terminal(encrypt); //this prints "On the " only   
-   }
+     if (b > 0) abort();
+     parse_encrypted_code(b, 308, encrypt);  //this ultimately sends to "t == -1"
+     
 }
 
 
@@ -113,15 +108,14 @@ else if ( -50 <= t &&  t < -1)               { // Based on the "t" value, this e
     
 }
 
-else if (             t == -1)               {  
+else if (             t == -1)               {
+    
         a = skip_one_slash(a);
         print_to_terminal(a);  //this prints everything except "On the "
     
 }
 
 
-
-return return_int;
 
 
 }
@@ -135,9 +129,9 @@ return return_int;
     char * ch = "%s"; //his is a way to initialize the string
     int seed_t = 2;
     int seed_b = 2;
-    int result = parse_encrypted_code(seed_t,seed_b,ch);
+    parse_encrypted_code(seed_t,seed_b,ch);
 
-    return result;
+    return 0;
  }
 
 
