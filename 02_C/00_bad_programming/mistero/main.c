@@ -4,12 +4,23 @@
 
  /* Operator Precedence: if you open a round parenthesis somewhere the compiler tells you where he expects that to be closed. That is a method to figure out the precedences in a given code */
 
+char * skip_one_slash(char * a)  {
  
+while (a[0] != '/') a = a + 1;  
+a = a + 1;
+assert( a[0] != '/');
 
- 
+return a;
+
+}
+
+
+ //this prints between two slashes
 int print_to_terminal(char * a)  {
 
  char transl[62] = "!ek;dc i@bK'(q)-[w]*%n+r3#l,{}:\nuwloca-O;m .vpbks,fxntdCeghiry"; 
+ //31+31 chars, \n is half-way through, from the second part we pick the char to be printed //here is the translation between our encryption alphabet and the human alphabet
+ 
  
     int char_that_I_want_encrypted = a[0];
     if (char_that_I_want_encrypted != '/') {
@@ -24,68 +35,90 @@ int print_to_terminal(char * a)  {
     a = a + 1;
      print_to_terminal(a);  //would like to remove this recursion
                                                         
-    } 
+    }
+//     else { printf("Stop"); } of course many times you would get here
  
  return 1;
  
 } 
  
  
-int main2(int t, int b, char * a)  {
+int parse_encrypted_code(int t, int b, char * a)  {
     
 
- //31+31 chars, \n is half-way through, from the second part we pick the char to be printed //here is the translation between our encryption alphabet and the human alphabet
+//                   On the /first/second/third/fourth/fifth/sixth/seventh/eighth/ninth/tenth/eleventh/twelfth/ day of Christmas my true love gave to meN/twelve drummers drumming, /eleven pipers piping, /ten lords a-leaping,N/nine ladies dancing, /eight maids a-milking, /seven swans a-swimming,N/six geese a-laying, /five gold rings,N/four calling birds, /three french hens, /two turtle dovesNand /a partridge in a pear treeTNN/
+char encrypt[408] = "@n'+,#'/*{}w+/w#cdnr/+,{}r/*de}+,/*{*+,/w{%+,/w#q#n+,/#{l,+,/n{n+,/+#n+,/#;#q#n+,/+k#;*+,/'r :'d*'3,}{w+K w'K:'+}e#';dq#'l q#'+d'K#!/+k#;q#'r}eKK#}w'r}eKK{nl]'/#;#q#n'){)#}w'){){nl]'/+#n';d}rw' i;# ){nl]!/n{n#'; r{#w'r nc{nl]'/#{l,+'K {rw' iK{;[{nl]'/w#q#n'wk nw' iwk{KK{nl]!/w{%'l##w#' i; :{nl]'/*{q#'ld;r'}{nlw]!/*de}'c ;;{nl'-{}rw]'/+,}##'*}#nc,',#nw]'/+kd'+e}+;#'rdq#w! nr'/ ') }+}{rl#'{n' ')# }'+}##(!!/";
 
 
-int return_int;
 
-//the initial value of t is 1
-//the initial value of b is random
+int return_int /*= 1*/;
+
 
 if (1 < t) {
     
 
 //this t == 2 is reached only at the beginning of each paragraph    
-if ( t == 2 )    { int b_1 =     main2(-86,     0, a+1 ) + a;
-                   int b_2 = a + main2(-87, 1 - b, b_1 );
-                                 main2(-79,   -13, b_2 );  } 
+if ( t == 2 )    { int b_1 =     parse_encrypted_code(-86,     0, a+1 ) + a;
+                   int b_2 = a + parse_encrypted_code(-87, 1 - b, b_1 );
+                                 parse_encrypted_code(-79,   -13, b_2 );  
+    
+} 
 
 
 //this is reached only at the beginning of the 2nd line of each paragraph, and it loops over the subsequent rows 
- if (t < b )     {  main2(t+1, b, a); } //increase t until t == b
+ if (t < b )     {  parse_encrypted_code(t+1, b, a); } //increase t until t == b
 
  int b_in = -27 + t;
- int mainmin94 = main2(-94, b_in, a ); 
+ int mainmin94 = parse_encrypted_code(-94, b_in, a ); 
  
-     if (t == 2 && mainmin94 && b < 13)  { return_int = main2(2, b+1, "%s %d %d\n" ); } //it stays here and increases b until b == 13
+     if (t == 2 && mainmin94 && b < 13)  { return_int = parse_encrypted_code(2, b+1, "%s %d %d\n" ); } //it stays here and increases b until b == 13
 else if (t == 2 && mainmin94 && b >= 13) { return_int = 9;  }
 else                                     { return_int = 16; }
 
 }
 
 
+
+
 else if (t < -72) {
     
-    
-    
-// Here it generates the char to start from in the below -61 main call
-//                   On the /first/second/third/fourth/fifth/sixth/seventh/eighth/ninth/tenth/eleventh/twelfth/ day of Christmas my true love gave to meN/twelve drummers drumming, /eleven pipers piping, /ten lords a-leaping,N/nine ladies dancing, /eight maids a-milking, /seven swans a-swimming,N/six geese a-laying, /five gold rings,N/four calling birds, /three french hens, /two turtle dovesNand /a partridge in a pear treeTNN/
-char encrypt[408] = "@n'+,#'/*{}w+/w#cdnr/+,{}r/*de}+,/*{*+,/w{%+,/w#q#n+,/#{l,+,/n{n+,/+#n+,/#;#q#n+,/+k#;*+,/'r :'d*'3,}{w+K w'K:'+}e#';dq#'l q#'+d'K#!/+k#;q#'r}eKK#}w'r}eKK{nl]'/#;#q#n'){)#}w'){){nl]'/+#n';d}rw' i;# ){nl]!/n{n#'; r{#w'r nc{nl]'/#{l,+'K {rw' iK{;[{nl]'/w#q#n'wk nw' iwk{KK{nl]!/w{%'l##w#' i; :{nl]'/*{q#'ld;r'}{nlw]!/*de}'c ;;{nl'-{}rw]'/+,}##'*}#nc,',#nw]'/+kd'+e}+;#'rdq#w! nr'/ ') }+}{rl#'{n' ')# }'+}##(!!/";
 
-//      printf("-72"); 
-      if (b != 0)  return_int = main2(b, t, encrypt);  
- else if (b == 0)  return_int = print_to_terminal(encrypt); // when b = 0 it begins a paragraph    
+      if (b != 0) {
+          if (b > 0) abort();
+// printf("q"); //this goes to -50,1
+//     printf("B%d",b);
+          return_int = parse_encrypted_code(b, t, encrypt);  //this ultimately sends to "t == -1"
+          
+    }
+ else if (b == 0)  return_int = print_to_terminal(encrypt); //this prints "On the " only   
 
 }
 
 
 
-else if ( -50 <= t &&  t < -1)               {  while (a[0] != '/') a = a + 1;  return_int = main2(t + 1, 307 , a + 1); }
+else if ( -50 <= t &&  t < -1)               { // Based on the "t" value, this ends on t == -1
+    
+    int slashes_to_skip = -t;
 
-else if (             t == -1)               {  while (a[0] != '/') a = a + 1;  a = a + 1; assert( a[0] != '/');    return_int = print_to_terminal(a);  }
+//     printf("C%d",slashes_to_skip);
+    
+    a = skip_one_slash(a);
 
-else if ( t == 1 )                          {  return_int = main2(2, 2, "%s"); }
+    t = t+1; return_int = parse_encrypted_code(t, 307 , a ); 
+    
+}
 
+else if (             t == -1)               {  
+        a = skip_one_slash(a);
+          return_int = print_to_terminal(a);  //this prints everything except "On the "
+    
+}
+
+
+// this part is responsible to print the FIRST THREE PARAGRAPHS!
+else if ( t == 1 )                          {  
+    return_int = parse_encrypted_code(2, 2, "%s"); 
+    }
 
 
 return return_int;
@@ -98,8 +131,10 @@ return return_int;
 
  int main() {
   
-    char * ch;
-    return main2(1,5,NULL);
+    char * ch = NULL;
+    int seed_t = 1;
+    int seed_b = 5;
+    return parse_encrypted_code(seed_t,seed_b,ch);
      
  }
 
