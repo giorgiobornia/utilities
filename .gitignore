@@ -1,3 +1,3 @@
 *.directory
-a.out
+*.out
 *.o
