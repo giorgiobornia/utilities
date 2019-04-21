@@ -19,3 +19,6 @@ locate (o find) in questi percorsi
 
 Il modo diretto potrebbe fare un minifile di latex in cui inserisco soltanto \usepackage{} e vedo se dice 'file not found'.
 Ma cosi' non va bene, perche' ci sono dei pacchetti che sono per le document class
+
+
+---------- In realta' basta usare "kpsewhich"!
