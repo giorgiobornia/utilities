@@ -146,6 +146,7 @@ $INSTALL_COMMAND texlive-sttools
 $INSTALL_COMMAND texlive-dblfloatfix
 $INSTALL_COMMAND texlive-stix
 $INSTALL_COMMAND texlive-tikz-cd
+$INSTALL_COMMAND texlive-tcolorbox
 
 
 # Multimedia packages ====================================================
