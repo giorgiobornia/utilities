@@ -148,6 +148,8 @@ $INSTALL_COMMAND texlive-stix
 $INSTALL_COMMAND texlive-tikz-cd
 $INSTALL_COMMAND texlive-tcolorbox
 
+# Web ====================================================
+$INSTALL_COMMAND phpMyAdmin
 
 # Multimedia packages ====================================================
 $INSTALL_COMMAND imagewriter
