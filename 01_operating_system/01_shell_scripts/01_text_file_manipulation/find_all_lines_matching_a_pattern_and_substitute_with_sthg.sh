@@ -29,7 +29,8 @@ do
 # sed "${pos} ${print_mode};d" $file  #print that line
   if (test $mode = 'write') then  #@todo see how to handle the case when mode is not provided from cmd line
      echo "write mode";
-     sed  -e  "${pos} ${insert_mode}\ \\\item" -i  $file  #putting the space is the way to avoid adding other lines, do not put \ or \\n because otherwise you perturb the line numbers!
+     sed  -e  "${pos} ${insert_mode}\ " -i  $file  #putting the space is the way to avoid adding other lines, do not put \ or \\n because otherwise you perturb the line numbers!
+#      sed  -e  "${pos} ${insert_mode}\ \\\item" -i  $file  #putting the space is the way to avoid adding other lines, do not put \ or \\n because otherwise you perturb the line numbers!
     fi
 done
 
