@@ -15,4 +15,7 @@
              (gimp-image-rotate image rot_index)
              (gimp-file-save RUN-NONINTERACTIVE  image drawable filename filename)
              (gimp-image-delete image))
-           (set! filelist (cdr filelist)))))
+           (set! filelist (cdr filelist))
+    )
+  )
+)
