@@ -1,11 +1,11 @@
-;;  gimp -i -b '(myrotate "*.tif" 1)' -b '(gimp-quit 0)'
+;;  gimp -i -b '(rotate_images "*.tif" 1)' -b '(gimp-quit 0)'
 
 ;; rot_index   ROTATE-90 (0), ROTATE-180 (1), ROTATE-270 (2) 
 
 ;; seems like this script does not work if you provide an explicit list in 'pattern',
 ;; other than "*.tif"
 
-(define (myrotate  pattern  rot_index)
+(define (rotate_images  pattern  rot_index)
   (let* ((filelist (cadr (file-glob pattern 1))))
     (while (not (null? filelist))
            (let* ((filename (car filelist))

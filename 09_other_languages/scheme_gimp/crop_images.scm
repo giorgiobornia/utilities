@@ -1,4 +1,4 @@
-;;  gimp -i -b '(mycrop "*.png"  new-width new-height offx offy)' -b '(gimp-quit 0)'
+;;  gimp -i -b '(crop_images "*.png"  new-width new-height offx offy)' -b '(gimp-quit 0)'
 ;;  new-width 600
 ;; new-height 840
 ;; offx 800
@@ -8,7 +8,7 @@
 ;; seems like this script does not work if you provide an explicit list in 'pattern',
 ;; other than "*.tif"
 
-(define (mycrop  pattern new-width new-height offx offy)
+(define (crop_images  pattern new-width new-height offx offy)
   (let* ((filelist (cadr (file-glob pattern 1))))
     (while (not (null? filelist))
            (let* ((filename (car filelist))
