@@ -130,12 +130,14 @@ function list_directories_only() {
 
 folder=$1
 
-for file in *
+for file in $folder/*
 do
-  if [ -d $file ]
-  then
-     ls $file
+  if [ -d $file ]; then
+     echo $file
   fi
 done
+
+# one-liner:
+# for file in *; do if [ -d $file ]; then ls $file; fi; done
 
 }
