@@ -13,8 +13,12 @@ echo "Remember to re-source the script every time you change some function"
 # so you keep on living with an environment that is more and more "dirty"...
 # I don't think it's possible to do 'unsource'
 
+# @todo how to replace a line by REMOVING it, rather than replacing with nothing?
+
 
 function find_pattern_and_replace() {
+# @todo can I find a pattern in MORE THAN ONE LINE?
+
 
 #cmd line args
 file=$1
@@ -53,7 +57,7 @@ do
   if (test $mode = 'write') then  #@todo see how to handle the case when mode is not provided from cmd line
      echo "write mode";
      sed  -e  "${pos} ${insert_mode}\ " -i  $file  #putting the space is the way to avoid adding other lines, do not put \ or \\n because otherwise you perturb the line numbers!
-#      sed  -e  "${pos} ${insert_mode}\ \\\item" -i  $file  #putting the space is the way to avoid adding other lines, do not put \ or \\n because otherwise you perturb the line numbers!
+#      sed  -e  "${pos} ${insert_mode}\ \\\item" -i  $file
     fi
 done
 
