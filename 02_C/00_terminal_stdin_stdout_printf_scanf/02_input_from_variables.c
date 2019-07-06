@@ -1,15 +1,15 @@
-/* Calcolo area rettangolo */
+/* Compute area of a rectangle */
 #include <stdio.h>
 
 main()
 {
   int base;
-  int altezza;
+  int height;
   int area;
 
   base = 3;
-  altezza = 7;
-  area = base*altezza;
+  height = 7;
+  area = base*height;
 
   printf("%d\n", area);
 }
