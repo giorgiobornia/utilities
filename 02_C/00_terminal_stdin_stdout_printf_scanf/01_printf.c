@@ -1,14 +1,12 @@
+#include <stdio.h>
 
-main()
+int main()  {
 
-{
-
-  printf("Hi mom! \n");
-
+  printf("Hello world! \n");
   /*
-  printf('Hi mom! \n');
-  PRINTF("Hi mom! \n");
+  PRINTF("Hello world! \n");
   */
+  
 }
 
 
@@ -19,7 +17,6 @@ main()
  gcc -o c0 c0.o (link: c0)
  ./c0           (esecuzione) 
 
- Ciao mamma!
   
 [ora inserisco prima solo la seconda, 
  poi solo la terza]
@@ -48,12 +45,12 @@ nm  c0.o
          
          
   /*
-          Note sul primo programma:
+          Notes:
 - main(...): inizio programma
 - main and printf are FUNCTIONS (see later when we talk about functions)
 - printf: funzione per lo standard output
 - \n: manda a capo (nuova linea)
-- C: is case-sensitive
+- C is case-sensitive: printf or PRINTF are different functions
 - { ....}: isolates a block of instructions
 - commento con /* ...
 - ; : terminatore di istruzione

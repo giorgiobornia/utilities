@@ -6,10 +6,11 @@
 
 #define AREA EU
 
-main()
+int main()
 {
 #if AREA==US
    char moneta[]="dollaro";
+   egergergegr
 #elif AREA==EU
    char moneta[]="euro";
 #else

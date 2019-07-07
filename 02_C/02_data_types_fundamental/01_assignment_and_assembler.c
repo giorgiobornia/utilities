@@ -1,37 +1,26 @@
 
-main()
 
-/* inizio blocco principale */ 
-{
+int main() {
 
-  /* dichiarazione di tre interi */
-  int a,b,c;
+  /* three integers */
+  int a, b, c;
 
-  /* assegnazione ai primi due di un 
-     valore, al terzo della somma */
-  a=2;
-  b =3;
-  c = a+b;
+  /* assign two values, then sum them */
+  a = 2;
+  b = 3;
+  c = a + b;
 
-  /* stampiamo i loro valori */
-  printf("addendi, a:%2d, b:%5d;",a,b);
-  printf(" loro somma:%2d \n",c);
+  /* print their values */
+  printf("summands, a:%2d, b:%5d;",a,b);
+  printf(" their sum:%2d \n",c);
 
 }
-/* fine blocco principale e programma */
+
+
 
 /* ------------------------------
-Compilazione ed esecuzione
-raus:--> gcc -o c1 c1.c
-raus:--> ./c1
-addendi, a: 2, b: 3; loro somma: 5
-raus:--> 
-*/
+Assembler
 
-
-
-
-/*
 raus:--> gcc -S c1.c (genera l'assembly)
 raus:--> ls
 c1  c1.c  c1.s
@@ -73,8 +62,8 @@ main:
         ret
         .size   main, .-main
         .ident "GCC: (GNU) 3.3 (SuSE Linux)"
-raus:-->
 
+        
 Note sull'assembly generato: 
 %eax, %ebp, %esp: sono i nomi di registri
 push, mov: istruzioni di trasferimento dati

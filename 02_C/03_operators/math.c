@@ -1,7 +1,6 @@
 #include <math.h>
 /* ------------------------------------ *
- * Scrittura e compilazione di c4.c:    *
- * espressioni aritmetiche (+,-,*,/,%)  *
+ * Arithmetic operators (+,-,*,/,%, powf)  *
  * ------------------------------------ */
 main()
 
