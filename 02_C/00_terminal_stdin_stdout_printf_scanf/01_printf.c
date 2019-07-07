@@ -46,6 +46,7 @@ nm  c0.o
          
   /*
           Notes:
+- #include preprocessor directive          
 - main(...): inizio programma
 - main and printf are FUNCTIONS (see later when we talk about functions)
 - printf: funzione per lo standard output

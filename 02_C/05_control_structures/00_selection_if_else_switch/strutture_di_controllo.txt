@@ -1,31 +1,24 @@
 /* Strutture di controllo */
 
-Le strutture di controllo servono per
-poter decidere le operazioni da eseguire
-sulla base dello stato dell'esecuzione
-stessa. Per esempio, ad un certo 
-momento dell'esecuzione del programma
-voglio fare la radice quadrata di un
-numero a, risultato dei miei calcoli
-precedenti. Devo controllare se a > 0,
-se si posso calcolare la sua radice
-quadrata, altrimenti no.
+Le strutture di controllo servono 
+per poter decidere le operazioni da eseguire
+sulla base dello stato dell'esecuzione stessa.
+Per esempio, ad un certo momento dell'esecuzione del programma
+voglio fare la radice quadrata di un numero a,
+risultato dei miei calcoli precedenti. 
+Devo controllare se a > 0, se si posso calcolare la sua radice quadrata,
+altrimenti no.
 
-Esiste un teorema (Teorema di Boehm -
-Jacopini) che dimostra che le strutture
+
+Esiste un teorema (Teorema di Boehm - Jacopini) che dimostra che le strutture
 di controllo del C (e di altri linguaggi)
-sono equivalenti a quelle dell'assembler
-basate sulla diretta manipolazione del
-registro contatore (il registro PC).
-Sono inoltre complete, nel senso che sono
-sufficienti per codificare qualsiasi
-algoritmo.
+sono equivalenti a quelle dell'assembler basate sulla diretta manipolazione del registro contatore (il registro PC).
+Sono inoltre complete, nel senso che sono sufficienti per codificare qualsiasi algoritmo.
 
-In pratica, queste istruzioni permettono
-di saltare ad istruzioni differenti del
-nostro codice in assembly a seconda 
-dello stato dell'esecuzione.
 
+In pratica, queste istruzioni permettono di saltare 
+ad istruzioni differenti del nostro codice in assembly 
+a seconda dello stato dell'esecuzione.
 
 
 
