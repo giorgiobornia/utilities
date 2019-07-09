@@ -6,15 +6,24 @@
 
 #define AREA EU
 
-int main()
-{
+int main() {
+    
 #if AREA==US
+    
    char moneta[]="dollaro";
    egergergegr
+
 #elif AREA==EU
+
    char moneta[]="euro";
+   
 #else
+   
    char moneta[]="sterlina";
+
 #endif
-printf("Moneta corrente: %s\n", moneta);
+
+   printf("Moneta corrente: %s\n", moneta);
+
+
 }

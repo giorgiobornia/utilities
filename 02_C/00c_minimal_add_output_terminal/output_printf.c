@@ -1,11 +1,16 @@
 #include <stdio.h>
 
+
 int main()  {
 
   printf("Hello world! \n");
-  /*
-  PRINTF("Hello world! \n");
-  */
+
+  /* printf('Hello world! \n');  */    /* single quotes instead of double quotes */
+  
+  /* PRINTF("Hello world! \n");  */    /* C is case-sensitive: printf or PRINTF are different functions */
+
+  /* printf( \
+  "Hello world! \n"); */  /* line continuation */
   
 }
 
@@ -13,13 +18,8 @@ int main()  {
 
   /*
 
- gcc -c c0.c    (oggetto: c0.o)
- gcc -o c0 c0.o (link: c0)
- ./c0           (esecuzione) 
-
   
-[ora inserisco prima solo la seconda, 
- poi solo la terza]
+[ora inserisco prima solo la seconda, poi solo la terza]
 
  gcc -o c0 c0.c
 c0.c:11:10: warning: character constant too 
@@ -43,18 +43,15 @@ nm  c0.o
   */
 
          
-         
+
+  
+  
   /*
           Notes:
 - #include preprocessor directive          
-- main(...): inizio programma
-- main and printf are FUNCTIONS (see later when we talk about functions)
-- printf: funzione per lo standard output
-- \n: manda a capo (nuova linea)
-- C is case-sensitive: printf or PRINTF are different functions
-- { ....}: isolates a block of instructions
-- commento con /* ...
-- ; : terminatore di istruzione
+- printf is a FUNCTION for standard output, such as main
+- \n: escape sequence (new line)
+- ; : instruction terminator
   */
 
 
