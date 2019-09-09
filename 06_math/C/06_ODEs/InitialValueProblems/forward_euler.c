@@ -1,17 +1,20 @@
 /*
+ * gcc euler.c -lm
+ * if you plot the x and y in two columns, then open gnuplot and simply type:
+ * plot 'file.txt'
+ * 
 	Title: Demonstration of Euler's method.
 	 
 	This solves the initial value problem
+	
    	y'(x) = f(x,y(x)) ,  x0 <= x <= b ,  y(x0)=y0.
-	The function f(x,z) is defined below, along with the true
-	solution y(x).  the number of the problem to be solved
-	is specified by the input variable 'numde', which is used
-	in the functions 'f' and 'y'.  The program will request
-	the problem parameters, along with the values of 'h' and
-	'iprint'.  'h' is the stepsize, and 'iprint' is the number
-	of steps between each printing of the solution.
-	Use h=0 and numde=0 to stop the program. This program is
-	in Section 9.2.
+   	
+	The function f(x,z) is defined below, along with the true solution y(x).
+	the number of the problem to be solved is specified by the input variable 'numde', 
+    which is used in the functions 'f' and 'y'.
+    The program will request the problem parameters, along with the values of 'h' and 'iprint'.  
+    'h' is the stepsize, and 'iprint' is the number of steps between each printing of the solution.
+	Use h=0 and numde=0 to stop the program. This program is in Section 9.2.
 */       
 
 #include <stdio.h>
@@ -24,7 +27,7 @@ float y(float x);
 
 int numde;
 
-main()
+int main()
 {
 
 	float xzero, yzero, b, h, truevalue, error;
@@ -35,17 +38,17 @@ main()
 	{
 		/*  Input problem parameters */
 
-		printf("\n\n numde = ?");	
-		printf("\n Give zero to stop : ");
+		printf("\n\n numde = ? Give 0 to stop : ");
 		scanf("%d", &numde);
-		if (numde == 0)
-			return(0);
-		printf("\n Give x0, b, and y0 : ");
+		if (numde == 0) return(0);
+        
+		printf("\n Give x0, b, and y0 (press Enter after each input): ");
+        
 		scanf("%f %f %f", &xzero, &b, &yzero);
 
 		while (1)  
 		{
-			printf("\n\n Give h and iprint : ");
+			printf("\n\n Give h and iprint (press Enter after each input): ");
 			scanf("%f %d", &h, &iprint);
 			if (h==0)
 				break;	
