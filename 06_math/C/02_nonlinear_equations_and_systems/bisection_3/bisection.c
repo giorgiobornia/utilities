@@ -1,7 +1,7 @@
 /*
 	This is a demonstration program for the
 	rootfinding subroutine 'bisect', given
-	in Section 4.1.
+	in Section 4.1. (Elementary Numerical Analysis, Atkinson)
 */
 
 #include <stdio.h>
