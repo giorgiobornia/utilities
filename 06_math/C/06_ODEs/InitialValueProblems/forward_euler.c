@@ -86,7 +86,7 @@ int main()
 					x1 = x0 + h;
 					if (x1 > b)
 						break;
-					y1 = y0 + h*f(x0,y0);
+					y1 = y0 + h * f(x0,y0);
 					x0 = x1;
 					y0 = y1;
 				}

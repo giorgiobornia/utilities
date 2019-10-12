@@ -4,9 +4,13 @@
 #Substitute strings in files
 #every * is independent, it is like *_1 and *_2
 
+$string_old=""
+$string_new=""
+
 for file in Caso*/*.xmf 
 do
-   sed -i 's|data_in/||g' $file
+   sed -i "s|${string_old}|${string_new}|g" ${file}
+#  sed -i ""  "s|${string_old}|${string_new}|g" ${file}    # on a Mac
 done
 
 
