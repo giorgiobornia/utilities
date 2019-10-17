@@ -151,6 +151,7 @@ $INSTALL_COMMAND texlive-polynom
 
 # Web ====================================================
 $INSTALL_COMMAND phpMyAdmin
+$INSTALL_COMMAND mysql-workbench
 
 # Multimedia packages ====================================================
 $INSTALL_COMMAND imagewriter
