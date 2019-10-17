@@ -147,6 +147,7 @@ $INSTALL_COMMAND texlive-dblfloatfix
 $INSTALL_COMMAND texlive-stix
 $INSTALL_COMMAND texlive-tikz-cd
 $INSTALL_COMMAND texlive-tcolorbox
+$INSTALL_COMMAND texlive-polynom
 
 # Web ====================================================
 $INSTALL_COMMAND phpMyAdmin
