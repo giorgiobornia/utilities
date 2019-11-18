@@ -62,7 +62,9 @@ $INSTALL_COMMAND build
 $INSTALL_COMMAND rpmlint
 $INSTALL_COMMAND checkinstall
 $INSTALL_COMMAND octave
+$INSTALL_COMMAND octave-forge-symbolic
 $INSTALL_COMMAND qtoctave
+$INSTALL_COMMAND scilab
 $INSTALL_COMMAND lapack-devel  #for trilinos
 $INSTALL_COMMAND netcdf        #for trilinos
 $INSTALL_COMMAND netcdf-devel  #for trilinos
