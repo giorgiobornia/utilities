@@ -107,6 +107,7 @@ $INSTALL_COMMAND doxygen
 $INSTALL_COMMAND graphviz
 $INSTALL_COMMAND inkscape
 $INSTALL_COMMAND kile
+$INSTALL_COMMAND kbibtex
 $INSTALL_COMMAND texlive
 $INSTALL_COMMAND texlive-latex-base          #for ubuntu
 $INSTALL_COMMAND texlive-latex-recommended   #for ubuntu  
