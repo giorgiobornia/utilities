@@ -74,6 +74,8 @@ $INSTALL_COMMAND boost-devel
 $INSTALL_COMMAND libboost-dev # for our code (should put a check in cmake)
 $INSTALL_COMMAND unzip 
 $INSTALL_COMMAND unrar 
+$INSTALL_COMMAND exfat-utils
+$INSTALL_COMMAND fuse-exfat 
 
 $INSTALL_COMMAND fparser-devel
 $INSTALL_COMMAND flex
