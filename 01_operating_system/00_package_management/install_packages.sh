@@ -153,6 +153,16 @@ $INSTALL_COMMAND texlive-stix
 $INSTALL_COMMAND texlive-tikz-cd
 $INSTALL_COMMAND texlive-tcolorbox
 $INSTALL_COMMAND texlive-polynom
+$INSTALL_COMMAND texlive-verse
+$INSTALL_COMMAND texlive-harmony
+$INSTALL_COMMAND texlive-fourier
+$INSTALL_COMMAND texlive-pgfornament
+$INSTALL_COMMAND texlive-musixtex
+$INSTALL_COMMAND texlive-musixtex-fonts
+
+
+
+
 
 # Web ====================================================
 $INSTALL_COMMAND phpMyAdmin
