@@ -159,6 +159,7 @@ $INSTALL_COMMAND texlive-fourier
 $INSTALL_COMMAND texlive-pgfornament
 $INSTALL_COMMAND texlive-musixtex
 $INSTALL_COMMAND texlive-musixtex-fonts
+$INSTALL_COMMAND eog  #lightweight slideshow
 
 
 
@@ -167,6 +168,8 @@ $INSTALL_COMMAND texlive-musixtex-fonts
 # Web ====================================================
 $INSTALL_COMMAND phpMyAdmin
 $INSTALL_COMMAND mysql-workbench
+$INSTALL_COMMAND sqlitebrowser
+
 
 # Multimedia packages ====================================================
 $INSTALL_COMMAND imagewriter
