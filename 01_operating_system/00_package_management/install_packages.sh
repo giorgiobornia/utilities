@@ -160,6 +160,7 @@ $INSTALL_COMMAND texlive-pgfornament
 $INSTALL_COMMAND texlive-musixtex
 $INSTALL_COMMAND texlive-musixtex-fonts
 $INSTALL_COMMAND eog  #lightweight slideshow
+$INSTALL_COMMAND bc  #basic calculator
 
 
 
