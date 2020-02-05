@@ -1,4 +1,5 @@
 #!/bin/bash
+
 #the purpose of this script is to rename files inside each directory
 #What would happen if I did
 #  mv Caso*/*.h5 Caso*/sol.200.h5

@@ -4,7 +4,7 @@
 
 if (test "$1" = "--help") then
 echo " function variable  delimiter delimiter_out";
-return;
+exit
 fi
 
 echo $1 | tr $2 $3

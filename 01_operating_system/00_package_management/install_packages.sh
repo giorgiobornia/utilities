@@ -18,6 +18,7 @@ $INSTALL_COMMAND binutils
 $INSTALL_COMMAND diffutils
 $INSTALL_COMMAND findutils
 $INSTALL_COMMAND findutils-locate
+$INSTALL_COMMAND net-tools-deprecated
 $INSTALL_COMMAND emacs
 $INSTALL_COMMAND vim
 $INSTALL_COMMAND bash
