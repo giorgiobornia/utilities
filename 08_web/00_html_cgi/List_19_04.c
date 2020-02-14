@@ -1,9 +1,10 @@
 /* Indicare in quale directory inserire il file dei commenti */
 
-#define COMMENT_FILE "c:\\http\\comments.txt"
+#define COMMENT_FILE "comments.txt"
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 /* Variabili globali */
 

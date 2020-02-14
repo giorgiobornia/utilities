@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-main()
+int main()
 {
    int ch, in, sh, lo, fl, dd, ld;
 

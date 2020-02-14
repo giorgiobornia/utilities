@@ -2,12 +2,12 @@
 
 /*  What does this program do? 
  It is used to show that formatting
- can occur at run-time also, with %*
+ can occur at run-time also, with '%*'
  */ 
 
 int main()
 {
-  int i,n,nn,w;
+  int i, n, nn, w;
   
   printf("\nInserire il numero di iterazioni desiderate:\n\t");
   scanf("%d",&n);
@@ -23,15 +23,15 @@ int main()
   {
     w++;  
     nn /= 10;
-  } while(nn>=1); 
+  } while(nn >= 1); 
   
-  printf("\n w,i,n,nn: %2d %2d %2d %2d\n\n",w,i,n,nn);
+  printf("\n w,i,n,nn: %2d %2d %2d %2d\n\n", w, i, n, nn);
  
   do 
   {
     i--;
     printf("\tcontatore\t:%*d:\n",w,i);
-  } while(i>0);
+  } while(i > 0);
   
   printf("\n\n");
 

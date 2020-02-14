@@ -1,14 +1,20 @@
 #include <stdio.h>
-main()
-{
+
+int main() {
+    
 char x, y, z;
-printf("Digita tre carat.: ");
+
+printf("Type three characters:");
+
 x = getchar();
 y = getchar();
 z = getchar();
-printf("Hai digitato: ");
+
+printf("You typed: ");
+
 putchar(x);
 putchar(y);
 putchar(z);
 putchar('\n');
+
 }

@@ -172,6 +172,7 @@ $INSTALL_COMMAND bc  #basic calculator
 $INSTALL_COMMAND phpMyAdmin
 $INSTALL_COMMAND mysql-workbench
 $INSTALL_COMMAND sqlitebrowser
+$INSTALL_COMMAND postgresql10-devel  //ecpg
 
 
 # Multimedia packages ====================================================

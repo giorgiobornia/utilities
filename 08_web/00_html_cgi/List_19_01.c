@@ -1,14 +1,13 @@
-/* hello.c: un esempio di CGI */
+/* Write a C program that generates a mini HTML page with Hello World 
+   Redirect the run to file.html
+   Open file.html with any Web browser
+ */
 
-/* Includere cio' che serve per lo Standard Input e Output */
 #include <stdio.h>
 
-/* Dichiarare il main, come sempre */
 int main(int argc, char *argv[]) 
 {
-/* Per prima cosa indicare un'informazione necessaria 
-per l'intestazione della response HTTP                */
-	printf("Content-type: text/html\n\n");
+     
 /* Inviare su Standard Output i tag HTML */
 	printf("<head>\n");
 	printf("<title>Hello, World</title>\n");

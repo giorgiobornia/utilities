@@ -1,16 +1,22 @@
-/* Esempio di Embedded SQL */
+/* Example of Embedded SQL in C */
+/* This is a C code that contains SQL commands
+   First, you need to use a preprocessor that turns everything into C
+   Then, you compile it as a C program
+   "ecpg" is one such preprocessor
+   
+   The code below is written for the Sybase preprocessor...
+*/
 
 exec sql include sqlca;
 
-main()
-{
+int main() {
+
 /* Dichiarazione delle variabili */
 exec sql begin declare section;
 CS_CHAR utente[31]; password[31];
 exec sql end declare section;
 
-/* Inizializzazione del sottoprogramma che 
-   gestisce gli errori SQL                  */
+/* Inizializzazione del sottoprogramma che gestisce gli errori SQL                  */
 exec sql whenever sqlerror perform err_p();
 
 /* Avvia la connessione con il server SQL */
@@ -28,8 +34,8 @@ exec sql disconnect;
 }
 
 /* Sottoprogramma che gestisce gli errori SQL */
-err_p()
-{
+
+err_p() {
 /* Stampa il codice di errore, un messaggio e il 
    numero di linea dove si e' prodotto l'errore */
 printf("\nErrore nella linea %d, codice errore %d.\ns"
