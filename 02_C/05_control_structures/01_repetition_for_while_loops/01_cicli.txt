@@ -1,0 +1,107 @@
+
+/* Cicli in C */
+
+Abbiamo vari formati per ripetere 
+ciclicamente una serie di istruzioni
+
+
+Ciclo con il for: 
+
+for (init_exp; loop_condition; loop_exp)
+{
+istruzioni;
+}
+
+
+
+Ciclo con il while:
+
+while (exp)
+{
+istruzioni;
+}
+
+
+Ciclo con il do-while:
+
+do {
+istruzioni;
+} while (exp);
+
+
+Cicli annidati, break, continue:
+
+for (...) {
+  ...
+  for (...) {
+    ...
+  }
+  ...
+}
+
+for (...) {
+  ...
+  for (...) {
+    ...
+    break;
+    ...
+  }
+  ...
+}
+for (...) {
+  ...
+  for (...) {
+    ...
+    continue;
+    ...
+  }
+  ...
+}
+
+
+Dettagli sul ciclo for:
+
+1 - valuta l'espressione iniziale (opz.)
+2 - valuta la condizione del ciclo
+    (se falsa esce dal ciclo)
+3 - esegue il blocco di istruzioni
+4 - valuta l'espressione del ciclo
+5 - torna al punto 2
+
+
+Equivalenze ciclo for <--> ciclo while:
+
+init_exp;
+while (loop_condition) {
+  istruzioni;
+  loop_exp;
+}
+
+il ciclo for e' consigliato quando il
+numero di cicli e' noto e/o la stessa
+variabile e' usata nelle 3 espressioni
+del ciclo
+
+Varianti:
+
+for (i=0, j=0; i<10; i=i+1) {
+
+for (i=0, j=100; i<10; i=++, j=j-10) {
+
+for ( ; j!=100; j -= 5) {
+
+
+NOTA BENE: queste 4 istruzioni producono
+lo stesso risultato:
+
+i = i+1; i++; ++i; i+=1;
+
+
+NOTA BENE: qui vanno assai diversamente:
+
+i = j++;
+i = ++j;
+
+(sia 5 il valore di j prima delle due
+istruzioni, dopo la prima: i e' 5, j e' 6,
+dopo la seconda sono tutti e due a 7) 

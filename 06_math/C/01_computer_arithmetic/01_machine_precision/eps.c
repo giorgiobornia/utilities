@@ -24,20 +24,20 @@
 
 int main() {
   
-	MYTYPE eps,res;
+	MYTYPE eps, res;
 	
   printf("\n\n Il programma calcola automaticamente la precisione di macchina\n");
 	
-	eps=1.;
+	eps = 1.;
 	
 	do  {
 		res = 1.;
-                eps= eps/2.;
+                eps = eps/2.;
 		res += eps;
-		printf("\teps=%e\t\tres=%e\n",eps,res);
-	} while(res!=1.);
+		printf("\teps=%e\t\tres=%e\n", eps, res);
+	} while(res != 1.);
 	
-	printf("\t\teps = %e \n\n",eps);
+	printf("\t\teps = %e \n\n", eps);
 
   return 0;
 }

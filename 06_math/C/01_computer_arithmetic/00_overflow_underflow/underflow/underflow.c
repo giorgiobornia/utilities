@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 
-/*What is the smallest representable number*/
+/* What is the smallest representable number */
 
 
 

@@ -14,10 +14,10 @@ int main() {
  
   The main function contains the program
 
- - commento con /* ...
+ - comment with /* ...
 
 
- - gcc file.c creates a.out
+ - "gcc file.c" creates a.out
  - ./a.out to run the program
 
   */

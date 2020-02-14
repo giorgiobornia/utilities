@@ -1,0 +1,2 @@
+Store the numbers 0.5, 0.25, 0.1 and 2.1 in float variables or double variables 
+Print them to terminal with scientific notation (%e), with varying number of significant digits in base 10 (6, 10, 16, 50)
