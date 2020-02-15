@@ -20,8 +20,8 @@ else
 }
 
 
-/* Visita in ordine anticipato, ricercando il sottoalbero con
-radice sa. Se lo reperisce assegna il suo indirizzo a *puntSa */
+/* Visita in ordine anticipato, ricercando il sottoalbero con radice sa.
+ * Se lo reperisce assegna il suo indirizzo a *puntSa */
 
 ricerca(struct nodo *p, char sa, struct nodo **puntSa)
 {

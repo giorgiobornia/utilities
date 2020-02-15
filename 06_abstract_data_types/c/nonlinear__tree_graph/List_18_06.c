@@ -1,6 +1,5 @@
-/* Dalla rappresentazione parentetica di un albero ricava il
-   corrispondente albero binario, che visita in ordine simmetrico,
-   anticipato e differito.
+/* Dalla rappresentazione parentetica di un albero ricava il corrispondente albero binario,
+ * che visita in ordine simmetrico, anticipato e differito.
    Per la creazione usa una funzione iterativa (non ricorsiva)
    con l'ausilio di una pila gestita mediante una lista lineare
    il cui campo inf e' un puntatore ai nodi dell'albero binario.
@@ -33,8 +32,9 @@ struct elemento *inserimento(struct elemento *, struct nodo *);
 struct elemento *eliminazione(struct elemento *, struct nodo **);
 int pilaVuota(struct elemento *);
 
-main()
+int main()
 {
+    
 struct nodo *radice;
 
 radice = albBinPar();
@@ -45,6 +45,7 @@ printf("\nVISITA IN ORDINE ANTICIPATO\n");
 anticipato(radice);
 printf("\nVISITA IN ORDINE DIFFERITO\n");
 differito(radice);
+
 }
 
 

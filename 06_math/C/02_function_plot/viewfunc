@@ -1,0 +1,23 @@
+#! /bin/bash
+
+# script per visualizzare la funzione desiderata attraverso gnuplot
+# !! gli spazi e le virgolette vanno mantenuti o lo script non funziona !!
+
+# se il programma ritorna gnuplot:command not found bisogna installarlo nel sistema
+# openSUSE  -> $> su -c 'zypper in gnuplot'
+# (K)Ubuntu -> $> sudo apt-get install gnuplot
+
+# inserire di seguito la funzione desiderata
+func="x*x*sin(x)-2."
+#inserire gli estremi dell'intervallo che si vuole visualizzare
+a="0"
+b="4"
+
+# !!! non editare i comandi successivi !!!
+echo
+echo "plot [$a:$b] $func, 0" > func.tmp
+echo "pause -1 \"premere invio per uscire...\"" >> func.tmp
+echo "exit" >> func.tmp
+gnuplot func.tmp
+rm func.tmp
+echo

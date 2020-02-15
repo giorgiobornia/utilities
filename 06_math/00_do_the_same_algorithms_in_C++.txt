@@ -1,0 +1,9 @@
+Do a class NonlinearEquation that contains
+
+- the data of the equation (interval [a,b], initial guess, etc...)
+- a function solve() that switches between different methods
+
+  This can be done with a Solver father class, and many children Bisection, Secant, Tangent, etc...
+
+
+Or, do a class Function with a method    compute_integral() that uses multiple ways

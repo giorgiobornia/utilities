@@ -1,6 +1,6 @@
 /* Creazione di un albero e visita in ordine anticipato.
-   L'albero viene immesso dall'utente informa parentetica
-   anticipata. L'etichetta dei nodi è un carattere. 
+   L'albero viene immesso dall'utente in forma parentetica anticipata. 
+   L'etichetta dei nodi è un carattere. 
    L'albero è implementato con liste multiple             */
 
 #include <stdio.h>
@@ -16,17 +16,18 @@ struct nodo *albero();
 struct nodo *creaAlbero(struct nodo *);
 void anticipato(struct nodo *);
 
-main()
+int main()
 {
+    
 struct nodo *radice;
 radice = albero();                /* creazione dell'albero */
 printf("\nVISITA IN ORDINE ANTICIPATO\n");
 anticipato(radice);
+
 }
 
 
-/* Legge il primo carattere della rappresentazione parentetica
-   e invoca la funzione creaAlbero()                         */
+/* Legge il primo carattere della rappresentazione parentetica e invoca la funzione creaAlbero()                         */
 struct nodo *albero()
 {
 struct nodo *p = NULL;
