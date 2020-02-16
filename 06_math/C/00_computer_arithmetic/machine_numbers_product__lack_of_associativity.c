@@ -4,33 +4,26 @@
 
 int main() {
 
- float a;
+ float a, b, c, s_1, s_2;
 
-//   a = 0.25;
-  a = 0.5;
-//   a = 0.1;
-  
-   printf("%.6e\n", a);
-   printf("%.10e\n", a);
-   printf("%.16e\n", a);
-   printf("%.50e\n", a);
-
-   printf("%.6f\n", a);
-   printf("%.10f\n", a);
-   printf("%.16f\n", a);
-   printf("%.50f\n", a);
+   a = 0.1;
+   b = 0.2;
+   c = 0.3;
    
-  a = 2.1;
+   s_1 = a + (b + c);
+   s_2 = (a + b) + c;
+   
   
-   printf("%.6e\n", a);
-   printf("%.10e\n", a);
-   printf("%.16e\n", a);
-   printf("%.50e\n", a);
+   printf("%.6e\n", s_1);
+   printf("%.10e\n", s_1);
+   printf("%.16e\n", s_1);
+   printf("%.50e\n", s_1);
 
-   printf("%.6f\n", a);
-   printf("%.10f\n", a);
-   printf("%.16f\n", a);
-   printf("%.50f\n", a);
+   printf("%.6e\n", s_2);
+   printf("%.10e\n", s_2);
+   printf("%.16e\n", s_2);
+   printf("%.50e\n", s_2);
+   
 
 return 0;
 }
