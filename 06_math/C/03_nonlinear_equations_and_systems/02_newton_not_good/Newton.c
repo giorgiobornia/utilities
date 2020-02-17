@@ -1,7 +1,7 @@
 /*
 	Title: Test subroutine newton.
 
-	This tests the subroutine 'newton' given in Section 4.2.
+	This tests the subroutine 'newton' given in Section 4.2. (Elementary Numerical Analysis, Atkinson)
 */
 
 #include <stdio.h>
