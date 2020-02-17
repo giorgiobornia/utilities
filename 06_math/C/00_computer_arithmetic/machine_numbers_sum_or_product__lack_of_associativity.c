@@ -1,17 +1,29 @@
 #include <stdio.h>
 
+#define OP +
 
+// #define MYTYPE float  //no difference is shown... how is it possible that with lower precision you don't have differences...
+#define MYTYPE double  //there are differences
 
 int main() {
 
- float a, b, c, s_1, s_2;
+ MYTYPE a, b, c, s_1, s_2;
 
-   a = 0.1;
+   a = 0.7;
    b = 0.2;
-   c = 0.3;
+   c = 0.1;
+
+   a = 7.;
+   b = 2.;
+   c = 1.;
    
-   s_1 = a + (b + c);
-   s_2 = (a + b) + c;
+//  these three are sums of powers of 2, so no roundoff error here   
+//    a = 0.25;
+//    b = 0.75;
+//    c = 0.5;
+
+   s_1 = a OP (b OP c);
+   s_2 = (a OP b) OP c;
    
   
    printf("%.6e\n", s_1);

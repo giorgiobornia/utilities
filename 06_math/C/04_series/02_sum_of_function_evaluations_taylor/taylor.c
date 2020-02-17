@@ -35,7 +35,7 @@ int main() {
 	
 	exactsum = fun(x);
 	
-	printf("taylorsum = %f\n exactsum = %f\n err_r = %f\n",taylorsum,exactsum,(taylorsum-exactsum)/(x-x0));
+	printf("taylorsum = %f\n exactsum = %f\n err_r = %f\n", taylorsum, exactsum, (taylorsum-exactsum)/(x-x0));
 	
 	return 0;
 }

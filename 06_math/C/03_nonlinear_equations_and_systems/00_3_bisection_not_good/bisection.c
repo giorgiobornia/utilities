@@ -13,7 +13,7 @@ float sign(float, float);
 void bisect(float(*f)(float), float, float, float, float *, int *);
  
 
-main()
+int main()
 {
 
 	float a, b, epsilon, root;
@@ -36,8 +36,7 @@ main()
 
 		/*  Print answers  */
 
-		printf("\n\n a = %11.4e     b = %11.4e     epsilon = %9.3e", 
-					a, b, epsilon);
+		printf("\n\n a = %11.4e     b = %11.4e     epsilon = %9.3e", a, b, epsilon);
 		printf("\n root = %14.7e     ier = %1d", root, ier);
 	} 
 	return 0;
@@ -67,20 +66,15 @@ void bisect(float(*f)(float), float a, float b, float eps,
 				float *root, int *ier)
 {
 /*
-	The program uses the bisection method to solve
-	the equation
+	The program uses the bisection method to solve the equation
 		f(x) = 0.
-	The solution is to be in [a,b] and it is assumed
-	that
+	The solution is to be in [a,b] and it is assumed that
 		f(a)*f(b) <= 0.
-	The solution is returned in root, and it is to
-	be in error by at most eps.
+	The solution is returned in root, and it is to be in error by at most eps.
 	
 	ier is an error indicator.
-	If ier=0 on completion of the routine, then the
-	solution has been computed satisfactorily.
-	If ier=1, then f(a)*f(b) was greater than 0,
-	contrary to assumption.
+	If ier=0 on completion of the routine, then the solution has been computed satisfactorily.
+	If ier=1, then f(a)*f(b) was greater than 0, contrary to assumption.
 */
 
 	const float zero = 0.0, one = 1.0, two = 2.0;
@@ -93,7 +87,7 @@ void bisect(float(*f)(float), float a, float b, float eps,
 	fb = (*f)(b);
 	sfa = sign(one, fa);
 	sfb = sign(one, fb);
-	if (sfa*sfb > 0.0)  
+	if (sfa * sfb > zero)  
 	{
 
 		/*  The choice of a and b is in error  */
@@ -105,7 +99,9 @@ void bisect(float(*f)(float), float a, float b, float eps,
 	/* Create a new value of c, the midpoint of [a,b]  */
 
 	while (1)  {
+        
 		c = (a + b)/two;
+        
 		if (fabs(b-c) <= eps)  
 		{
 			

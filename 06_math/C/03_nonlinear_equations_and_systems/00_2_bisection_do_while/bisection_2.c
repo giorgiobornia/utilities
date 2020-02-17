@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 
-/* definizione della funzione di cui si vuole calcolare
-   lo zero                                              */
+/* definizione della funzione di cui si vuole calcolare  lo zero */
 double func(double);
 
 int main() {
@@ -31,8 +30,8 @@ int main() {
     /* check per vedere se l'intervallo considerato e' adatto
        all'uitilizzo del metodo di bisezione                  */
     if(func(a0)*func(b0) > 0.) {
-	fprintf(stderr,"attenzione! l'intervallo inserito non e' corretto!\n");
-	return 2;
+    fprintf(stderr,"attenzione! l'intervallo inserito non e' corretto!\n");
+    return 2;
     }
 
     /* inizializzazione delle variabili */
@@ -51,7 +50,7 @@ int main() {
     do {
 	/* aggiornamento del numero di iterazioni eseguite */
 	n++;
-	c = 0.5*(a+b);
+	c = 0.5 * (a + b);
 	/* test per determinare se lo zero e' nella meta' sinistra o destra */
 	if (func(a)*func(c) < 0.) {
 	    b = c;
@@ -60,7 +59,7 @@ int main() {
 	    a = c;
 	}
 	err = fabs(c - c_old);
-	fprintf(outfile,"| %2d | %10.8f | %+e | %10.8f | %10.8f | %+e |\n",n,c,func(c),a,b,err);
+	fprintf(outfile,"| %2d | %10.8f | %+e | %10.8f | %10.8f | %+e |\n", n, c, func(c), a, b, err);
 	c_old = c;
     }
     while(err > eps);
@@ -74,6 +73,6 @@ int main() {
 /* funzione studiata */
 double func(double x) {
     double y;
-    y = exp(x)*sin(x)-x*x*x;
+    y = exp(x)*sin(x) - x*x*x;
     return y;
 } 
