@@ -1,71 +1,75 @@
 #include <stdio.h>
 #include <math.h>
 
-/* definizione della funzione di cui si vuole calcolare  lo zero */
+/* function definition whose root you want to compute */
 double func(double);
 
 int main() {
 
-    /* numero di iterazioni */
+    /* iteration counter */
     int n;
-    /* punti di partenza, soluzione, soluzioni vecchia, precisione
-       desiderata, errore                                          */
-    double a,a0,b0,b,c,c_old,eps,err;
+    /* punti di partenza, soluzione, soluzioni vecchia, precisione desiderata, errore */
+    double a, a0, b0, b, c, c_old, eps, err;
 
-    FILE *infile;
-    FILE *outfile;
+    FILE * infile;
+    FILE * outfile;
 
-    /* apertura del file di input e lettura delle variabili */
+    /* input file opening */
     infile = fopen("bisez2.in","r");
     if (infile != NULL) {
-	fscanf(infile,"%lf",&a0);
-	fscanf(infile,"%lf",&b0);
-	fscanf(infile,"%lf",&eps);
+	fscanf(infile,"%lf", &a0);
+	fscanf(infile,"%lf", &b0);
+	fscanf(infile,"%lf", &eps);
     }
     else {
-	fprintf(stderr,"errore nel file di input!\n");
+      fprintf(stderr, "error in input file!\n");
 	return 1;
     }
 
     /* check per vedere se l'intervallo considerato e' adatto
        all'uitilizzo del metodo di bisezione                  */
-    if(func(a0)*func(b0) > 0.) {
-    fprintf(stderr,"attenzione! l'intervallo inserito non e' corretto!\n");
-    return 2;
+    if( func(a0) * func(b0) > 0.) {
+    fprintf(stderr, "beware! the interval is not correct!\n");
+      return 2;
     }
 
-    /* inizializzazione delle variabili */
+    /* variable initialization */
     n = 0;
     a = a0;
     b = b0;
 
-    /* apertura del file di output e scrittura della intestazione */
+    /* output file opening */
     outfile = fopen("bisez2.out","w");
     fprintf(outfile,"-----------------------------------------------------------------------------\n");
     fprintf(outfile,"| it |      c     |      f(c)     |      a     |      b     |       err     |\n");
     fprintf(outfile,"-----------------------------------------------------------------------------\n");
   
 
-    /* la condizione del while e' determinata dalla precisione cercata */
     do {
-	/* aggiornamento del numero di iterazioni eseguite */
-	n++;
-	c = 0.5 * (a + b);
-	/* test per determinare se lo zero e' nella meta' sinistra o destra */
-	if (func(a)*func(c) < 0.) {
-	    b = c;
-	}
-	else {
-	    a = c;
-	}
-	err = fabs(c - c_old);
-	fprintf(outfile,"| %2d | %10.8f | %+e | %10.8f | %10.8f | %+e |\n", n, c, func(c), a, b, err);
-	c_old = c;
+        
+	/* counter update */
+    	n++;
+	    c = 0.5 * (a + b);
+    
+    	/* test to see if you are to the left or the right */
+    	if (func(a) * func(c) < 0.) {
+    	    b = c;
+     	}
+    	else {
+	        a = c;
+    	}
+	
+        /* control on abscissas */
+    	err = fabs(c - c_old);
+    
+    	fprintf(outfile,"| %2d | %10.8f | %+e | %10.8f | %10.8f | %+e |\n", n, c, func(c), a, b, err);
+    
+    	c_old = c;
     }
     while(err > eps);
 
-    /* risultato finale a schermo */
-    fprintf(stdout,"Zero calcolato nell'intervallo (%f,%f) con precisione %e.\n c = %12.10f in %d iterazioni\n",a0,b0,eps,c,n);
+    /* final result to screen */
+    fprintf(stdout, "Zero calcolato nell'intervallo (%f,%f) con precisione %e.\n c = %12.10f in %d iterazioni\n", a0, b0, eps, c, n);
 
     return 0;
 }
@@ -73,6 +77,6 @@ int main() {
 /* funzione studiata */
 double func(double x) {
     double y;
-    y = exp(x)*sin(x) - x*x*x;
+    y = exp(x) * sin(x) - x * x * x;
     return y;
 } 

@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 
-/* definizione della funzione di cui si vuole calcolare
-   lo zero                                              */
+/* definition of the function whose root you want to compute */
 double func(double);
 
 int main() {
@@ -45,13 +44,15 @@ int main() {
 
   /* la condizione del while e' determinata dalla precisione cercata */
   while(err > eps) {
+      
     /* aggiornamento del numero di iterazioni eseguite */
     n++;
 
-    /* calcolo della nuova soluzione secondo la formula di Newton-Raphson */
-    x = x_old-func(x_old)*(x_old-x_old2)/(func(x_old)-func(x_old2));
+    /* calcolo della nuova soluzione */
+    x = x_old - func(x_old) * (x_old - x_old2) / ( func(x_old) - func(x_old2) );
+    
     /* calcolo dell'errore assoluto */
-    err = fabs(x-x_old);
+    err = fabs(x - x_old);
 
     fprintf(outfile,"| %2d | %12.10f | %e | %+e |\n",n,x,err,func(x));
     x_old2 = x_old;
@@ -59,16 +60,17 @@ int main() {
   }
 
   /* risultato finale a schermo */
-  fprintf(stdout,"Zero calcolato a partire da x0 = %f con precisione %e.\n x = %12.10f in %d iterazioni\n",
-          x0,eps,x,n);
+  fprintf(stdout, "Zero calcolato a partire da x0 = %f con precisione %e.\n x = %12.10f in %d iterazioni\n", x0, eps, x, n);
 
   return 0;
 }
 
 /* funzione studiata */
 double func(double x) {
+    
   double y;
-  y = x*x*sin(x)-2.;
+  y = x * x * sin(x) - 2.;
   return y;
+  
 }   
 
