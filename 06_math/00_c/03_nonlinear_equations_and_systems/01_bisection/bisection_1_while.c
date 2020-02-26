@@ -6,6 +6,16 @@
    In that interval the function is assumed to be continuous and to have at most one zero.
  */
 
+/* COMMENTS
+ * - fprintf to stderr or stdout
+ * - Read inputs from file with fscanf
+ * - The a priori knowledge of some function properties is required.
+ * - At each cycle the interval is halved.
+ * - You need to initialize the error to properly trigger the while loop.
+ * - Error control either on abscissas or on ordinates.
+ */
+
+
 double fun(double);
 
 
@@ -14,16 +24,17 @@ int main() {
 	int n;
 	double a, b, c, eps, err, err_old;
 	
-	FILE *bis_file;
+	FILE * bis_file;
+    
 	bis_file = fopen("bisez.in", "r");
 	fscanf(bis_file, "%lf", &a);
 	fscanf(bis_file, "%lf", &b);
 	fscanf(bis_file, "%lf", &eps);
 	
-	printf(" a= %f b = %f\n eps = %f\n", a, b, eps);
+	printf("a= %f, b = %f\n, eps = %f\n", a, b, eps);
 	
- 	if( fun(a)*fun(b) >= 0. ) {
-		fprintf(stderr,"f(a)*f(b) > 0!! No zeros in the interval\n");
+ 	if( fun(a) * fun(b) >= 0. ) {
+		fprintf(stderr,"f(a) * f(b) > 0!! No zeros in the interval\n");
 		return 1;
 	}
 	
@@ -39,16 +50,14 @@ int main() {
 		if( fun(a) * fun(c) < 0.) {
 			b = c;
 		}
-		else if( fun(a) * fun(c) == 0.) {
-			printf("incredible! I found the exact zero!! c = %f", c);  /* this will most likely never happen */
-			return 0;
-		}
 		else {
 			a = c;
 		}
 		
-		/* control on ordinates */
+		/* control on ordinate */
 		err = fabs(fun(c));
+//         /* control on abscissa change: with this the convergence rate is always 0.5 */
+//         err = fabs(b - a);
         
 		printf("conv_rate = %e\n", err/err_old);
         
@@ -64,16 +73,10 @@ double fun(double x) {
 
 	double y;
 	y = sin(x - 0.1);
-	
+//     y =  x * x - x;
+// 	y = exp(x) + x - 2.;  /* zero ~= 0442854 */
+    
 	return y;
 }
 
 
-/* COMMENTS
- * - fprintf to stderr or stdout
- * - Use of input file for input data
- * - The a priori knowledge of some function properties is required.
- * - At each cycle the interval is halved.
- * - You need to initialize the error to properly trigger the while loop.
- * - Error control either on abscissas or on ordinates.
- */

@@ -69,14 +69,19 @@ int main() {
     while(err > eps);
 
     /* final result to screen */
-    fprintf(stdout, "Zero calcolato nell'intervallo (%f,%f) con precisione %e.\n c = %12.10f in %d iterazioni\n", a0, b0, eps, c, n);
+    fprintf(stdout, "Found zero in the interval (%f,%f) with precision %e.\n c = %12.10f in %d iterations\n", a0, b0, eps, c, n);
 
     return 0;
 }
 
 /* funzione studiata */
 double func(double x) {
+    
     double y;
-    y = exp(x) * sin(x) - x * x * x;
+    y = exp(x) * sin(x) - x * x * x;   /* zero about 1.8 in 1.-3. */
+//  y = exp(x) + x - 2.;               /* zero ~= 0442854 */
+//  y = sin(x - 0.1);
+//     y =  x * x - x;
     return y;
-} 
+    
+}
