@@ -54,8 +54,8 @@ int main() {
     /* initialization */
     n_max = 50;
     
-      x0 = -0.1;
-     eps = 0.0000001;
+      x0 = 0.4;
+     eps = 1.e-7;
 
     x     = x0;
     x_old = x0;
@@ -79,7 +79,7 @@ int main() {
 	/* error on abscissa change */
 	 err = fabs(x - x_old);
 	
-// 	fprintf(outfile,"| %2d | %16.10f | %16.10e | %+e |\n", n, x, err, func(x));
+	fprintf(stdout/*outfile*/, "| %2d | %16.10f | %16.10e | %+e |\n", n, x, err, func(x));
     
 	/* update old with new */
 	x_old = x;

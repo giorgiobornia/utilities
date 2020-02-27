@@ -3,6 +3,35 @@
 
 /* Zero di una funzione con il metodo di Newton-Raphson */
 
+
+/*
+ Commenti:
+ Qui non si parte da un intervallo predefinito.
+ Prima l'algoritmo di bisezione richiedeva di isolare 
+ un intervallo in cui la funzione era continua e aveva un solo zero.
+ Qui si vuole annullare la funzione in un punto che non
+ si sa dove sia, e si parte da un altro punto che non si sa
+ se sia quello in cui si annulla la funzione.
+- E' richiesta la conoscenza SIA della funzione
+  SIA della sua derivata prima.
+- Problema:
+  C'e' un raggio di convergenza per ogni zero,
+  non e' detto che si sappia calcolare precisamente
+  ma di solito ci sono delle stime per maggiorazione,
+  e questo raggio di convergenza e' FINITO, magari anche molto piccolo.
+  Quindi, se parti da un punto ottieni qualcosa,
+  se parti da un altro punto ottieni qualcos'altro.
+  - Sicuramente se un dato punto intorno al punto che vuoi considerare
+    va a convergere dentro un altro zero, allora quel punto
+    non sta dentro il raggio di convergenza dello zero
+    che io considero. E' un modo per determinare 
+    il raggio di convergenza "per tentativi",
+    come l'algoritmo dell'avvicinamento decimale per il calcolo degli zeri
+    
+    - think of passing function and derivative as FUNCTION POINTERS
+ */
+
+
 /* definizione della funzione di cui si vuole calcolare lo zero e della sua derivata */
 double func(double);
 double fprime(double);
