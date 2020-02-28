@@ -54,7 +54,7 @@ int main() {
     /* initialization */
     n_max = 50;
     
-      x0 = 0.4;
+      x0 = 0.9;
      eps = 1.e-7;
 
     x     = x0;
