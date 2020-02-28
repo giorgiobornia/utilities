@@ -1,62 +1,63 @@
 /*	
-	Title: Test subroutine tridgl
-	
-	This tests the subroutine 'tridgl' given in section 8.4.
+ * Double-sweep method for the solution of tridiagonal systems
 */
       
 #include <stdio.h>
 #include <math.h>
 
-#define MAX_N	200
+#define MAX_N   200
 
-void tridgl(float a[], float b[], float c[], float f[],
-				int n, int iflag, int *ier);
+#define REAL_TYPE double
 
-main()
-{
-	float a[MAX_N+1],b[MAX_N+1], c[MAX_N+1], f[MAX_N+1];
+void tridgl(REAL_TYPE a[], REAL_TYPE b[], REAL_TYPE c[], REAL_TYPE f[], int n, int iflag, int *ier);
+
+
+int main() {
+    
+	REAL_TYPE a[MAX_N + 1], b[MAX_N + 1], c[MAX_N + 1], f[MAX_N + 1];
 	int n, ier, i, j, iflag;
 
 	/*  Input the system to be solved  */
       
-	printf("\n What is order n of system? : ");
+	printf("\n What is the size n of the square tridiagonal system? : ");
 	scanf("%d", &n);
 
-	printf("\n Give the equation coefficients ");
-	printf("\n Give them one equation at a time ");
-	printf("\n Give only the elements of the ");
-	printf("\n subdiagonal, diagonal, and ");
-	printf("\n superdiagonal, as appropriate ");
-	printf("\n Also include the equation's right side\n ");
+	printf(" Give the equation coefficients\n ");
+	printf(" Give them one equation at a time\n ");
+	printf(" Give only the elements of the\n ");
+	printf(" subdiagonal, diagonal, and superdiagonal, as appropriate\n ");
+	printf(" Also include the equation's right-hand side\n ");
 
 	printf("\n Give b[1], c[1], rhs[1] for equation 1 : ");
 	scanf("%f %f %f", &b[1], &c[1], &f[1]);
-	for (i=2; i <= n-1; i++)  
-	{
+    
+	for (i = 2; i <= n-1; i++)  {
 		printf("\n Give a[i], b[i], c[i], rhs[i] for equation %d : ", i);
 		scanf("%f %f %f %f", &a[i], &b[i], &c[i], &f[i]);
 	}
-	printf("\n Give a(n), b(n), rhs(n) for equation %d : ", n);
+	
+	printf("\n Give a[n], b[n], rhs(n) for equation %d : ", n);
 	scanf("%f %f %f", &a[n], &b[n], &f[n]);
 	
 	/*  Call subroutine tridgl to solve the tridiagonal system  */
-      	
 	iflag = 0;
-	tridgl(a,b,c,f,n,iflag,&ier);
+    
+	tridgl(a, b, c, f, n, iflag, &ier);
 	
+    
 	/*  Output the solution of the system  */
       	
 	printf("\n Solutions ");
 	printf("\n  i      x[i] ");
-	for (j=1; j <= n; j++)
-		printf("\n %d   %e", j, f[j]);
+	for (j = 1; j <= n; j++)  printf("\n %d   %e", j, f[j]);
+    
 	printf("\n");
+    
 }
 
       
 
-void tridgl(float a[], float b[], float c[], float f[] ,
-			int n, int iflag, int *ier)
+void tridgl(REAL_TYPE a[], REAL_TYPE b[], REAL_TYPE c[], REAL_TYPE f[], int n, int iflag, int *ier)
 {
 /*
 	This solves a tridiagonal system of linear equations  m*x=f.
@@ -83,39 +84,38 @@ void tridgl(float a[], float b[], float c[], float f[] ,
 	no solution was attempted.
 */
 
- 	const float zero = 0.0;
+ 	const REAL_TYPE zero = 0.0;
 
 	int j;
       
-	if (iflag == 0)  
-	{
+	if (iflag == 0) {
 		/*  Compute LU factorization of matrix m  */
           
-		for (j=2; j <= n; j++)  
-		{
-			if (b[j-1] == zero)  
-			{
+		for (j = 2; j <= n; j++)  {
+            
+			if (b[j-1] == zero)  {
 				*ier = 1;
 				return;
 			}
 			a[j] = a[j]/b[j-1];
-			b[j] = b[j] - a[j]*c[j-1];
-			}
-			if (b[n] == zero)  
-			{
+			b[j] = b[j] - a[j] * c[j-1];
+            
+		}
+		
+			if (b[n] == zero)  {
 				*ier = 1;
 				return;
 			}
-		}
+	}
 
-		/*  Compute solution x to m*x=f  */
+		/*  Compute solution x to m * x = f  */
       
-		for (j=2; j <= n; j++)
-			f[j] = f[j] - a[j]*f[j-1];
+		for (j = 2; j <= n; j++)
+			f[j] = f[j] - a[j] * f[j-1];
       	f[n] = f[n]/b[n];
 
-      	for (j=n-1; j >= 1; j--)
-			f[j] = (f[j] - c[j]*f[j+1])/b[j];
+      	for (j = n-1; j >= 1; j--)
+			f[j] = (f[j] - c[j] * f[j+1]) / b[j];
 
       	*ier = 0;
       	return;
