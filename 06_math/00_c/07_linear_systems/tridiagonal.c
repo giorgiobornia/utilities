@@ -8,6 +8,11 @@
 #define MAX_N   200
 
 #define REAL_TYPE double
+#define REAL_FORMAT %lf
+#define REAL_SCANF_THREE  "%lf %lf %lf"
+#define REAL_SCANF_FOUR   "%lf %lf %lf %lf"
+
+
 
 void tridgl(REAL_TYPE a[], REAL_TYPE b[], REAL_TYPE c[], REAL_TYPE f[], int n, int iflag, int *ier);
 
@@ -22,22 +27,21 @@ int main() {
 	printf("\n What is the size n of the square tridiagonal system? : ");
 	scanf("%d", &n);
 
-	printf(" Give the equation coefficients\n ");
-	printf(" Give them one equation at a time\n ");
-	printf(" Give only the elements of the\n ");
-	printf(" subdiagonal, diagonal, and superdiagonal, as appropriate\n ");
-	printf(" Also include the equation's right-hand side\n ");
+	printf(" Give the equation coefficients, one equation at a time\n");
+	printf(" Give only the elements of the subdiagonal, diagonal, and superdiagonal\n");
+	printf(" Also include the equation's right-hand side\n");
 
 	printf("\n Give b[1], c[1], rhs[1] for equation 1 : ");
-	scanf("%f %f %f", &b[1], &c[1], &f[1]);
+	scanf(REAL_SCANF_THREE, &b[1], &c[1], &f[1]);
     
 	for (i = 2; i <= n-1; i++)  {
 		printf("\n Give a[i], b[i], c[i], rhs[i] for equation %d : ", i);
-		scanf("%f %f %f %f", &a[i], &b[i], &c[i], &f[i]);
+		scanf(REAL_SCANF_FOUR, &a[i], &b[i], &c[i], &f[i]);
 	}
 	
 	printf("\n Give a[n], b[n], rhs(n) for equation %d : ", n);
-	scanf("%f %f %f", &a[n], &b[n], &f[n]);
+	scanf(REAL_SCANF_THREE, &a[n], &b[n], &f[n]);
+    
 	
 	/*  Call subroutine tridgl to solve the tridiagonal system  */
 	iflag = 0;
@@ -47,8 +51,8 @@ int main() {
     
 	/*  Output the solution of the system  */
       	
-	printf("\n Solutions ");
-	printf("\n  i      x[i] ");
+	printf("Solutions\n");
+	printf("  i      x[i] ");
 	for (j = 1; j <= n; j++)  printf("\n %d   %e", j, f[j]);
     
 	printf("\n");
@@ -60,7 +64,7 @@ int main() {
 void tridgl(REAL_TYPE a[], REAL_TYPE b[], REAL_TYPE c[], REAL_TYPE f[], int n, int iflag, int *ier)
 {
 /*
-	This solves a tridiagonal system of linear equations  m*x=f.
+	This solves a tridiagonal system of linear equations  m * x = f.
 
 	Input:
 	The order of the linear system is given by  n.
@@ -69,19 +73,16 @@ void tridgl(REAL_TYPE a[], REAL_TYPE b[], REAL_TYPE c[], REAL_TYPE f[], int n, i
 		m(i,i-1) = a(i),  i=2,...,n
 		m(i,i)   = b(i),  i=1,...,n
 		m(i,i+1) = c(i),  i=1,...,n-1
-	iflag=0 means that the original matrix  m  is given as
-	specified above.
+	iflag=0 means that the original matrix  m  is given as specified above.
 	iflag=1 means that the lu factorization of  m  is already known
-	and is stored in  a,b, and c. This will have been accomplished
-	by a previous call to this subroutine.
+	and is stored in  a,b, and c. 
+	This will have been accomplished by a previous call to this subroutine.
 
 	Output:
-	Upon exit, the LU factorization of  m  will be stored
-	in  a,b, and c.
+	Upon exit, the LU factorization of  m  will be stored in  a, b, and c.
 	The solution vector  x  will be returned in  f.
 	ier=0 means the program was completed satisfactorily.
-	ier=1 means that a zero pivot element was encountered, and
-	no solution was attempted.
+	ier=1 means that a zero pivot element was encountered, and no solution was attempted.
 */
 
  	const REAL_TYPE zero = 0.0;
