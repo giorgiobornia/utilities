@@ -1,7 +1,7 @@
 /* Compute area of a rectangle, use scanf */
 #include <stdio.h>
 
-main()
+int main()
 {
 
     int base, height, area;

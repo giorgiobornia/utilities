@@ -1,12 +1,11 @@
 #include <stdio.h>
 
-main()
-{
+int main() {
+
    double valore;
    char buf[31], nome[31];
 
-   printf("Inserire una variabile nel formato \
-   \"nome = <valore>\":");
+   printf("Inserire una variabile nel formato \"nome = <valore>\":");
    gets(buf);
 
    /* Con sscanf() si separa il nome dal valore */

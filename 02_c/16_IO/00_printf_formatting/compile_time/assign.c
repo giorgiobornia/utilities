@@ -6,7 +6,7 @@
 
 int main () {
 
- double a,b,c;
+ double a, b, c;
  
           printf("a = %+-28.15e, b = %+-28.15e, c = %+-28.15e \n",a,b,c);
 

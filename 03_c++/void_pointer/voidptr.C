@@ -6,35 +6,46 @@ using namespace std;
 
 typedef void* VoidPtr;
 
-class VoidVector
-{
+
+class VoidVector {
+
 public:
-VoidVector(int nArraySize)
-{
+
+    VoidVector(int nArraySize) {
 // store off the number of elements
 nSize = nArraySize;
 ptr = new VoidPtr[nArraySize];
 reset();
 }
+
 int size() { return nWriteIndex; }
+
 void reset() { nWriteIndex = 0; nReadIndex = 0; }
-void add(void* pValue)
-{
-if (nWriteIndex < nSize)
-{
-ptr[nWriteIndex++] = pValue;
+
+void add(void* pValue) {
+  if (nWriteIndex < nSize)
+  {
+    ptr[nWriteIndex++] = pValue;
+  }
 }
-}
+
 VoidPtr get(){ return ptr[nReadIndex++]; }
+
 protected:
+    
 int nSize;
 int nWriteIndex;
 int nReadIndex;
 VoidPtr* ptr;
+
+
 };
-int main(int argc, char* pArgs[])
-{
-// create a vector
+
+
+
+int main(int argc, char* pArgs[]) {
+
+    // create a vector
 VoidVector vv(10);
 // add values to the vector
 cout << "Give me a series integer values to add to a vector\n"
@@ -58,6 +69,7 @@ for(int i = 0; i < vv.size(); i++)
 int* p = (int*)vv.get();
 cout << i << ":" << *p << endl;
 }
+
 return 0;
 }
 
