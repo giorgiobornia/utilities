@@ -2,8 +2,8 @@
 
 #include <stdio.h>
 
-main()
-{
+int main() {
+    
 char buf[100];   /* buffer per la lettura */
 FILE *fp;        /* file pointer */
 long nc;         /* contatore caratteri */

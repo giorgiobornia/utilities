@@ -73,5 +73,3 @@ cout << i << ":" << *p << endl;
 return 0;
 }
 
-
- 

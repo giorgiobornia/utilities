@@ -1,10 +1,10 @@
-/* Scrittura di una stringa in un file */
+/* Write a string to file */
 
 #include <stdio.h>
 #include <string.h>
 
-main()
-{
+int main() {
+    
   char buf[100];        /* buffer */
   FILE *fp;             /* file pointer */
   int len;

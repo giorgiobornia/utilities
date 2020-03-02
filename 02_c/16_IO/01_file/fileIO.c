@@ -3,8 +3,7 @@
 
 
 
-int main()
-{
+int main() {
   FILE* foutp;
   
   foutp = fopen("file.out","a");

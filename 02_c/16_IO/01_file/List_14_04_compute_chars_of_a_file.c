@@ -1,9 +1,8 @@
-/* Determinazione del numero di caratteri di un file
-con fseek() e ftell()	 				 	         */
+/* Compute number of chars of a file with fseek() and ftell() */
 
 #include <stdio.h>
 
-main(int argc, char **argv)
+int main(int argc, char **argv)
 {
 FILE *fp;
 long n;

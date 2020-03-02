@@ -4,25 +4,26 @@
   FORMATTING printf
  */
 
-int main () {
+int main() {
 
  double a, b, c;
  
-          printf("a = %+-28.15e, b = %+-28.15e, c = %+-28.15e \n",a,b,c);
+          printf("a = %+-28.15e, b = %+-28.15e, c = %+-28.15e \n", a, b, c);
 
  a = 3.;
-          printf("a = %+-28.15e, b = %+-28.15e, c = %+-28.15e \n",a,b,c);
+          printf("a = %+-28.15e, b = %+-28.15e, c = %+-28.15e \n", a, b, c);
 
  b = 0.1;
-          printf("a = %+-28.15e, b = %+-28.15e, c = %+-28.15e \n",a,b,c);    
+          printf("a = %+-28.15e, b = %+-28.15e, c = %+-28.15e \n", a, b, c);    
 
  c = a + b;
 
-          printf("a = %+-28.15e, b = %+-28.15e, c = %+-28.15e \n",a,b,c);
+          printf("a = %+-28.15e, b = %+-28.15e, c = %+-28.15e \n", a, b, c);
 	  
 	  
 return 0;
 }
+
 
 /*Variable assignment
  - assign one by one

@@ -1,3 +1,5 @@
+/* People registry */
+
 #include <stdio.h>
 #include <string.h>
 
@@ -20,8 +22,7 @@ struct per {
 /* Puntatore al file */
 FILE *fp;
 
-/* La variabile di appoggio anag per le operazioni
-sul file    								      */
+/* La variabile di appoggio anag per le operazioni sul file */
 struct per anag;
 
 int menPer(void);
@@ -34,10 +35,12 @@ void visPer(void);
 void visAnagrafe(void);
 
 /* Presenta il menu e lancia la funzione scelta */
-void main()
-{
+
+void main() {
 int scelta = MENU;
+
 while(scelta!=OUT) {
+    
   switch(scelta) {
     case MENU:
       scelta = menPer();
@@ -59,13 +62,18 @@ while(scelta!=OUT) {
   case VIS:
       visAnagrafe();
       scelta = MENU;
-      break;}
-}
+      break;
+      
+  }
+
+ }
+
+    
 }
 
+
 /* Menu */
-int menPer(void)
-{
+int menPer(void) {
 int scelta;
 char invio;
 int vero = 1;

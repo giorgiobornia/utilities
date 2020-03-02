@@ -1,9 +1,12 @@
+
+
 #include <stdio.h>
 #include <string.h>
 
 #define DIM 31
 #define TAPPO "X_Y_Z"
 
+/* Semplice struttura che modella una persona */
 struct per {
   char cognome[DIM];
   char nome[DIM];

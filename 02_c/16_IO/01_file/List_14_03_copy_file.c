@@ -1,9 +1,9 @@
-/* Copia di un file su un altro */
+/* Copy a file */
 
 #include <stdio.h>
 
-main()
-{
+int main() {
+    
 FILE *fpin, *fpout;    /* file pointer */
 char buf[512];         /* buffer dati */
 int n;
@@ -28,4 +28,5 @@ fpout = fopen("ordini.bak", "w");     /* crea  ordini.bak */
 else
 /* Errore di apertura */
   printf("Il file ordini non esiste\n");
+  
 }

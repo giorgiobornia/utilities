@@ -3,8 +3,8 @@
 
 #include <stdio.h>
 
-main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
+
 char buf[100];
 int linee;
 FILE *fp;

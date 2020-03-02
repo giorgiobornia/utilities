@@ -1,4 +1,4 @@
-/* Copia il contenuto di un file in un altro */
+/* Copy file */
 
 #include <stdio.h>
 #include <fcntl.h>

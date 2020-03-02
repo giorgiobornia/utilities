@@ -15,7 +15,8 @@ int main()  {
   scanf("%d", &n);
   
  /*first do while loop: The first check on the condition is done at the END of the FIRST CYCLE
- Here we divide by 10 the given number of iterations to know how many decimal digits nn has
+ Here we divide by 10 the given number of iterations to know how many decimal digits n has
+ That width will be used later to allow for 
  */
 
   nn = n;  /* desired number of iterations */
@@ -33,7 +34,7 @@ int main()  {
  
    do {
     i--;
-    printf("\tcounter\t:%*d:\n", w, i);
+    printf("\tcounter\t:%*d:\n", w, i); /* Here, the first number is for *, the second number is for d */
   } while(i > 0);
   
 

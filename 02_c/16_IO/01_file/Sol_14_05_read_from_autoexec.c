@@ -1,6 +1,7 @@
 #include <stdio.h>
-main()
-{
+
+int main() {
+    
 int i;
 FILE	*fp;
 char	sequenza[80];
