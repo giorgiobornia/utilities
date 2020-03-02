@@ -8,7 +8,7 @@ struct automobile {
   int venduto;
 };
 
-main()
+int main()
 {
 struct automobile a1, a2;
 

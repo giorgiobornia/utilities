@@ -7,9 +7,9 @@
 # openSUSE  -> $> su -c 'zypper in gnuplot'
 # (K)Ubuntu -> $> sudo apt-get install gnuplot
 
-# inserire di seguito la funzione desiderata
+# desired function
 func="x*x*sin(x)-2."
-#inserire gli estremi dell'intervallo che si vuole visualizzare
+# extremes of the interval
 a="0"
 b="4"
 

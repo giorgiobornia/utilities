@@ -2,14 +2,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #define OUTFILE "f4.dat"
+
 /* ---------------------------------------- *
- * Dati per il grafico di f(x)              *
+s * Dati per il grafico di f(x)              *
  * -----------------------------------------*/
 
 double fx(double);
 /* ---------------------------------------- */
-main ()
-{
+int main () {
+    
   FILE *fp;
   int i,n;
   double a,b,h,x;
@@ -30,13 +31,11 @@ main ()
   h = (b-a)/(double)n;
 
   /* *********************************** *
-   * 2 - stampa i valori delle ascissa   *
-   *     e delle ordinate                *
+   * 2 - stampa i valori delle ascissa e delle ordinate                *
    * *********************************** */
   x = a;
   for (i=0; i<=n; i++) {
-    fprintf(fp,"%9.6f  %10.6f \n",
-	    x,fx(x));
+    fprintf(fp,"%9.6f  %10.6f \n", x, fx(x));
     x += h;
   }
   fprintf(fp,"\n");
@@ -45,19 +44,18 @@ main ()
   fclose(fp);
 }
 
+
 /* ---------------------------------------- */
 double fx(double x)
 {
   double y,pihalf;
   
   pihalf = asin(1.);
-  y = 0.25*x*x*x*x - 2.*x*x*x +            
-    x*x - 5.*x + 8.;                    
-
-
+  y = 0.25*x*x*x*x - 2.*x*x*x + x*x - 5.*x + 8.;                    
 
   return(y);
 }
+
 /* ---------------------------------------- *
  * f1:                                      *
  * y = 4.*sin(x) + 1. - x;                  *
@@ -72,8 +70,7 @@ double fx(double x)
  * b = 3.;  a = -3.;                        *
  * ---------------------------------------- *
  * f4:                                      *
- * y = 0.25*x*x*x*x - 2.*x*x*x +            *
- *      x*x - 5.*x + 8.;                    *
+ * y = 0.25*x*x*x*x - 2.*x*x*x +  x*x - 5.*x + 8.;    *
  * b = 4.;  a = -2.;                        *
  * ---------------------------------------- *
  * f5:                                      *
