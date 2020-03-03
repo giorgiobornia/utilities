@@ -1,0 +1,225 @@
+<html><head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>C Operator Precedence Table</title>
+</head>
+
+<body style="background-color: rgb(192, 192, 192);" vlink="#0000FF">
+
+  <center>
+  <table border="0" cellpadding="0" cellspacing="0" width="640">
+    <tbody><tr>
+      <td align="left" width="100%">
+        <h1 style="margin-top: 0; margin-bottom: 0">C Operator Precedence and 
+		Associativity</h1>
+		<h3 style="margin-top: 0; margin-bottom: 0">C Programming (COP-2220)</h3>
+        <p><map name="FPMap0">
+		<area href="http://www.difranco.net/" shape="rect" coords="0, 0, 126, 17">
+		<area href="http://www.difranco.net/faq.htm" shape="rect" coords="130, 0, 255, 17">
+		<area href="http://www.difranco.net/search.htm" shape="rect" coords="258, 0, 383, 17">
+		<area href="http://www.difranco.net/feedback.htm" shape="rect" coords="386, 0, 510, 17">
+		<area href="http://www.difranco.net/progstuff/proglinks.htm" shape="rect" coords="515, 0, 636, 17">
+		</map>
+		<img src="op-prec_files/navbar5.gif" usemap="#FPMap0" border="0" height="18" width="640"></p>
+        <blockquote>
+        This page lists C operators in order of <i>precedence</i> (highest to 
+        lowest). Their <i>associativity</i> indicates in what order operators of equal 
+        precedence in an expression are applied.</blockquote>
+                  
+          
+       
+          <div align="center">
+                  
+          
+       
+          <center>
+            </center><table style="border-collapse: collapse;" border="1" bordercolor="#111111" cellpadding="2" cellspacing="0" width="90%">
+            <tbody><tr>
+              <th>
+                <p align="center"><b>Operator</b></p>
+              </th>
+              <th>
+                <b>Description</b></th>
+              <th>
+                <p align="center"><b>Associativity</b></p></th>
+            </tr>
+  <tr>
+              <td align="center"><font face="Courier New" size="3">()<br>
+              []<br>
+              .<br>
+                -&gt;<br>
+				++&nbsp; --</font></td>
+              <td>Parentheses (function call) (see Note 1)<br>
+              Brackets (array subscript)<br>
+              Member selection via object name<br>
+              Member selection via pointer<br>
+				Postfix increment/decrement (see Note 2)</td>
+              <td valign="top">
+                <p align="center">left-to-right</p>
+              </td>
+            </tr>
+            <tr>
+              <td align="center"><font size="3"><font face="Courier New">++&nbsp;
+              --<br>
+              +&nbsp;
+              -<br>
+              !&nbsp;
+              ~<br>
+              (<i>type</i>)<br>
+              *<br>
+              &amp;<br>
+              sizeof</font>&nbsp;</font>&nbsp;</td>
+              <td>Prefix increment/decrement<br>
+              Unary plus/minus<br>
+              Logical negation/bitwise complement<br>
+              Cast (change <i>type</i>)<br>
+              Dereference<br>
+              Address<br>
+              Determine size in bytes</td>
+              <td align="center" valign="top">right-to-left</td>
+            </tr>
+            <tr>
+              <td align="center"><font face="Courier New">*&nbsp;
+              /&nbsp;
+              %</font></td>
+              <td>Multiplication/division/modulus</td>
+              <td align="center" valign="top">left-to-right</td>
+            </tr>
+            <tr>
+              <td align="center"><font face="Courier New" size="3">+&nbsp;
+              -</font></td>
+              <td>Addition/subtraction</td>
+              <td align="center" valign="top">left-to-right</td>
+            </tr>
+            <tr>
+              <td align="center"><font face="Courier New" size="3">&lt;&lt;&nbsp;
+              &gt;&gt;</font></td>
+              <td>Bitwise shift left,
+              Bitwise shift right</td>
+              <td align="center" valign="top">left-to-right</td>
+            </tr>
+            <tr>
+              <td align="center"><font face="Courier New">&lt;&nbsp;
+              &lt;=<br>
+                &gt;&nbsp;
+              &gt;=</font></td>
+              <td>Relational less than/less than or equal to<br>
+              Relational greater than/greater than or equal to</td>
+              <td align="center" valign="top">left-to-right</td>
+            </tr>
+            <tr>
+              <td align="center"><font face="Courier New">==&nbsp;
+              !=</font></td>
+              <td>Relational is equal to/is not equal to</td>
+              <td align="center" valign="top">left-to-right</td>
+            </tr>
+            <tr>
+              <td align="center"><font face="Courier New">&amp;</font></td>
+              <td>Bitwise AND</td>
+              <td align="center" valign="top">left-to-right</td>
+            </tr>
+            <tr>
+              <td align="center"><font face="Courier New">^</font></td>
+              <td>Bitwise exclusive OR</td>
+              <td align="center" valign="top">left-to-right</td>
+            </tr>
+            <tr>
+              <td align="center"><font face="Courier New" size="3">|</font></td>
+              <td>Bitwise inclusive OR</td>
+              <td align="center" valign="top">left-to-right</td>
+            </tr>
+            <tr>
+              <td align="center"><font face="Courier New">&amp;&amp;</font></td>
+              <td>Logical AND</td>
+              <td align="center" valign="top">left-to-right</td>
+            </tr>
+            <tr>
+              <td align="center"><font face="Courier New" size="3">||</font></td>
+              <td>Logical OR</td>
+              <td align="center" valign="top">left-to-right</td>
+            </tr>
+            <tr>
+              <td align="center"><font face="Courier New">?:</font></td>
+              <td>Ternary conditional</td>
+              <td align="center" valign="top">right-to-left</td>
+            </tr>
+            <tr>
+              <td align="center"><font face="Courier New">=<br>
+              +=&nbsp;
+              -=<br>
+              *=&nbsp;
+              /=<br>
+              %=&nbsp;
+              &amp;=<br>
+              ^=&nbsp;
+              |=<br>
+              &lt;&lt;=&nbsp;
+              &gt;&gt;=</font></td>
+              <td>Assignment<br>
+              Addition/subtraction assignment<br>
+              Multiplication/division assignment<br>
+              Modulus/bitwise AND assignment<br>
+              Bitwise exclusive/inclusive OR assignment<br>
+              Bitwise shift left/right assignment</td>
+              <td align="center" valign="top">right-to-left</td>
+            </tr>
+            <tr>
+              <td>
+              <p align="center"><font face="Courier New">,</font></p></td>
+              <td>Comma (separate expressions)</td>
+              <td align="center" valign="top">left-to-right</td>
+              
+            </tr>
+            <tr>
+              <td colspan="3">
+              <blockquote>
+				<dl>
+					<dt style="margin-top: 12px"><b>Note 1:</b></dt>
+					<dd>Parentheses are also used to group 
+						sub-expressions to force a different precedence; 
+						such parenthetical expressions can be nested and are 
+						evaluated from inner to outer.</dd>
+					<dt><b>Note 2:</b></dt>
+					<dd>Postfix increment/decrement have high 
+						precedence, but the actual increment or decrement of the 
+						operand is delayed (to be accomplished sometime before 
+						the statement completes execution). So in the statement&nbsp;
+						<font face="Courier New" size="2"><b>y = x * z++; </b>
+					</font>the current value of
+						<font face="Courier New" size="2"><b>z</b></font> is 
+						used to evaluate the expression (<i>i.e., </i>
+					<font face="Courier New" size="2"><b>z++ </b></font>evaluates to 
+					<font face="Courier New" size="2"><b>z</b></font>) 
+						and <font face="Courier New" size="2"><b>z</b></font> 
+						only incremented after all else is done. See <b>
+					<font face="Courier New" size="2">
+					<a href="http://www.difranco.net/cop2220/examples/k&amp;r_examples/postinc.c">postinc.c</a></font></b> 
+						for another example.</dd>
+				</dl>
+				</blockquote>
+				</td>
+              
+            </tr>
+          </tbody></table>
+            <p>&nbsp;</p></div>	
+			
+
+        <div align="center">
+          <table bgcolor="#0066FF" border="0" cellpadding="2" cellspacing="0" width="100%">
+            <tbody><tr>
+              <td width="100%"><b><font face="Tahoma" size="1">
+&nbsp;Updated: 
+              <!--webbot bot="Timestamp" S-Type="EDITED" S-Format="%m.%d.%Y" startspan -->02.10.2011<!--webbot bot="Timestamp" i-checksum="12455" endspan --></font></b></td>
+            </tr>
+          </tbody></table>
+        </div>
+      </td>
+    </tr>
+  </tbody></table>
+  </center>
+
+
+
+</body></html>
