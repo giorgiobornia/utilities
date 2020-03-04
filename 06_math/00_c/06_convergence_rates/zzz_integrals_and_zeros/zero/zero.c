@@ -6,7 +6,7 @@
  #define MYFUNC 12 
 #include "../myfunctions.h"
 
- #define MYMETHOD 0 
+ #define MYMETHOD 2 
 #include "methods.h"
 
 #define EPS 1.e-10
@@ -18,14 +18,14 @@ double fprime(double);
 int main() {
 
     FILE *outfile;
-    int n,nfunc,nmethod,nitmax,i;
-    double xa,xb; /*intervallo, che serve anche per l'inizializzazione della successione*/
-    double x,x_old,eps,err,x_n[NITMAX],err_n,err_np1,conv,p; /*x_old not needed for bisection*/
-    double x_oold;   /*solo per la secante*/
-    double x_l,x_r;/* left & right, solo per la bisezione*/
+    int n, nfunc, nmethod, nitmax, i;
+    double xa, xb; /* interval, used also to initialize the sequence */
+    double x, x_old, eps, err, x_n[NITMAX], err_n, err_np1, conv, p; /* x_old not needed for bisection */
+    double x_oold;   /* only for the secant */
+    double x_l, x_r; /* left & right, only for bisection */
 
-     nmethod = MYMETHOD; /*Method-related*/
-     p = CONV_ORDER; /*Method-related*/
+     nmethod = MYMETHOD; /* Method-related */
+     p = CONV_ORDER;     /* Method-related */
     
     xa = X_A;
     xb = X_B;
@@ -34,75 +34,80 @@ int main() {
     nfunc = MYFUNC;
     nitmax = NITMAX;
 
-    outfile = fopen(METHODFILE,"a");  /* AAA APPEND MODE*/
- fprintf(outfile,"-----------------------------------------------------\n");
- fprintf(outfile,"--------------- FUNCTION %d -------------------------\n",nfunc);
- fprintf(outfile,"----------------------------------------------------\n");
+    outfile = fopen(METHODFILE, "a");  /* AAA APPEND MODE*/
+ fprintf(outfile, "-----------------------------------------------------\n");
+ fprintf(outfile, "--------------- FUNCTION %d -------------------------\n", nfunc);
+ fprintf(outfile, "----------------------------------------------------\n");
  
-    /* inizializzazione delle variabili */
+    /* variable initialization */
     err   = 10.;
     n     = 0;
     x      = xb;
     x_n[0] = x;
     x_old  = xb;
-    x_oold = xa;  /*solo per la secante*/
+    x_oold = xa;  /* only for secant */
     
-    x_l    = xa;             /*solo per la bisezione*/
-    x_r    = xb;             /*solo per la bisezione*/
-    if (nmethod == 3)  {     /*solo per la bisezione*/
-     if (func(x_l)*func(x_r)>=0.) {
-       fprintf(outfile,"The bisection method cannot start --------\n"); abort();
+    
+    /* only for bisection ****** */    
+    x_l    = xa;
+    x_r    = xb;             
+    if (nmethod == 3)  {
+     if (func(x_l) * func(x_r) >= 0.) {
+       fprintf(outfile,"The bisection method cannot start --------\n"); 
+       abort();
       }
-       x      = 0.5*(x_l + x_r);
+       x      = 0.5 * (x_l + x_r);
        x_n[0] = x;
     }
+    /* only for bisection - end  ****** */    
     
 
- fprintf(outfile,"----------------------------------------------------\n");
- fprintf(outfile,"| it |         x      |     err      |      f(x)     |\n");
- fprintf(outfile,"----------------------------------------------------\n");
+ fprintf(outfile, "----------------------------------------------------\n");
+ fprintf(outfile, "| it |         x      |     err      |      f(x)     |\n");
+ fprintf(outfile, "----------------------------------------------------\n");
   
     while(err > eps && n < nitmax) {
       
 
 	if (nmethod == 0)  {
-	x      = x_old-func(x_old)/fprime(x_old);
-	err    = fabs(x-x_old);
+	x      = x_old - func(x_old) / fprime(x_old);
+	err    = fabs(x - x_old);
 	x_old  = x;
 	  }
 	  
 	else if (nmethod == 1)  {
-	  x     = x_old-func(x_old)*(x_old-x_oold)/(func(x_old)-func(x_oold));
-          err   = fabs(x-x_old);
-         x_oold = x_old;
-         x_old  = x;
+	  x     = x_old - func(x_old) * (x_old - x_oold) / ( func(x_old) - func(x_oold) );
+      err   = fabs(x - x_old);
+      x_oold = x_old;
+      x_old  = x;
 	}
 	
 	else if (nmethod == 2)  {
-	  x   = func(x_old) + x_old;
-	err   = fabs(x-x_old); 
-	x_old = x;
+	   x   = func(x_old) + x_old;
+	 err   = fabs(x - x_old); 
+     x_old = x;
 	}
 	
 	else if (nmethod == 3)  {
-          x      = 0.5*(x_l + x_r);
-	  if (func(x_l)*func(x)<0.) {x_r = x;}
-	  else                      {x_l = x;} /*qui ci puo' essere un problema se becchi ESATTAMENTE lo zero*/
-	  err=fabs(x_l-x_r);                   /*one of the two is surely x, the other is x_old */
+      x      = 0.5 * (x_l + x_r);
+	  if (func(x_l) * func(x) < 0.) { x_r = x; }
+	  else                          { x_l = x; } /* here there can be a problem if you hit EXACTLY the zero */
+	  err = fabs(x_l - x_r);                     /* one of the two is surely x, the other one is x_old */
 	}
 	
 
 	n++;
+    
         x_n[n] = x;  /*riempi il vettore con le iterazioni intermedie*/
 
 
-	fprintf(outfile,"| %2d | %20.18e | %20.18e | %20.18e |\n",n,x,err,func(x));
+	fprintf(outfile,"| %2d | %20.18e | %20.18e | %20.18e |\n", n, x, err, func(x));
     }
 
     fprintf(outfile,"Zero sought between xa = %f and xb = %f, computed in %d iterations:  x = %12.10f\n",xa,xb,n,x);
 
     
-    for (i=0;i<(n-1);i++) {
+    for (i = 0; i < (n-1); i++) {
     /* Qui l'estremo superiore di i potrebbe essere 
       i<(n-2),
       i<(n-1) oppure anche 
