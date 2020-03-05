@@ -23,9 +23,8 @@ double derivata(double x); /*per trapezi con correzione finale*/
 int main() {
 
 FILE   *outfile;
-double a,b,dx,xxx[N*2*2*2+1],yyy[N*2*2*2+1],integr[NRAF],int_exact,conv,
-        error_coarse,error_fine;
-int    i,n,is,nraf,nmethod,nfunc;
+double a, b, dx, xxx[N*2*2*2+1], yyy[N*2*2*2+1], integr[NRAF], int_exact, conv, error_coarse, error_fine;
+int    i, n, is, nraf, nmethod, nfunc;
 
   a = X_A;
   b = X_B;
@@ -36,19 +35,19 @@ int    i,n,is,nraf,nmethod,nfunc;
 nmethod = MYMETHOD;
 
    outfile = fopen(METHODFILE,"a");
- fprintf(outfile,"-----------------------------------------------------\n");
- fprintf(outfile,"--------------- FUNZIONE %d -------------------------\n",nfunc);
- fprintf(outfile,"----------------------------------------------------\n");
+ fprintf(outfile, "-----------------------------------------------------\n");
+ fprintf(outfile, "--------------- FUNZIONE %d -------------------------\n", nfunc);
+ fprintf(outfile, "----------------------------------------------------\n");
 
     if (nmethod == 5)  {
-      if (n%2 !=0) { fprintf(outfile,"For the Simpson's method the number of subdivisions must be EVEN \n"); abort(); }
+      if (n % 2 != 0) { fprintf(outfile,"For the Simpson's method the number of subdivisions must be EVEN \n"); abort(); }
     }
       
    for(is = 0; is < nraf; is++) {   /*inizio ciclo is*/
      
    integr[is] = 0.;  
  
-   n *= 2;   if (is==0) n = N; /* in questo modo posso avere un N iniziale sia pari sia dispari.
+   n *= 2;   if (is == 0) n = N; /* in questo modo posso avere un N iniziale sia pari sia dispari.
                                 L'inizializzazione "n = N/2" al di fuori del ciclo "is"
                                 avrebbe arrotondato per difetto nel caso di N dispari.
                                 "N/2" e' infatti una divisione tra intero e intero,
@@ -61,22 +60,22 @@ nmethod = MYMETHOD;
        xxx[i] = a + i*dx;
        yyy[i] = fun(xxx[i]);
 	if (nmethod == 0)  {
-        	  if ( i!= 0 ) { integr[is]  +=  fun( (xxx[i-1] + xxx[i])*0.5 ) ; }       /* metodo rettangoli, punto medio */
+        	  if ( i != 0 ) { integr[is]  +=  fun( (xxx[i-1] + xxx[i])*0.5 ) ; }       /* metodo rettangoli, punto medio */
 	}
 	else if (nmethod == 1)  {
 	       if ( i < n ) { integr[is] +=  yyy[i] ; }                            /* metodo rettangoli, estremo inferiore */
 	}
 	else if (nmethod == 2)  {
-        	if ( i!= 0 ) { integr[is] +=  yyy[i] ; }                        /* metodo rettangoli, estremo superiore */
+        	if ( i != 0 ) { integr[is] +=  yyy[i] ; }                        /* metodo rettangoli, estremo superiore */
 	}
  	else if (nmethod == 3)  {
-        	if ( i!= 0 ) { integr[is] +=    (yyy[i-1] + yyy[i])*0.5 ; }                        /* metodo trapezi*/
+        	if ( i != 0 ) { integr[is] +=    (yyy[i-1] + yyy[i])*0.5 ; }                        /* metodo trapezi*/
 	}
  	else if (nmethod == 4)  {
-        	if ( i!= 0 ) { integr[is] +=    (yyy[i-1] + yyy[i])*0.5 ; }                        /* sempre trap e dopo correggo*/
+        	if ( i != 0 ) { integr[is] +=    (yyy[i-1] + yyy[i])*0.5 ; }                        /* sempre trap e dopo correggo*/
 	}
  	else if (nmethod == 5)  {
-        	 if ( i%2==0 && i!=0 ) { integr[is] +=  ( yyy[i-2] + 4.*yyy[i-1] + yyy[i] )/3. ; }       /* Simpson*/
+        	 if ( i%2 == 0 && i != 0 ) { integr[is] +=  ( yyy[i-2] + 4.*yyy[i-1] + yyy[i] )/3. ; }       /* Simpson*/
 	}
     
   }
@@ -126,7 +125,7 @@ return 0;
 double fun(double x)   {
 
 double y;
-y= FUNC(x);
+y = FUNC(x);
 
 return y;
 }
@@ -134,7 +133,7 @@ return y;
 double primitiva(double x)   {
 
 double y;
-y= FPRIMITIVE(x);
+y = FPRIMITIVE(x);
 
 return y;
 }
@@ -142,7 +141,7 @@ return y;
 double derivata(double x)   {
 
 double y;
-y= FDERIVATIVE(x);
+y = FDERIVATIVE(x);
 
 return y;
 }

@@ -45,7 +45,7 @@ double func(double);
 
 int main() {
 
-    /* counter */
+    /* counter, max number of iterations */
     int n, n_max;
     /* starting point, current iterate, previous iterate, tolerance, error */
     double x0, x, x_old, eps, err;
@@ -62,24 +62,27 @@ int main() {
     err   = 10.;
     n     = 0;
   
+    outfile = stdout;
+    
     /* opening of the output file and header writing */
-//     outfile = fopen("fixed_point.out","w");
+//     outfile = fopen("fixed_point.out", "w");
 //     fprintf(outfile,"----------------------------------------------------\n");
 //     fprintf(outfile,"| it |       x      |     err      |      f(x)     |\n");
 //     fprintf(outfile,"----------------------------------------------------\n");
   
     /* la condizione del while e' determinata dalla precisione cercata */
     while(err > eps && n < n_max) {
-	/* aggiornamento del numero di iterazioni eseguite */
+        
+	/* counter update */
 	n++;
 
 	/* next iteration */
-	x = func(x_old) + x_old;  /*qui ci va g(x), la funzione "ausiliaria"*/
+	x = func(x_old) + x_old;  /* here you put g(x), the "auxiliary" function */
 	
 	/* error on abscissa change */
 	 err = fabs(x - x_old);
 	
-	fprintf(stdout/*outfile*/, "| %2d | %16.10f | %16.10e | %+e |\n", n, x, err, func(x));
+	fprintf(outfile, "| %2d | %16.10f | %16.10e | %+e |\n", n, x, err, func(x));
     
 	/* update old with new */
 	x_old = x;
@@ -87,7 +90,7 @@ int main() {
     }
 
     /* final result to screen */
-    fprintf(stdout, "Zero computed starting from x0 = %f with precision %e.\n x = %12.10f in %d iterations \n", x0, eps, x, n);       
+    fprintf(outfile, "Zero computed starting from x0 = %f with precision %e.\n x = %12.10f in %d iterations \n", x0, eps, x, n);       
 
     return 0;
 }
