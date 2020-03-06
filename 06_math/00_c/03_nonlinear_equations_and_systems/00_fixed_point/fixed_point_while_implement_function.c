@@ -49,6 +49,7 @@ double func(double);
 
 void fixed_point(/*const*/ FILE * outfile, const double eps, const double x0, int * n, double * x)  {
     
+   
         const int n_max = 50;
 
         double err = 10.;
@@ -58,7 +59,7 @@ void fixed_point(/*const*/ FILE * outfile, const double eps, const double x0, in
 
         
         
-    while(err > eps &&  (* n) < n_max) {
+    while(err > eps &&  (*n) < n_max) {
         
 	/* counter update */
 	(*n)++;
@@ -83,8 +84,8 @@ void fixed_point(/*const*/ FILE * outfile, const double eps, const double x0, in
 
 int main() {
 
-    int * n;
-    double * x;
+    int  n;
+    double  x;
     double x0, eps;
     /*const*/ FILE * outfile = stdout; 
 
@@ -94,22 +95,17 @@ int main() {
      eps = 1.e-7;
 
 
-      n = (int*) malloc( sizeof(int) );
-      x = (double*) malloc( sizeof(double) );     
-     
-      (*n) = 0;
-      (*x) = x0;
+      n = 0;
+      x = x0;
  
       
-    fixed_point(outfile, eps, x0, n, x);  /* C passes by copy, so you need to pass the pointer if you want your variables to survive */
+    fixed_point(outfile, eps, x0, &n, &x);  /* C passes by copy, so you need to pass the pointer if you want your variables to survive */
 
 
     
     /* final result to screen */
-    fprintf(outfile, "Zero computed starting from x0 = %f with precision %e.\n x = %12.10f in %d iterations \n", x0, eps, *x, *n);
+    fprintf(outfile, "Zero computed starting from x0 = %f with precision %e.\n x = %12.10f in %d iterations \n", x0, eps, x, n);
     
-    free(x);
-    free(n);
     
     return 0;
 }
