@@ -32,14 +32,15 @@ void bisection(FILE * outfile, const int n_max, const double eps, const double a
 		abort();
 	}
 	
-	err = 1.e+6; 
-    err_old = 1.e+6;
+    err = eps + 10.;
+    err_old = err;
 	n = 0;
     
 	while(err > eps && n < n_max) {
         
-		c = .5 * (a + b);
 		n++;
+        
+		c = 0.5 * (a + b);
         
 		if( fun(a) * fun(c) < 0.) {
 			b = c;
@@ -48,11 +49,11 @@ void bisection(FILE * outfile, const int n_max, const double eps, const double a
 			a = c;
 		}
 		
-		/* control on ordinate */
-		err = fabs(fun(c));
 //         /* control on abscissa change: with this the convergence rate is always 0.5 */
-//         err = fabs(b - a);
-        
+         err = fabs(b - a);
+//  		/* control on ordinate */
+// 		err = fabs(fun(c));
+       
 	fprintf(outfile, "| %2d | %16.10f | %16.10e | %+e |\n", n, c, err, fun(c));
 // 		printf("conv_rate = %e\n", err/err_old);
         
