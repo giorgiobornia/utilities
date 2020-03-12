@@ -55,7 +55,7 @@ int main() {
 		}
 		
 		/* control on ordinate */
-		err = fabs(fun(c));
+		err = fabs(fun(c));  //THIS IS CRUCIAL IF THE MIDPOINT EXACTLY HITS THE ZERO!
 //         /* control on abscissa change: with this the convergence rate is always 0.5 */
 //         err = fabs(b - a);
         
