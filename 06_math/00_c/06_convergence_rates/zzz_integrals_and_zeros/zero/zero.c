@@ -6,7 +6,7 @@
  #define MYFUNC 12 
 #include "../myfunctions.h"
 
- #define MYMETHOD 2 
+ #define MYMETHOD 0 
 #include "methods.h"
 
 #define EPS 1.e-10
@@ -21,6 +21,7 @@ int main() {
     int n, nfunc, nmethod, nitmax, i;
     double xa, xb; /* interval, used also to initialize the sequence */
     double x, x_old, eps, err, x_n[NITMAX], err_n, err_np1, conv, p; /* x_old not needed for bisection */
+    double err_n_incremental, err_np1_incremental;
     double x_oold;   /* only for the secant */
     double x_l, x_r; /* left & right, only for bisection */
 
@@ -73,6 +74,7 @@ int main() {
 	x      = x_old - func(x_old) / fprime(x_old);
 	err    = fabs(x - x_old);
 	x_old  = x;
+    
 	  }
 	  
 	else if (nmethod == 1)  {
@@ -98,7 +100,7 @@ int main() {
 
 	n++;
     
-        x_n[n] = x;  /*riempi il vettore con le iterazioni intermedie*/
+        x_n[n] = x;  /* fill the vector with intermediate iterations */
 
 
 	fprintf(outfile,"| %2d | %20.18e | %20.18e | %20.18e |\n", n, x, err, func(x));
@@ -176,6 +178,32 @@ int main() {
     }
    
    
+   //------------------------------
+   //------------------------------
+       fprintf(outfile, "Convergence rate formula, incremental ========\n");
+       
+       
+     for (i = 0; i < (n-1); i++) {
+    
+      err_n_incremental   = fabs( x_n[i+1]   - x_n[i] );
+      
+     if ( err_n_incremental < 1.e-18 )   {
+       fprintf(outfile,"Probably x was computed exactly, or the difference between two values is very small\n"); 
+       }
+         
+     else {
+       
+       err_np1_incremental = fabs( x_n[i+2] - x_n[i+1] );
+
+       
+       conv = err_np1_incremental / pow(err_n_incremental,p) ;
+      
+       fprintf(outfile,"The constant C in the convergence rate formula is %20.18e\n", conv);
+     }
+     
+    }
+    
+    
     return 0;
 }
 
@@ -193,17 +221,3 @@ double fprime(double x) {
     return y;
 }
 
-
-/* Voglio fare un test per tutte le funzioni che ho, e con tutti i metodi
- Facciamo con un metodo tutte le funzioni, le stampiamo su un unico file 
- per ogni funzione compiliamo e lanciamo l'eseguibile. Quindi il file viene sempre sovrascritto.
- Dovrei fare tanti file diversi. Se ne faccio uno unico non mi piace fare l'append,
- perche' rischio sempre di aumentare il file. Quindi posso fare che all'inizio dello script 
- il file, il cui nome so qual e', venga prima di tutto RIMOSSO,
- fuori dal loop sulle funzioni
- Se pero' voglio usare il file da solo, il rischio di append c'e' sempre
- 
- 
- Il punto fisso e' molto pericoloso, non converge quasi mai...
- 
- */
