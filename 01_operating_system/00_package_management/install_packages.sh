@@ -172,10 +172,11 @@ $INSTALL_COMMAND bc  #basic calculator
 $INSTALL_COMMAND phpMyAdmin
 $INSTALL_COMMAND mysql-workbench
 $INSTALL_COMMAND sqlitebrowser
-$INSTALL_COMMAND postgresql10-devel  //ecpg
+$INSTALL_COMMAND postgresql10-devel  #ecpg
 
 
 # Multimedia packages ====================================================
+$INSTALL_COMMAND simplescreenrecorder
 $INSTALL_COMMAND imagewriter
 $INSTALL_COMMAND tuxguitar
 $INSTALL_COMMAND audacity #audio editing
