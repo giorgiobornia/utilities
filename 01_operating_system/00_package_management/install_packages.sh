@@ -161,6 +161,7 @@ $INSTALL_COMMAND texlive-pgfornament
 $INSTALL_COMMAND texlive-musixtex
 $INSTALL_COMMAND texlive-musixtex-fonts
 $INSTALL_COMMAND texlive-doublestroke
+$INSTALL_COMMAND texlive-draftwatermark
 $INSTALL_COMMAND eog  #lightweight slideshow
 $INSTALL_COMMAND bc  #basic calculator
 
@@ -209,3 +210,5 @@ $INSTALL_COMMAND gstreamer-plugins-libav
 $INSTALL_COMMAND libdvdcss2
 $INSTALL_COMMAND libdvdread3
 $INSTALL_COMMAND libdvdread4
+$INSTALL_COMMAND zoom
+$INSTALL_COMMAND teams
