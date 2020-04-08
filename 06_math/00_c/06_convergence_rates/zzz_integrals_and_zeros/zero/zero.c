@@ -6,7 +6,7 @@
  #define MYFUNC 12 
 #include "../myfunctions.h"
 
- #define MYMETHOD 0 
+ #define MYMETHOD 1 
 #include "methods.h"
 
 #define EPS 1.e-10

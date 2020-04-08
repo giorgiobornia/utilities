@@ -212,3 +212,5 @@ $INSTALL_COMMAND libdvdread3
 $INSTALL_COMMAND libdvdread4
 $INSTALL_COMMAND zoom
 $INSTALL_COMMAND teams
+$INSTALL_COMMAND libheif1  # for HEIC files
+$INSTALL_COMMAND gimp-plugin-heif  # for HEIC files
