@@ -102,6 +102,7 @@ $INSTALL_COMMAND libpsm_infinipath1
 
 # Office packages (latex, libreoffice, etc) ==================================
 $INSTALL_COMMAND pdftk
+$INSTALL_COMMAND pdfmod
 $INSTALL_COMMAND gnuplot
 $INSTALL_COMMAND libreoffice
 $INSTALL_COMMAND gimp
@@ -109,7 +110,8 @@ $INSTALL_COMMAND acroread
 $INSTALL_COMMAND doxygen
 $INSTALL_COMMAND graphviz
 $INSTALL_COMMAND inkscape
-$INSTALL_COMMAND kile
+# $INSTALL_COMMAND kile   #with Qt4
+$INSTALL_COMMAND kile5    #with Qt5
 $INSTALL_COMMAND kbibtex
 $INSTALL_COMMAND texlive
 $INSTALL_COMMAND texlive-latex-base          #for ubuntu
