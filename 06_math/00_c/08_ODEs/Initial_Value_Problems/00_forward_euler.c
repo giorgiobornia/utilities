@@ -1,8 +1,10 @@
 /*
  * gcc forward_euler.c -lm
- * if you plot the x and y in two columns, then open gnuplot and simply type:
- * plot 'file.txt',  [0:1]  exp(-x)
  * 
+ * If you plot the x and y in two columns, then open gnuplot and simply type:
+ * plot 'out.txt',  [0:1]  exp(-x)
+ * plot 'out.txt',  [0:1]  x * x - 2. * ( (x+1) * log(x+1) - (x+1))
+
 	 
 
    	y'(x) = f(x,y(x)) ,  x0 <= x <= b ,  y(x0) = y0.
@@ -89,6 +91,8 @@ int main() {
 					if (x1 > b)	break;
                     
 					y1 = y0 + h * f(x0, y0, numde);
+//                     double y0_stage0 = y0 + h * f(x0, y0, numde);
+// 					y1 = y0 + 0.5 * h * ( f(x0, y0, numde) + f(x1, y0_stage0, numde));
 					x0 = x1;
 					y0 = y1;
 				}
@@ -112,7 +116,7 @@ int main() {
 	
 	fclose(file);
     
-//     return 0;
+     return 0;
 	
 }
       

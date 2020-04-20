@@ -1,0 +1,5 @@
+arrays are derived types
+functions are derived types
+pointers are derived types
+references (in C++) are derived types
+...
