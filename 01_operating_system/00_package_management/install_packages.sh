@@ -1,6 +1,8 @@
 #!/bin/bash
 
 
+  echo "At the end the root will occupy something more than 20GB, so I'd say make a root partition of at least 30-40GB"
+  
   echo "Run this script as root"
   
   echo "You may want to setup software repositories first, if you want some special packages"
@@ -179,7 +181,14 @@ $INSTALL_COMMAND postgresql10-devel  #ecpg
 
 
 # Multimedia packages ====================================================
-$INSTALL_COMMAND simplescreenrecorder
+$INSTALL_COMMAND aegisub
+$INSTALL_COMMAND python3-SpeechRecognition
+$INSTALL_COMMAND wxcam                 #some problem launching it
+$INSTALL_COMMAND kamoso                #webcam recording
+$INSTALL_COMMAND guvcview              #webcam recording
+$INSTALL_COMMAND simplescreenrecorder  #screen recording
+$INSTALL_COMMAND vokoscreen            #recording - both screen and webcam
+$INSTALL_COMMAND obs-studio            #recording
 $INSTALL_COMMAND imagewriter
 $INSTALL_COMMAND tuxguitar
 $INSTALL_COMMAND audacity #audio editing
@@ -195,8 +204,6 @@ $INSTALL_COMMAND faad2
 $INSTALL_COMMAND kmid
 $INSTALL_COMMAND timidity
 $INSTALL_COMMAND wine
-$INSTALL_COMMAND wxcam
-$INSTALL_COMMAND kamoso
 $INSTALL_COMMAND vlc
 $INSTALL_COMMAND ktorrent
 $INSTALL_COMMAND aMule amule
