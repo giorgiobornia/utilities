@@ -1,0 +1,1180 @@
+% Copyright (c) 2004 by T.P. Love. This document may be copied freely 
+% for the purposes of education and non-commercial research.
+% Cambridge University Engineering Department,  
+% Cambridge CB2 1PZ, England.
+% Use latex file.tex ;latex file.tex ; dvips  file.dvi
+% to print a copy. 
+\documentclass[dvips]{article}
+\usepackage{palatino,a4,graphicx,color,subfig,longtable,array}
+\usepackage{floatflt,contentsfancybox,html,bm}
+
+\newcommand{\AmS}{${\protect\the\textfont2 A}\kern-.1667em\lower
+         .5ex\hbox{\protect\the\textfont2 M}\kern
+         -.125em{\protect\the\textfont2 S}$}
+ 
+\newcommand{\AmSLaTeX}{\mbox{\AmS-\LaTeX}}
+
+
+\def\bydefn{\stackrel{def}{=}}
+\def\convf{\hbox{\space \raise-2mm\hbox{$\textstyle  \bigotimes \atop \scriptstyle \omega$} \space}}
+
+\begin{document}
+
+\title{\LaTeX\ maths and graphics}
+\author{Tim Love}
+\date{\today}
+\maketitle
+
+\begin{quotation}
+This handout assumes that you have already read the 
+\htmladdnormallinkfoot{Advanced LaTeX}{http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/latex\_advanced/latex\_advanced.html}
+document handout, so if you're unsure about `environments', read no further.
+
+Note that there's an alternative way of producing maths in \LaTeX{} - 
+ \AmSLaTeX{}. See the 
+\htmladdnormallinkfoot{online manual}{http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/amslatex.dvi}
+ for details.
+
+If you want to more more about graphics, see \htmladdnormallinkfoot{Using Imported Graphics in LaTeX2e Documents}{http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/epslatex.ps}  by Keith Reckdahl.  
+
+Comments and bug reports to Tim Love (\htmladdnormallink{tpl@eng.cam.ac.uk}{mailto:tpl@eng.cam.ac.uk}). 
+\end{quotation}
+
+\begin{table}[b]
+Copyright \copyright 2004 by T.P.~Love.
+This document may be copied freely for the purposes 
+of education and non-commercial research.
+Cambridge University Engineering Department,  
+Cambridge CB2 1PZ, England.
+\end{table}
+
+
+\tableofcontents
+
+
+
+\section{Maths}
+%\verb| {}| are used to group.
+There's more to maths typesetting than meets the eye. Many conventions
+used in the typesetting of plain text are inappropriate to maths. \LaTeX\ 
+goes a long way to help you along with the style. For example,
+in a \LaTeX\ maths environment, letters come out in {\it italics}, \texttt{`-'}
+as `$-$' (minus) instead of the usual `-' (dash), `*' becomes $*$,
+\verb|'| becomes $'$ and spacing is 
+changed (less around `/', more around `+').
+
+Many of the usual \LaTeX\ constructions can still be used in maths environments
+but their effect may be slightly different; eg \verb|\textbf{  }| only affects letters 
+and numbers. `\verb|{|' and  `\verb|}|' are still special characters;
+they're used to group characters.
+
+As usual in \LaTeX\ you can override the defaults, but think before doing
+ it: maths support in \LaTeX\ has been carefully thought out and is 
+quite logical though the \LaTeX\ source text may not be very readable.
+It's a good idea to write out the formulae on paper before you start
+\LaTeX ing, and try not to overdo the use of the `\verb|\frac|' 
+construction; use `\verb|/|' instead. 
+
+
+
+\subsection{Environments}
+There are 2 environments to display one-line equations.
+
+
+\begin{description}
+
+\item[equation:-] Equations in this environment are numbered.
+\begin{verbatim}
+\begin{equation}
+ x + iy
+\end{equation}
+\end{verbatim}
+\begin{equation}
+ x + iy
+\end{equation}
+\item[displaymath:-] These won't be numbered.  \verb|\[, \]| 
+can be used as abbreviations for \verb|\begin{displaymath}| and
+\verb|\end{displaymath}|.
+\begin{verbatim}
+\begin{displaymath}
+ x + iy
+\end{displaymath}
+\end{verbatim}
+\begin{displaymath}
+ x + iy
+\end{displaymath}
+
+\end{description}
+Never leave a blank line before these equations; it 
+starts a new paragraph and looks ugly. 
+'\verb|\displaystyle|' is the font type used to print maths in these 
+\emph{display} environments. Other relevant environments are:-
+\begin{description}
+\item[math:-] For use in text. \verb|\(| and  \verb|\)| can be used
+to delimit the environment, as can the \TeX\ constructions \verb|$| 
+and \verb|$| . For example, \verb|$x=y^2$| gives $x=y^2$.
+\item[eqnarray:-]
+This is like a 3 column tabular environment. Each line by default is numbered.
+You can use  the  \verb|eqnarray*| variant to suppress numbering altogether.
+\begin{verbatim}
+\begin{eqnarray}
+a1 & = & b1 + c1\nonumber\\
+a2 & = & b2 - c2
+\end{eqnarray}
+\end{verbatim}
+\begin{eqnarray}
+a1 & = & b1 + c1\nonumber\\
+a2 & = & b2 - c2
+\end{eqnarray}
+\end{description}
+
+Maths in these 2 sorts of environments have different default
+sizes for some characters and other behavioural differences so 
+that a line of maths won't impinge on text lines below or above. 
+If you want to put some non-maths text in amongst maths then
+enclose it in an \verb|\mbox{...}|.
+
+\subsection{Special Characters}
+The \texttt{amssymb} package offers more symbols if the following
+aren't enough. The \htmladdnormallinkfoot{symbols}{http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/symbols.ps} document (a postscript file) has a bigger list.
+
+\subsubsection{Greek}
+\begin{longtable}{llllllllll}
+$\alpha$&           \verb|\alpha|&               
+$\beta$&           \verb|\beta|&               
+$\gamma$&           \verb|\gamma|&               
+$\delta$&           \verb|\delta|&               
+$\epsilon$&      \verb|\epsilon|\\ 
+$\zeta$&     	 \verb|\zeta|&  
+$\eta$&      	 \verb|\eta|&      
+$\theta$&    	 \verb|\theta|&    
+$\iota$&     	 \verb|\iota|&     
+$\kappa$&    	 \verb|\kappa|\\    
+$\lambda$&    	 \verb|\lambda|&    
+$\mu$&       	 \verb|\mu|&    
+$\nu$&       	 \verb|\nu|&       
+$\xi$&       	 \verb|\xi|&       
+$o$&         	 \verb|o|\\         
+$\pi$&       	 \verb|\pi|&       
+$\rho$&      	 \verb|\rho|&      
+$\sigma$&    	 \verb|\sigma|&    
+$\tau$&      	 \verb|\tau|&      
+$\upsilon$&  	 \verb|\upsilon|\\  
+$\phi$&      	 \verb|\phi|&  
+$\chi$&      	 \verb|\chi|&      
+$\psi$&       	 \verb|\psi|&      
+$\omega$&           \verb|\omega|&
+$\Gamma$&           \verb|\Gamma|\\
+$\Delta$&           \verb|\Delta|&
+$\Theta$&           \verb|\Theta|&
+$\Lambda$&          \verb|\Lambda|& 
+$\Xi$&              \verb|\Xi| &
+$\Pi$&              \verb|\Pi|\\
+$\Sigma$&           \verb|\Sigma|&
+$\Upsilon$&         \verb|\Upsilon|&
+$\Phi$&             \verb|\Phi|&
+$\Psi$&             \verb|\Psi| &      
+$\Omega$&           \verb|\Omega|\\               
+\end{longtable}
+
+
+
+\subsubsection{Miscellaneous}
+
+\begin{longtable}{llllll}
+$\ldots $&          \verb|\ldots|&              
+$\cdots $&         \verb|\cdots| &             
+$\vdots$&           \verb|\vdots|\\               
+$\ddots$&           \verb|\ddots|&               
+$\pm$&              \verb|\pm|&                  
+$\mp$&             \verb|\mp|\\                
+$\times$&           \verb|\times|&               
+$\div$&             \verb|\div|&                 
+$\ast$&             \verb|\ast|\\                 
+$\star$&           \verb|\star|&               
+$\circ$&            \verb|\circ|&                
+$\bullet$&          \verb|\bullet|\\              
+$\cdot$&            \verb|\cdot|&                
+$\cap$&            \verb|\cap|&                
+$\bigcap$&          \verb|\bigcap|\\             
+$\cup$&             \verb|\cup|&                 
+$\bigcup$&          \verb|\bigcup|&              
+$\uplus$&          \verb|\uplus|\\           
+$\biguplus$&        \verb|\biguplus|&            
+$\sqcap$&           \verb|\sqcap|&               
+$\sqcup$&          \verb|\sqcup|\\             
+$\bigsqcup$&        \verb|\bigsqcup|&            
+$\vee$&             \verb|\vee|&                
+$\bigvee$&          \verb|\bigvee|\\              
+$\wedge$&          \verb|\wedge|&              
+$\bigwedge$&        \verb|\bigwedge|&            
+$\setminus$&        \verb|\setminus|\\            
+$\wr$&              \verb|\wr|&                  
+$\diamond$&        \verb|\diamond|&          
+$\bigtriangleup$&   \verb|\bigtriangleup|\\       
+$\bigtriangledown$& \verb|\bigtriangledown|&     
+$\triangleleft$&    \verb|\triangleleft|&       
+$\triangleright$&  \verb|\triangleright|\\      
+%$\lhd$&             \verb|\lhd|&       
+%$\rhd$&             \verb|\rhd|&                 
+%$\unlhd$&           \verb|\unlhd|\\               
+%$\unrhd$&          \verb|\unrhd|&              
+$\oplus$&           \verb|\oplus|&               
+$\bigoplus$&        \verb|\bigoplus|&           
+$\ominus$&          \verb|\ominus|\\            
+$\otimes$&         \verb|\otimes|&          
+$\bigotimes$&       \verb|\bigotimes|&           
+$\oslash$&          \verb|\oslash|\\       
+$\odot$&            \verb|\odot|&               
+$\bigodot$&        \verb|\bigodot|&            
+$\bigcirc$&         \verb|\bigcirc|\\             
+$\amalg$&           \verb|\amalg|&              
+$\leq$&             \verb|\leq|&             
+$\prec$&           \verb|\prec|\\               
+$\preceq$&          \verb|\preceq|&              
+$\ll$&              \verb|\ll|&             
+$\subset$&          \verb|\subset|\\              
+$\subseteq$&       \verb|\subseteq|&           
+%$\sqsubset$&        \verb|\sqsubset|\\            
+$\sqsubseteq$&      \verb|\sqsubseteq|&          
+$\in$&              \verb|\in|\\       
+$\vdash$&          \verb|\vdash|&              
+$\geq$&             \verb|\geq|&                 
+$\succ$&            \verb|\succ|\\                
+$\succeq$&          \verb|\succeq|&              
+$\gg$&             \verb|\gg|&           
+$\supset$&          \verb|\supset|\\              
+$\supseteq$&        \verb|\supseteq|&            
+%$\sqsupset$&        \verb|\sqsupset|&            
+$\sqsupseteq$&     \verb|\sqsupseteq|&         
+$\ni$&              \verb|\ni|\\                  
+$\dashv$&           \verb|\dashv|&               
+$\equiv$&           \verb|\equiv|&               
+$\sim$&            \verb|\sim|\\             
+$\simeq$&           \verb|\simeq|&               
+$\asymp$&           \verb|\asymp|&               
+$\approx$&          \verb|\approx|\\              
+$\cong$&           \verb|\cong|&               
+$\neq$&             \verb|\neq|&              
+$\doteq$&           \verb|\doteq|\\               
+$\propto$&          \verb|\propto|&              
+$\models$&         \verb|\models|&             
+$\perp$&            \verb|\perp|\\               
+$\mid$&             \verb|\mid|&                 
+$\parallel$&       \verb|\parallel|&           
+$\bowtie$&         \verb|\bowtie|\\           
+%$\Join$&            \verb|\Join|&                
+$\smile$&           \verb|\smile|&               
+$\frown$&           \verb|\frown|&               
+$\aleph$&           \verb|\aleph|\\               
+$\hbar$&           \verb|\hbar|&             
+$\imath$&           \verb|\imath|&               
+$\jmath$&           \verb|\jmath|\\               
+$\ell$&             \verb|\ell|&               
+$\wp$&             \verb|\wp|&                 
+$\Re$&              \verb|\Re|\\                
+$\Im$&              \verb|\Im|&                  
+%$\mho$&             \verb|\mho|&                 
+$\prime$&          \verb|\prime|&              
+$\empty$&           \verb|\empty|\\               
+$\nabla$&           \verb|\nabla|&               
+$\surd$&            \verb|\surd|&              
+$\top$&            \verb|\top|\\              
+$\bot$&             \verb|\bot|&                 
+$\|$&               \verb?\|?&
+$\angle$&           \verb|\angle|\\               
+$\forall$&         \verb|\forall|&             
+$\exists$&          \verb|\exists|&              
+$\neg$&             \verb|\neg|\\              
+$\flat$&            \verb|\flat|&                
+$\natural$&        \verb|\natural|&            
+$\sharp$&           \verb|\sharp|\\               
+$\backslash$&        \verb|\backslash|&            
+$\partial$&         \verb|\partial|&          
+$\infty$&          \verb|\infty|\\              
+%$\Box$&             \verb|\Box|&           
+%$\Diamond$&         \verb|\Diamond|&             
+$\triangle$&        \verb|\triangle|&            
+$\sum$&            \verb|\sum|&              
+$\prod$&            \verb|\prod|\\            
+$\coprod$&          \verb|\coprod|&           
+$\int$&             \verb|\int|&                 
+$\oint$&           \verb|\oint|\\               
+\end{longtable}
+
+\subsubsection{Arrows}
+\begin{longtable}{llllll}
+$\leftarrow$&      \verb|\leftarrow|&
+$\Leftarrow$&       \verb|\Leftarrow|&          
+$\rightarrow$&      \verb|\rightarrow|\\          
+$\Rightarrow$&      \verb|\Rightarrow|&          
+$\leftrightarrow$& \verb|\leftrightarrow|&     
+$\Leftrightarrow$&  \verb|\Leftrightarrow|\\      
+$\mapsto$&          \verb|\mapsto|&              
+$\hookleftarrow$&   \verb|\hookleftarrow|&      
+$\leftharpoonup$&  \verb|\leftharpoonup|\\     
+$\leftharpoondown$& \verb|\leftharpoondown|&     
+$\rightleftharpoons$& \verb|\rightleftharpoons|& 
+$\longleftarrow$&   \verb|\longleftarrow|\\  
+$\Longleftarrow$&  \verb|\Longleftarrow|&      
+$\longrightarrow$&  \verb|\longrightarrow|&      
+$\Longrightarrow$&  \verb|\Longrightarrow|\\      
+$\longleftrightarrow$& \verb|\longleftrightarrow|&
+$\Longleftrightarrow$& \verb|\Longleftrightarrow|&
+$\longmapsto$&      \verb|\longmapsto|\\          
+$\hookrightarrow$&  \verb|\hookrightarrow|&      
+$\rightharpoonup$&  \verb|\rightharpoonup|&     
+$\rightharpoondown$& \verb|\rightharpoondown|\\ 
+%$\leadsto$&         \verb|\leadsto|&             
+$\uparrow$&         \verb|\uparrow|&             
+$\Uparrow$&         \verb|\Uparrow|\\             
+$\downarrow$&      \verb|\downarrow|&          
+$\Downarrow$&       \verb|\Downarrow|&           
+$\updownarrow$&     \verb|\updownarrow|\\         
+$\nearrow$&         \verb|\nearrow|&        
+$\searrow$&        \verb|\searrow|&            
+$\swarrow$&         \verb|\swarrow|\\             
+$\nwarrow$&         \verb|\nwarrow|&  & & & \\
+\end{longtable}            
+
+
+\subsubsection{Calligraphic}
+These characters are available if you use the \verb|\cal| control
+sequence.
+\begin{verbatim} 
+${\cal A B C D E F G H I J K L M N O P Q R S T U V W X Y Z}$
+\end{verbatim}
+gives
+${\cal A B C D E F G H I J K L M N O P Q R S T U V W X Y Z}$
+
+\subsubsection{Character Modifiers}
+\begin{longtable}{llll}
+\verb|\hat{e}|&            $\hat{e}$&            
+\verb|\widehat{easy}|&      $\widehat{easy}$ \\     
+\verb|\tilde{e}|&          $\tilde{e}$&          
+\verb|\widetilde{easy}|&   $\widetilde{easy}$\\   
+\verb|\check{e}|&          $\check{e}$&          
+\verb|\breve{e}|&          $\breve{e}$\\         
+\verb|\acute{e}|&          $\acute{e}$&          
+\verb|\grave{e}|&          $\grave{e}$\\          
+\verb|\bar{e}|&            $\bar{e}$&            
+\verb|\vec{e}|&            $\vec{e}$\\            
+\verb|\dot{e}|&            $\dot{e}$&            
+\verb|\ddot{e}|&           $\ddot{e}$\\           
+\verb|\not e| &            $\not e$ & & \\
+\end{longtable}
+
+\vspace{.5cm}
+Note that the wide versions of \texttt{hat} and \texttt{tilde} cannot produce
+very wide alternatives. The `\verb|\not|' operator hasn't properly 
+cut the following letter. The \emph{Fine Tuning} section on page 
+\pageref{FINE_TUNING}
+describes how to adjust this.
+
+ If you want to place one character 
+above another, you can use \verb|\stackrel|, which prints 
+its first argument in small type immediately above the second
+\begin{verbatim}
+$ a \stackrel{def}{=} b + c $
+\end{verbatim}
+gives
+$ a \stackrel{def}{=} b + c $
+
+See the \emph{Macros} section for how to stack characters using \texttt{atop}.
+
+\subsubsection{Common functions}
+In a maths environment, \LaTeX\ assumes that variables will 
+have single-character names. Function names require 
+special treatment.
+The advantage of using the following control sequences for
+common functions is that the text will not
+be put in math italic and subscripts/superscripts will be made into limits
+where appropriate.
+
+\begin{tabular}{lllllll}
+\verb|\arccos|& \verb|\arcsin|& \verb|\arctan|& \verb|\arg|& \verb|\cos| & 
+\verb|\cosh|& \verb|\cot|\\
+\verb|\coth|& \verb|\csc|& \verb|\deg|& 
+\verb|\det|& \verb|\dim|& \verb|\exp|& \verb|\gcd|\\
+\verb|\hom| & \verb|\inf|& \verb|\ker|& \verb|\lg|& \verb|\lim|&
+\verb|\liminf|& \verb|\ln|\\
+\verb|\log| & \verb|\max|& \verb|\min|& \verb|\Pr|&
+\verb|sec|& \verb|\sin|& \verb|\sinh|\\
+ \verb|\sup|& \verb|\tan| & \verb|\tanh| & & &  &\\    
+\end{tabular}
+
+
+
+\subsection{Subscripts and superscripts}
+These are introduced by the `\verb|^|' and `\verb|_|' characters.
+Depending on the base character and the current style, the sub- or 
+superscripts may go to the right of or directly above/below the main 
+character.
+With letters it goes to the right.
+\begin{verbatim}
+$F_2^3$
+\end{verbatim}
+produces `$F_2^3$'. Note that the sub- and superscripts aren't in line.
+To make them so, you can add an invisible character after the `F'. 
+\verb|$F{}_2^3$| produces $F{}_2^3$.
+
+With $\sum$ the default behaviour is different in display and
+text styles.
+
+\begin{verbatim}
+$\sum_{i=0}^2 $ 
+\end{verbatim}
+produces $\sum_{i=0}^2 $ (text style) but 
+\begin{verbatim}
+\[\sum_{i=0}^2 \] 
+\end{verbatim}
+produces (in display style) \[\sum_{i=0}^2 \] 
+
+This default behaviour can be overridden, if you really need
+to. For example in text mode,
+\begin{verbatim}
+$\sum\limits_{i=0}^2$ 
+\end{verbatim}
+produces $\sum\limits_{i=0}^2$
+
+\subsection{Overlining, underlining and bold characters}
+\begin{verbatim}
+$\underline{one} \overline{two}$ 
+\end{verbatim}
+produces $\underline{one} \overline{two}$. This is not a 
+useful facility if it's used more than once on a line. The lines are
+produced so that they don't quite overlap the text; lines over or 
+under different words won't in general be at the same height. 
+
+To be able to reproduce bold maths, it's best to use the \texttt{bm}
+package. \verb|$E = \bm{mc^2}$| produces $E = \bm{mc^2}$.
+
+Alternatively, you can use \verb|\mathbf{}| to create bold characters -
+\verb|$\mathbf{F}_2^3$| produces $\mathbf{F}_2^3$. 
+or you can use the 
+following idea
+\begin{verbatim}
+\usepackage{amsbsy} % This loads amstext too
+\begin{document}
+$\omega + \boldsymbol{\omega}$
+
+% Use the following if whole expressions need to be in bold
+{\boldmath $\omega $}
+\end{document}
+\end{verbatim}
+
+\subsection{Roots}
+\begin{verbatim}
+$\sqrt{4} + \sqrt[3]{x + y}$
+\end{verbatim}
+gives $\sqrt{4} + \sqrt[3]{x + y}$.
+
+\subsection{Fractions}
+Three constructions for putting expressions above others are
+\begin{description}
+\item[frac:-]
+\verb|$\frac{1}{(x + 3)}$| produces $\frac{1}{(x + 3)}$.
+\item[choose:-]
+\verb|${n + 1 \choose 3}$| produces ${n + 1 \choose 3}$.
+\item[atop:-]
+\verb|${x \atop y}$| produces ${x \atop y}$.  
+\end{description}
+
+These constructions can be used with ones described earlier. 
+\emph{E.g.},
+\begin{verbatim}
+\[ \sum_{-1\le i \le 1 \atop 0 < j < \infty} f(i,j)\]
+\end{verbatim}
+gives \[ \sum_{-1\le i \le 1 \atop 0 < j < \infty} f(i,j) \]
+
+
+\subsection{Delimiters}
+
+\begin{center}
+\begin{tabular}{|l|l||l|l|}
+\hline
+\emph{these} & are made by these & \emph{and these} & are made by these\\
+\hline
+$( $ & \verb|( | &
+$) $ &\verb|) | \\
+$[ $ & \verb|[ | &
+$] $ & \verb|] |\\
+$\{$ & \verb|\{| &
+$\} $ & \verb|\} |\\
+$\lfloor $ &\verb|\lfloor | &
+$\rfloor $ &\verb|\rfloor | \\
+$\lceil $ &\verb|\lceil | &
+$\rceil $ &\verb|\rceil | \\
+$\langle $ &\verb|\langle | &
+$\rangle $ & \verb|\rangle |\\
+$/ $ & \verb|/ | &
+$\backslash $ &\verb|\backslash | \\
+$| $ & \verb?|? &
+$\| $ & \verb?\|?\\
+$\uparrow $ &\verb|\uparrow| &
+$\Uparrow $ & \verb|\Uparrow|\\
+$\downarrow $ &\verb|\downarrow| &
+$\Downarrow $ & \verb|\Downarrow|\\
+$\updownarrow $ &\verb|\updownarrow| &
+$\Updownarrow $ &\verb|\Updownarrow| \\
+\hline
+\end{tabular}
+\end{center}
+
+This table shows the standard sizes. To get bigger sizes, use these prefices
+
+\begin{tabular}{|l|l|l|}
+\hline
+(for left delimiters) & (for right delimiters) & magnification\\
+\hline
+\verb|\bigl|  & \verb|\bigr|  & a bit bigger, but won't overlap lines\\
+\verb|\Bigl|  & \verb|\Bigr|  & 150\%  times  \verb|big|\\
+\verb|\biggl| & \verb|\biggr| & 200\% times  \verb|big|\\
+\verb|\Biggl| & \verb|\Biggr| & 250\% times  \verb|big|\\
+\hline
+\end{tabular}
+
+For example,
+\begin{verbatim}
+$\Biggl\{2\Bigl(x(3+y)\Bigr)\Biggr\}$
+\end{verbatim}
+gives $\Biggl\{2\Bigl(x(3+y)\Bigr)\Biggr\}$. If you're not using the default
+text size these commands might not work correctly. In that case try the
+\texttt{exscale} package. 
+
+It's preferable to let \LaTeX\ choose the delimiter size for you by using 
+\verb|\left| and \verb|\right|. These will produce delimiters just
+big enough for the formulae inbetween.
+\begin{verbatim}
+$\left( \frac{(x+iy)}{\{\int x\}} \right)$
+\end{verbatim}
+gives $\left( (x+iy) \over \{\int x\} \right)$
+
+The left and right delimiters needn't be the same type. It's sometimes
+useful to make one of them invisible
+
+\begin{verbatim}
+\[ z = \left\{
+              \begin{array}{ll}
+                   1 & (x>0)\\
+                   0 & (x<0)
+              \end{array}
+       \right. 
+\]
+\end{verbatim}
+produces
+
+\[ z = \left\{
+              \begin{array}{ll}
+                   1 & (x>0)\\
+                   0 & (x<0)
+              \end{array}
+       \right. 
+\]
+
+
+
+Over- and underbracing works too.
+\begin{verbatim}
+$\overbrace{\alpha \ldots \omega}^{\mbox{greek}} 
+ \underbrace{a \ldots z}_{\mbox{english}}$
+\end{verbatim}
+produces 
+$\overbrace{\alpha \ldots \omega}^{\mbox{greek}} 
+ \underbrace{a \ldots z}_{\mbox {english}}$.
+The use of \verb|\mbox| stops the text appearing in math italic.
+
+\subsection{Numbering and labelling}
+Numbering happening automatically when you display equations. If you 
+\emph{don't} want an equation numbered, use \verb|\nonumber| beside the
+equation. Equation numbers appear to the right of the maths by default.
+To make them appear on the left use the \texttt{leqno} class option
+(i.e., use \verb|\documentclass[leqno,....]{....}|).
+
+
+Use \verb|\label{}| to label an equation (or figure, section etc) in 
+order to reference from elsewhere. 
+
+\begin{verbatim}
+\begin{equation}
+W_{\bf S}(t,\omega) = \int\limits_{-\infty}^{\infty} {
+  {\cal R}_{\bf S}(t,\tau) e^{-j\omega\tau} \,d \tau }
+\label{LABELLING}
+\end{equation}
+\end{verbatim}
+\begin{equation}
+W_{\bf S}(t,\omega) = \int\limits_{-\infty}^{\infty} {
+  {\cal R}_{\bf S}(t,\tau) e^{-j\omega\tau} \,d \tau }
+\label{LABELLING}
+\end{equation}
+
+Now the following text
+\begin{verbatim}
+ refers back to equation \ref{LABELLING}
+\end{verbatim}
+ refers back to equation \ref{LABELLING} by number, and
+\begin{verbatim} 
+ refers back to the equation on page \pageref{LABELLING}
+\end{verbatim}
+ refers back to the equation on page \pageref{LABELLING}.
+
+A file will have to be \LaTeX 'ed twice before the references,
+both forwards and backwards, will be correctly produced. 
+
+
+\subsection{Matrices}
+The \texttt{array} environment is like \LaTeX 's \texttt{tabular} environment
+except that each element is in \texttt{math} mode. The number and alignment
+of columns is controlled by the arguments - use \texttt{l, c} 
+or \texttt{r} to represent each column with either left, center or right 
+alignment. The default font style 
+used is \verb|\textstyle| but you can override this by changing the \verb|\displaystyle|.
+
+
+\begin{verbatim}
+\begin{math}
+\begin{array}{clrr} %
+      a+b+c & uv & x-y & 27 \\
+       x+y  & w  & +z  & 363 
+\end{array}
+\end{math}
+\end{verbatim}
+produces
+\begin{math}
+\begin{array}{clrr}
+      a+b+c & uv & x-y & 27 \\
+       x+y  & w  & +z  & 363 
+\end{array}
+\end{math}
+
+The rows are arranged so that their centres are aligned. You 
+can align their tops or bottoms instead by using a further argument
+when you create the array.
+\begin{verbatim}
+\begin{array}{clrr}[t]
+\end{verbatim}
+would produce top-aligned lines, and \verb|`[b]'| would produce
+bottom-aligned ones. The \emph{Delimiters} section of this document
+shows how to bracket matrices.
+
+\TeX\ has a few maths facilities not mentioned in the \LaTeX\ book.
+The following \TeX\ construction might be useful.
+\begin{verbatim}
+\begin{math}
+\bordermatrix{&a_1&a_2&...&a_n\cr
+          b_1 & 1.2  & 3.3  & 5.1  & 2.8  \cr
+          c_1 & 4.7  & 7.8  & 2.4  & 1.9  \cr
+          ... & ...  & ...  & ...  & ...  \cr
+          z_1 & 8.0  & 9.9  & 0.9  & 9.99  \cr}
+\end{math}
+\end{verbatim}
+
+\begin{math}
+\bordermatrix{&a_1&a_2&...&a_n\cr
+          b_1 & 1.2  & 3.3  & 5.1  & 2.8   \cr
+          c_1 & 4.7  & 7.8  & 2.4  &  1.9    \cr
+          ... & ...  & ...  & ...  & ...   \cr
+          z_1 & 8.0  & 9.9  & 0.9  &  9.99  \cr}
+\end{math}
+
+
+\subsection{Macros}
+These aid readability, save on repetitive typing and offer ways of
+producing stylistic variations on standard \LaTeX\ formats.
+\begin{verbatim}
+
+\def\bydefn{\stackrel{def}{=}}
+\def\convf{\hbox{\space \raise-2mm\hbox{$\textstyle  
+    \bigotimes \atop \scriptstyle \omega$} \space}}
+\end{verbatim}
+
+produce $\bydefn$ and $\convf$ when \verb|$\bydefn$| and \verb|$\convf$|
+are typed.
+
+\subsection{Packages}
+The following packages may be of help 
+\begin{itemize}
+\item \htmladdnormallinkfoot{easybmat}{http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/easybmat.dvi} - easy block matrices
+\item \htmladdnormallinkfoot{easyeqn}{http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/easyeqn.dvi} - easy equations.
+\item \htmladdnormallinkfoot{easymat}{http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/easymat.dvi} - easy matrices
+\item \htmladdnormallinkfoot{easytable}{http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/easytable.dvi} - easy tables
+\item \htmladdnormallinkfoot{easyvector}{http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/easyvector.dvi} - easy vectors
+\item \htmladdnormallinkfoot{delarray}{http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/delarray.dvi} - nested arrays
+\item \htmladdnormallinkfoot{theorem}{http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/theorem.dvi} - gives more choice in theorem layout
+\item \texttt{subeqnarray} - Renumbering of sub-arrays in math-mode
+\item \texttt{subeqn} - Different numbering sub-arrays
+\end{itemize}
+
+
+\subsection{Fine tuning}
+\label{FINE_TUNING}
+It's generally a good idea to keep punctuation outside math mode;
+\LaTeX 's normal handling of spacing around punctuation is suspended 
+during maths. Sometimes you might want to adjust the spacing in a 
+formula (\emph{e.g.}, you might want to add space before \textit{dx}). Use these
+symbols :-
+
+\begin{tabular}{ll}
+\verb|a\, b| & ($a\, b$) thin space \\
+\verb|a\> b| & ($a\> b$) medium space \\
+\verb|a\; b| & ($a\; b$) thick space \\
+\verb|a\! b| & ($a\! b$) negative thin space \\
+\end{tabular}
+
+Long math expressions aren't broken automatically unless you use the
+\htmladdnormallinkfoot{\texttt{breqn}}{http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/breqndoc.dvi} package, which is still a little experimental.
+In an \texttt{eqnarray} environment you may want to break a long line
+manually. You can do this by putting
+\begin{verbatim}
+y & = & a + b \nonumber \\
+  &   & + k
+\end{verbatim}
+to give
+\begin{eqnarray}
+y & = & a + b \nonumber \\
+  &   & + k
+\end{eqnarray}
+but the spacing around the `\texttt{+}' on the 2nd line is wrong because
+\LaTeX\ thinks it's a unary operator. You can fool \LaTeX\ into 
+treating it as a binary operator by inserting a hidden character.
+\begin{verbatim}
+y & = & a + b \nonumber \\
+  &   & \mbox{} + k
+\end{verbatim}
+gives
+\begin{eqnarray}
+y & = & a + b \nonumber \\
+  &   & \mbox{} + k
+\end{eqnarray}
+
+You can use the \verb|\lefteqn| construction to format long expressions
+so that continuation lines are differently indented.
+\begin{verbatim}
+\begin{eqnarray}
+\lefteqn{x+ iy=}\\
+ & & a + b + c + d + e + f + g + h + i + j + k +\nonumber\\
+ & & l + m \nonumber
+\end{eqnarray}
+\end{verbatim}
+
+\begin{eqnarray}
+\lefteqn{x+ iy=}\\
+ & & a + b + c + d + e + f + g + h + i + j + k +\nonumber \\
+ & & l + m \nonumber
+\end{eqnarray}
+
+If you want more vertical spacing around a line you can create an 
+invisible vertical "struct" in LaTeX. \verb|\rule[-.3cm]{0cm}{1cm}|
+creates a box of width 0, height 1cm which starts .3cm below the usual 
+line base. By adjusting these values you should be able to create as
+much extra space below/above the maths as you like. ``$A \over B$  \rule[-.3cm]{0cm}{1cm}{and}'' is created by
+\begin{verbatim}
+$A \over B$  \rule[-.3cm]{0cm}{1cm}{and}
+\end{verbatim}
+
+
+\subsection{Maths and Postscript fonts}
+It's easy to use a postscript font (like \usefont{T1}{phv}{m}{n}helvetica\usefont{T1}{ppl}{m}{n}) for the text of a 
+\LaTeX{} document. What's harder is using the same font for maths.
+An easy, reasonable option is to use the \texttt{mathptmx} package to 
+put the maths into the postscript \textit{Times} and \textit{symbol} fonts where
+possible. 
+
+Alternatively, use
+\begin{itemize}
+\item the \texttt{mathpazo} package (loads Palatino as the text font family and a
+mixture of the Pazo and CM fonts for math).
+
+\item the \texttt{mathpple} package (loads Palatino as the text font family and a
+mixture of artificially obliqued Euler fonts 
+and CM fonts for math). 
+
+\end{itemize}
+
+
+Commercial and free alternatives are under development. 
+
+\subsection{Matlab and LaTeX}
+\htmladdnormallinkfoot{Matlab}{http://www-h.eng.cam.ac.uk/help/tpl/programs/matlab.html}
+has some support for LaTeX production. For example
+\begin{verbatim}
+  latex('(sin(x)+2*x+3*x^2)/(5*x+6*x^2)','math.tex')
+\end{verbatim}
+puts the LaTeX representation of the expression into a file called
+\texttt{math.tex}. Type ``\texttt{help latex}" inside 
+matlab for details. 
+
+
+
+\subsection{Examples}
+\begin{itemize}
+\item
+\begin{verbatim}
+\begin{equation}
+\hat{\theta}_{w_i} = \hat{\theta}(s(t,{\cal U}_{w_i})).
+\end{equation}
+\end{verbatim}
+gives
+\begin{equation}
+\hat{\theta}_{w_i} = \hat{\theta}(s(t,{\cal U}_{w_i})).
+\end{equation}
+
+\item
+\begin{verbatim}
+\begin{eqnarray}
+{\cal M}^2(\hat{\theta},\theta) &=& E[(\hat{\theta} - \theta)^2]
+\nonumber \\
+{\cal M}^2(\hat{\theta},\theta) &=& {\rm var}^2(\hat{\theta}) + 
+{\cal B}^2(\hat{\theta}).
+\end{eqnarray}
+\end{verbatim}
+gives
+\begin{eqnarray}
+{\cal M}^2(\hat{\theta},\theta) &=& E[(\hat{\theta} - \theta)^2]
+\nonumber \\
+{\cal M}^2(\hat{\theta},\theta) &=& {\rm var}^2(\hat{\theta}) + 
+{\cal B}^2(\hat{\theta}).
+\end{eqnarray}
+
+\item
+\begin{verbatim}
+\begin{equation}
+\hat{W}_{s}(t,\omega;\phi) \bydefn 
+\int\limits_{-\infty}^{\infty} 
+{\hat{\cal R}_s(t,\tau;\psi) e^{-j\omega \tau}
+\, d \tau }
+\end{equation}
+\end{verbatim}
+gives
+\begin{equation}
+\hat{W}_{s}(t,\omega;\phi) \bydefn \int\limits_{-\infty}^{\infty} 
+   {\hat{\cal R}_s(t,\tau;\psi)
+e^{-j\omega \tau}
+\, d \tau }
+\end{equation}
+
+\item
+\begin{verbatim}
+\begin{eqnarray}
+{\cal B}(t,\omega) & \approx &
+{1 \over 4\pi}
+{\cal D}_t^2 W_{\bf S}(t, \omega)
+{{{\scriptstyle \infty} \atop
+{\displaystyle \int \! \int \!
+}}\atop {\scriptstyle -\infty}}
+t_1^2
+\phi(t_1,\omega_1) \, dt_1 d\omega_1
+\nonumber \\
+&& +
+{1 \over 4\pi}
+{\cal D}_\omega^2 W_{\bf S}(t, \omega)
+{{{\scriptstyle \infty} \atop
+{\displaystyle \int \! \int \!
+}}\atop {\scriptstyle -\infty}}
+\omega_1^2
+\phi(t_1,\omega_1) \, dt_1 \, d\omega_1.
+\label{F4}
+\end{eqnarray}
+\end{verbatim}
+
+gives
+\begin{eqnarray}
+{\cal B}(t,\omega) & \approx &
+{1 \over 4\pi}
+{\cal D}_t^2 W_{\bf S}(t, \omega)
+{{{\scriptstyle \infty} \atop
+{\displaystyle \int \! \int \!
+}}\atop {\scriptstyle -\infty}}
+t_1^2
+\phi(t_1,\omega_1) \, dt_1 d\omega_1
+\nonumber \\
+&& +
+{1 \over 4\pi}
+{\cal D}_\omega^2 W_{\bf S}(t, \omega)
+{{{\scriptstyle \infty} \atop
+{\displaystyle \int \! \int \!
+}}\atop {\scriptstyle -\infty}}
+\omega_1^2
+\phi(t_1,\omega_1) \, dt_1 \, d\omega_1.
+\label{F4}
+\end{eqnarray}
+
+\item 
+\begin{verbatim}
+\newsavebox{\DERIVBOXZLM}
+\savebox{\DERIVBOXZLM}[2.5em]{$\Longrightarrow\hspace{-1.5em}
+\raisebox{.2ex}{*}
+\hspace{-.7em}\raisebox{-.8ex}{\scriptsize lm}\hspace{.7em}$}
+\newcommand{\Deriveszlm}{\usebox{\DERIVBOXZLM}}
+
+\Deriveszlm
+\end{verbatim}
+gives 
+
+\newsavebox{\DERIVBOXZLM}
+\savebox{\DERIVBOXZLM}[2.5em]{$\Longrightarrow\hspace{-1.5em}
+\raisebox{.2ex}{*}
+\hspace{-.7em}\raisebox{-.8ex}{\scriptsize lm}\hspace{.7em}$}
+\newcommand{\Deriveszlm}{\usebox{\DERIVBOXZLM}}
+
+\Deriveszlm
+
+\end{itemize}
+
+\section{Graphics}
+\LaTeX\ has a \texttt{picture} environment in which pictures can be drawn,
+but you'll find graph paper handy. \texttt{xfig} can create code for the
+\texttt{picture} environment but the resulting graphics still suffer several 
+limitations: only certain slopes and circles can be reproduced. 
+The best method presently available on Unix is to use \texttt{xfig} to produce
+postscript files, which have no such limitations, but require a postscript
+printer or equivalent. 
+
+Whatever graphics you want to add, you should use the \texttt{figure}
+environment so that \LaTeX{} can cope sensibly with situations where,
+for example, you attempt to insert near the bottom of a page a
+graphic that's half a page high. The \texttt{figure} environment
+will \emph{float} the graphic to the top or bottom of the page, or
+on the next page, with preferences that you can provide.
+
+\begin{tabular}{>{\ttfamily}ll}
+h & here \\
+t & top of page \\
+b & bottom of page \\
+p & on a page with no text \\
+\end{tabular}
+
+Putting \texttt{!} as the first argument in the square brackets 
+will encourage  \LaTeX\ to
+do what you say, even if the result's sub-optimal. See the
+online hints about
+ \htmladdnormallinkfoot{floats in LaTeX}{http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/float\_hint.html}
+for further details.
+
+\begin{verbatim}
+\begin{figure}[htbp]
+   \vspace{0.5in}
+   \caption{0.5 inch of space}
+\end{figure}
+\end{verbatim}
+\begin{figure}[htbp]
+   \vspace{0.5in}
+   \caption{0.5 inch of space}
+\end{figure}
+
+It's possible to have more than one graphic in a \emph{figure}. See the
+example later on.
+
+\subsection{Postscript}
+\texttt{pdflatex} supports \texttt{JPEG}, \texttt{PNG}
+and\texttt{PDF} images - but \emph{not} postscript. \texttt{latex} 
+supports Postscript files as long as they have a proper 
+bounding box comment; \emph{i.e.} \LaTeX{} requires full  
+\htmladdnormallinkfoot{Encapsulated Postscript}{http://www-h.eng.cam.ac.uk/help/tpl/graphics/postscript.html} as 
+produced by (for example) \texttt{xv} and \texttt{xfig} on Unix. 
+If the file hasn't got a \texttt{BoundingBox} line near the top, you can 
+use \texttt{ps2epsi} to generate one. Wherever the postscript file
+comes from, simply use
+
+\begin{verbatim}
+\documentclass[dvips]{article}
+\usepackage{graphicx}
+\end{verbatim}
+then include the postscript file using the following commands
+\begin{verbatim}
+\begin{figure}[htbp]
+\includegraphics{yourfile.ps}
+\end{figure}
+\end{verbatim}
+
+\LaTeX{} can cope with compressed postscript files too, but since latex
+can't read the \texttt{BoundingBox} line from the compressed file, you
+need to provide it. If your compressed file's called \texttt{yourfile.ps.gz}, 
+copy the \texttt{BoundingBox} line into a file called
+\texttt{yourfile.ps.bb}. Then the  following
+works
+\begin{verbatim}
+\begin{figure}[htbp]
+\includegraphics{yourfile.ps.gz}
+\end{figure}
+\end{verbatim}
+
+Just about all of the following facilities use postscript. You'll need to
+run \texttt{latex} to generate `\texttt{foo.dvi}'. This file can be viewed 
+by the latest \texttt{xdvi} program, which can cope with embedded postscript.
+Run \texttt{dvips -o foo.ps foo.dvi} 
+to convert the resulting \texttt{DVI}/postscript file to pure postscript. 
+This
+will produce a file that can be previewed with \texttt{ghostview} or \texttt{gs}. On
+the teaching system this file can be printed out using \texttt{plotview} or
+\texttt{lp}. 
+
+See the 
+\htmladdnormallinkfoot{\emph{Creating and Printing graphics on PC, Mac, 
+SUN and HP machines}}{http://www-h.eng.cam.ac.uk/help/tpl/graphics/graphics2/graphics2.html}
+and \htmladdnormallinkfoot{\emph{Xfig}}{http://www-h.eng.cam.ac.uk/help/tpl/graphics/xfig/xfig.html} handouts for more details.
+
+\subsubsection{\texttt{psfrag}: adding maths to postscript files}
+Many packages that produce postscript output don't provide good maths
+facilities. It's often easier to add the maths in later using the 
+\texttt{psfrag} package.
+This lets you replace text in a postscript file (produced with xfig,
+matlab, etc) by a fragment of \LaTeX{}. For example, doing
+\begin{verbatim}
+\usepackage{psfrag}
+...
+\begin{figure}
+\psfrag{MATHS}{$x^2$}
+\includegraphics{foo.eps}
+\end{figure}
+\end{verbatim}
+would display the file with \texttt{MATHS} replaced by $x^2$. See 
+\htmladdnormallinkfoot{the online documentation}
+{http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/psfrag.ps}
+for details.
+
+\subsubsection{Postscript from PCs/Macs}
+Modern applications should generate a conforming EPS file. Under windows
+when you're printing to file, look at the PostScript properties (or
+Advanced options), and choose (depending on the driver you have) either 
+'Archive Format', 'Encapsulated PS', 'Optimize for Portability' or 'Page 
+Independence'. People seem to have more luck with the free Adobe postscript 
+driver than with the Microsoft one.
+
+The resulting file should begin with \texttt{\%!PS}. If it doesn't it's not 
+postscript. Remove any characters that are before   \texttt{\%!PS}, and
+(to be on the safe side) remove anything after the final  \texttt{\%\%EOF} line.Platform-specific considerations do crop up. The EPS generated on
+Macintoshes will use \verb|ASCII 13| line terminators, while Unix will
+use \verb|ASCII 10| (and DOS will use both). If this causes trouble, 
+use \texttt{emacs} to convert, or try (in Unix)
+\begin{verbatim}
+     tr "\015" "\012" <original.ps >new.ps
+\end{verbatim}
+
+
+
+\subsection{Scaling, rotation, clipping, wrap-around and shadows}
+
+To scale, use some optional arguments
+\begin{verbatim}
+   \includegraphics[width=5cm,height=10cm]{yourfile.ps}
+\end{verbatim}
+would rescale the postscript so that it was 5cm wide and 10cm high.
+To make the picture 5cm wide and scale the height in proportion use
+\begin{verbatim}
+   \includegraphics[width=5cm]{yourfile.ps}
+\end{verbatim}
+
+To rotate anticlockwise by the specified number of degrees, use
+\begin{verbatim}
+   \includegraphics[angle=150]{yourfile.ps}
+\end{verbatim}
+
+These options can be combined - note that order matters. 
+The following examples demonstrate how to combine these features 
+and how to use the \texttt{subfig} package to have more than one
+graphic in a figure.
+
+\begin{figure}[hbtp]
+\centering
+  \includegraphics[height=40mm]{/export/ghostfonts/tiger.eps} 
+  \includegraphics[angle=120, height=20mm]{/export/ghostfonts/tiger.eps} 
+\caption{Tigers}
+\end{figure}
+
+\begin{small}
+\begin{verbatim}
+\centering
+\begin{figure}[hbtp]
+  \includegraphics[height=40mm]{/export/ghostfonts/tiger.eps} 
+  \includegraphics[angle=120, height=20mm]{/export/ghostfonts/tiger.eps} 
+\caption{Tigers}
+\end{figure}
+\end{verbatim}
+
+\begin{verbatim}
+% remember to do \usepackage{subfig} at the top of the document! 
+\begin{figure}[hbtp]
+\centering
+\subfloat[Small]% \quad on the next line adds spacing
+{\includegraphics[height=30mm]{/export/ghostfonts/crest.eps}}\quad
+\subfloat[Medium]
+{\includegraphics[width=40mm]{CUni3.eps}}\quad
+\subfloat[Large]
+{\includegraphics[height=50mm]{/export/ghostfonts/crest.eps}} 
+\caption{3 crests}
+\end{figure}
+\end{verbatim}
+\end{small}
+
+\begin{figure}[hbtp]
+\centering
+\subfloat[Small]
+{\includegraphics[height=30mm]{/export/ghostfonts/crest.eps}}\quad
+\subfloat[Medium]
+{\includegraphics[width=40mm]{CUni3.eps}}\quad
+\subfloat[Large]
+{\includegraphics[height=50mm]{/export/ghostfonts/crest.eps}} 
+\caption{3 crests}
+\end{figure}
+
+To clip the postscript image use the \texttt{viewpoint} argument. 
+The following fragment would display only part of the image.
+The viewport coordinates are in the same units as the bounding box.
+
+\begin{verbatim}
+\begin{figure}[htbp]
+\includegraphics[viewport=200 400 400 600,width=5cm,clip]%
+{CUniv3.eps}
+\end{figure}
+\end{verbatim}
+
+
+\begin{verbatim}
+% Use the floatflt package
+\begin{floatingfigure}[l]{4cm}
+\includegraphics[width=2cm]{/export/ghostfonts/crest.eps}  
+\caption{Using floatingfigure}
+\end{floatingfigure}
+\end{verbatim}
+
+\begin{floatingfigure}[l]{4cm}
+\includegraphics[width=2cm]{/export/ghostfonts/crest.eps}  
+\caption{Using floatingfigure}
+\end{floatingfigure}
+The 
+\htmladdnormallinkfoot{\texttt{floatflt}}{http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/floatflt.dvi}
+package lets you insert a graphic and have the
+text wrap around it. You can provide 2 arguments to the \texttt{floatingfigure}
+command: the first (\texttt{l} or
+ \texttt{r}) selects whether you want the graphic to be on the left
+or right of the page. The 2nd argument gives the width of the graphic.
+Not all text will flow perfectly around (for example, \texttt{verbatim}
+text fails, as illustrated below) so check the final output carefully.
+
+Using the \texttt{fancybox} package gives you access to 
+\verb|\shadowbox|, \verb|\ovalbox|,  \verb|\Ovalbox| and
+\verb|\doublebox| commands, which can be used with text or
+with graphics. For example, \verb|\shadowbox{shadow package}| produces
+\shadowbox{shadow package} and 
+\begin{verbatim}
+\ovalbox{\includegraphics[height=10mm]{CUni3.eps}}
+\end{verbatim}
+ produces
+\ovalbox{\includegraphics[height=10mm]{CUni3.eps}}.
+Unfortunately, the \texttt{fancybox} package as supplied suppresses the
+table of contents.  The locally produced \texttt{contentsfancybox} solves 
+this, but may introduce graphics problems.
+
+\subsection{GIF and jpeg files}
+CUED users can include a file called \texttt{keyboard.gif}, for example,
+by doing \texttt{gif2ps -b keyboard.gif} (as long as you don't change the
+\texttt{GIF} file you need only do this once) and then including the 
+\texttt{GIF} file as you would a postscript one.
+
+For JPEG files run "\texttt{jpeg2ps -h} \textit{file.jpg} $>$ 
+\textit{file.eps}" then include the postscript file in the usual way. 
+The resulting \texttt{eps} file will be little bigger than the original
+file. Alternatively, if you put the 'Bounding Box' line from the  \texttt{eps} file and put it in \textit{file.jpg.bb} you can include JPEG files in
+the same way that you do postscript files.
+\end{document}

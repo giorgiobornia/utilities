@@ -1,0 +1,33 @@
+%%%$$$$$$$$$$$$$$$$$
+% \usepackage{comment}
+% \newenvironment{solutionRemovable}{Sol:}{end}
+% \includecomment{solutionRemovable}
+%%%$$$$$$$$$$$$$$$$$
+
+
+%%%%%%%%%%%%%%
+% This solution seems pretty good, the only thing that doesn't work with it is if there is a ``verbatim'' inside
+\usepackage{environ}
+\usepackage{ifthen}
+\newboolean{answers}
+\setboolean{answers}{true}  %%% uncomment to show answers properly
+% \setboolean{answers}{false}  %%% comment to show answers properly
+
+
+\ifthenelse{\boolean{answers}}%
+  {%
+  \NewEnviron{solutionRemovable}
+    {%
+    \begin{solution}
+    \BODY{}
+    \end{solution}
+        }%
+}%
+    {\NewEnviron{solutionRemovable}
+    {%
+    \textit{ }
+    \textit{ }
+       }%
+}%
+
+%%%%%%%%%%%%%%%%%% 

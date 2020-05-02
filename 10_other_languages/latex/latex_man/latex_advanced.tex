@@ -1,0 +1,1485 @@
+% Copyright (c) 1999 by T.P.Love. This document may be copied freely 
+% for the purposes of education and non-commercial research.
+% Cambridge University Engineering Department,  
+% Cambridge CB2 1PZ, England.
+% Use latex file.tex ;latex file.tex ; dvips file.dvi
+% to print a copy. 
+\documentclass[dvips]{article}
+\usepackage{multicol,longtable,palatino,a4,graphics,color}
+\usepackage{array,pifont,fancyhdr,html}
+
+\setlongtables
+\begin{document}
+\def\xdt{$\cal X\!\!$\texttt{.desktop}}
+
+\setlength{\parskip}{0.4em}
+
+\title{Advanced \LaTeX}
+\author{Tim Love}
+\date{\today}
+\maketitle
+
+\begin{quotation}
+This document follows on from the 
+\htmladdnormallinkfoot{\textit{Word processing using \LaTeX}}{http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/latex\_basic/latex\_basic.html} 
+document. It describes the features of \LaTeX{} that people at CUED
+are most likely to use. Further information is available from the 
+\htmladdnormallinkfoot{LaTeX help page}{http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/LaTeX\_intro.html}
+and in the books available for loan from the operators in the 
+\texttt{DPO}.
+
+Comments and bug reports to Tim Love (\htmladdnormallink{tpl@eng.cam.ac.uk}{mailto:tpl@eng.cam.ac.uk}). 
+\end{quotation}
+
+\begin{table}[b]
+Copyright \copyright 1999 by T.P.~Love.
+This document may be copied freely for the purposes 
+of education and non-commercial research.
+Cambridge University Engineering Department,  
+Cambridge CB2 1PZ, England.
+\end{table}
+
+\tableofcontents
+
+\pagestyle{fancy}
+\section{\LaTeX\ Concepts}
+\subsection{Environments and commands}
+\LaTeX\ is a macro-package for \TeX\ which has many preset \emph{environments} 
+where much of the setting up that \TeX\ users have to do explicitly is done
+for you. An environment has the form
+
+\verb|\begin{|\textit{environment name}\verb|}|
+
+.
+
+\verb|\end{|\textit{environment name}\verb|}|
+
+
+\LaTeX\ also has commands which affect the formatting of the document.
+Their arguments are given in braces. For example, 
+\begin{verbatim}
+  \textit{This is much more important} than this.
+\end{verbatim}
+produces as output  \textit{This is much more important} than this.
+
+The related \verb|\itshape| command doesn't take an argument. It affects 
+all the subsequent text in the environment where it's used.
+
+\LaTeX\ tries to enforce the idea that the visual appearance of
+the document (use of fonts, indentation, etc) should derive from the 
+logical structure of the document (\textit{i.e.} rather than manually
+putting the section titles into bold, you should let the \verb|\section|
+command do it). Resisting this philosophy can lead to
+extra (usually unnecessary) work.
+
+\LaTeX\  is expandable. Many macros can be loaded in to provide added
+featues. You can also create your own commands and environments. Commands
+can take arguments that modify their action 
+\begin{itemize}
+\item Some commands have a \texttt{*-form}, a variant on the standard command
+that you get by adding a \texttt{*} to the command name.
+
+\item Mandatory arguments are enclosed in \verb|{}| braces
+\item Optional arguments are enclosed in \verb|[ ]| brackets.  
+\end{itemize}
+
+\subsection{Classes and packages}
+At the top of your file you will have a line something like
+\begin{verbatim}
+\documentclass[12pt]{article}
+\end{verbatim}
+which determines the font size and document 
+class -- the type of document you're writing. 
+Each class has an associated \verb|*.cls| file in the system directories
+which is read in at 
+start-up time.
+Other options accepted
+by \texttt{article} include \texttt{10pt}, \texttt{11pt} and 
+\texttt{twocolumn}. 
+
+Then you'll probably need to load in extra macros with the 
+\verb|\usepackage| command. Each package has  an associated 
+\verb|*.sty| file in the system directories. The packages 
+inherit the options from the \verb|\documentclass| line and can be
+given others of their own. \emph{E.g.}
+\begin{verbatim}
+\usepackage[dvips]{graphicx}
+\usepackage[dvips]{color}
+\end{verbatim}
+tells \LaTeX{} that you want to use the extra \texttt{graphicx} and
+\texttt{color} macros, and that you are going to use  \texttt{dvips}
+to convert the resulting file to postscript. You can shorten this to
+\begin{verbatim}
+\usepackage[dvips]{graphicx,color}
+\end{verbatim}
+
+\subsection{Errors}
+
+Errors can be reported either from the \LaTeX\ phase (in which case it is 
+reported as such) or the lower level \TeX\ phase. Don't be too put off by the 
+half-digested text displayed. A line number is reported which 
+usually helps to detect the error. Typing \texttt{`h'} sometimes produces 
+helpful diagnostics.   
+The most common errors reported are
+\begin{itemize}
+\item a command misspelt
+
+\item a mismatched brace
+
+\item improper use of special characters
+
+\item forgetting to have the appropriate \verb|\usepackage{...}| lines.
+
+\item a error like this
+\begin{small}
+\begin{verbatim}
+Overfull \hbox (15.42563pt too wide) in paragraph at lines 
+285--288 \OT1/ppl/m/n/10 You can cre-ate ver-tical space 
+between lines or ho-ri-zontal space   between
+\end{verbatim}
+\end{small}
+means that lines 285 to 288 are producing a text line about 15 pts (about
+5mm) too wide. \verb|\OT1/ppl/m/n/10| is the specification of the font
+used.
+When \TeX\ does right and left alignment, it works out how much space it 
+needs to leave between words and where to hypenate words if necessary. But the
+amount of space it's prepared to leave has to fall within a certain range
+and it will only split words in certain places (shown in the error message  
+by a hyphen). If these restrictions mean that \LaTeX\ can't produce a
+satisfactory line, it will produce as much of the line as it can. A re-phrasing of
+the offending sentence will usually solve the problem. Another thing you
+might try is to control the way a troublesome word is hyphenated using
+something like 
+\begin{verbatim}
+\hypenation{furthermore fur-ther-more}
+\end{verbatim}
+at the top of your file. If all else fails,  use 
+\verb|{\sloppy...}| to enclose the offending text.
+ 
+
+\item \LaTeX\ issues a \verb|*|.
+
+ This means \LaTeX\ needs more input. It
+probably means you've missed out an \verb|\end{document}|, but if not you may
+be able to get \LaTeX\ to continue processing as best it can by  typing
+\verb|<Return>|.
+
+\item \verb|! Argument of \label  has an extra }|
+
+If you're sure you haven't left out a left brace, then maybe you need
+to \emph{protect} the inmost (fragile) command. For example, in some
+older versions of \LaTeX{} 
+\verb|\label| is fragile which causes a problem in 
+\verb|\caption{Picture\label{margin}}|, so the safer construction 
+\verb|\caption{Picture\protect\label{margin}}|
+has to be used.
+\end{itemize} 
+
+\subsection{Files created}
+More than just the \texttt{.dvi} file may be produced. Don't worry about them --
+except perhaps for the log file you won't need to look at them.
+\begin{itemize}
+\item \texttt{.aux} - cross references, etc
+\item \texttt{.toc} -  created by \verb|\tableofcontents|
+\item \texttt{.lof} -  created by  \verb|\listoffigures|
+\item \texttt{.lot} -  created by  \verb|\listoftables|
+\item \texttt{.log} -  a copy of the diagnostic output that usually comes out on the
+screen.
+\end{itemize}
+
+Some common errors can be found using the \texttt{lacheck}
+program on the \LaTeX{} file.
+
+\subsection{How to use \LaTeX{} at CUED}
+\begin{description}
+\item[From the command line --] 
+After running \texttt{latex} at least twice, you should be able to 
+preview your \verb|*.dvi| document using \texttt{xdvi} and print it using 
+\texttt{plotview}, but if postscript is implicated at all (if you load
+in graphics, use postscript fonts, scale, use color, or rotate) then
+you should convert your  \verb|*.dvi| document to postscript. A typical
+sequence of commands to process \texttt{doc.tex} would be
+\begin{verbatim} 
+ latex doc
+ latex doc
+ dvips doc.dvi -o doc.ps
+ ghostview doc.ps
+ lp -dljmr1 -opostscript doc.ps 
+\end{verbatim} 
+
+\item[Using \texttt{xlatex} --] \texttt{xlatex} has buttons to process,
+preview and print your document (or selected pages of it), and convert it to 
+postscript. Just type \texttt{xlatex} \emph{filename}.
+\end{description}
+
+Writing a \LaTeX\ document is rather like writing a program. This makes
+using \LaTeX\ more difficult in some respects than using a word 
+processor, but there are advantages too. For instance creating a table
+of contents is trivial. Beginners often use unnecessary
+`\verb|\\|' sequences and write 
+`\verb|{\large \textbf{2.1 Method}}\\|' when `\verb|\subsection{Method}|' 
+would be much better. Users who think they know more about typesetting than
+\LaTeX\ (those who, for example, like underlining) will waste a lot of
+time too.
+
+Avoid repeating constructions. Instead, write your own macros and commands, 
+and familiarise yourself with the packages 
+described in the 
+\htmladdnormallinkfoot{packages}
+{http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/LaTeX\_intro.html\#Packages} section of the online \LaTeX{} page.
+
+\section{Document structure}
+\subsection{Counters and Length parameters}
+\begin{itemize}
+\item \textbf{Counters} :-
+\LaTeX\ maintains many counter variables (\emph{e.g.} \texttt{page}, 
+\texttt{part}, \texttt{equation}, 
+\texttt{footnote}, \texttt{chapter}, \texttt{paragraph}, \texttt{section}, 
+\texttt{subsection}, \texttt{subsubsection}, \texttt{enumi}, 
+etc). You can set these counters yourself. Some
+examples:-
+\begin{verbatim}
+\setcounter{page}{0}
+\addtocounter{chapter}{2}
+\end{verbatim}
+
+
+\item \textbf{Length Parameters} :- 
+\LaTeX\ accepts the following units of length: \texttt{in, cm,  mm, pt} (there
+are 72.27 pts to an inch), \texttt{em} (width of an \texttt{M}),
+\texttt{ex} (height of an \texttt{x}). These units can be used to set the values of length 
+variables using \verb|\setlength|. For example,
+\begin{verbatim}
+\setlength{\parindent}{0in}
+\end{verbatim}
+sets to zero the amount by which the first line of a paragraph is indented.
+Other useful length parameters are:-
+\begin{description}
+\item[\texttt{parskip}:-]   determines the gap between paragraphs.
+\item[\texttt{baselineskip}:-] determines the usual distance from the bottom of one line to the bottom 
+                     of the next. You can adjust this to produce double 
+spacing, but a better way, which takes a stretch \emph{factor} as argument
+is to use \verb|\linespread|. 
+For instance \emph{before} \verb|\begin{document}| you can do
+\begin{verbatim}
+\linespread{1.6}
+\end{verbatim}
+to get doublespacing through your document. The \texttt{setspace} package
+offers more options.
+\end{description}
+\end{itemize}
+
+\subsection{Document and page organisation}
+\begin{itemize}
+\item \textbf{Document classes}: The standard classes are  \texttt{article}, 
+\texttt{book}, \texttt{letter}, \texttt{report},
+\texttt{slides}. 
+The differences between these are often minor. A 
+\texttt{book} can have chapters. In a \texttt{report} sections begin at \texttt{0}
+whereas in an \texttt{article} they begin at \texttt{1}. Just about all our 
+handouts are \texttt{article}s. 
+
+\item \textbf{Big Documents} :- It's best to split your document into smaller files and have a master file
+looking like this
+\begin{verbatim}
+ \documentclass[dvips,12pt]{book}
+ \usepackage{a4,color,graphics,palatino,fancyhdr}
+ \begin{document}
+ \pagestyle{empty}
+ \tableofcontents
+ \listoffigures
+ \pagestyle{fancy}
+ \input{chapter1}
+ \input{chapter2}
+ \input{fig2}
+ \input{chapter3}
+ \input{chapter4}
+ \appendix
+ \input{appendices}
+ \end{document}
+\end{verbatim} 
+on which you can run \texttt{latex} just as if the master file contained all the text of \texttt{chapter1.tex}
+etc. The advantage of this is that once you have a chapter correct, you can comment out the 
+corresponding `input' line and avoid unnecessary processing. Remember to
+take out the \verb|\begin{document}| and \verb|\end{document}| lines from the 
+component files.    
+
+
+\item \textbf{Page Size} :- 
+You can choose the margin sizes yourself by changing the following 
+dimensions \emph{before} the \verb|\begin{document}| line. 
+\begin{verbatim}
+\setlength{\topmargin}{-0.4in}
+\setlength{\topskip}{0.3in}    % between header and text
+\setlength{\textheight}{9.5in} % height of main text
+\setlength{\textwidth}{6in}    % width of text
+\setlength{\oddsidemargin}{0.75in} % odd page left margin
+\setlength{\evensidemargin}{0.75in} % even page left margin
+\end{verbatim}
+
+Note that a margin width of 0cm gives you a margin 4cm wide. Rather 
+than set absolute sizes you can modify the default sizes using commands
+like the following --
+
+\begin{verbatim}
+\addtolength{\evensidemargin}{-1cm}
+\addtolength{\oddsidemargin}{-1cm}
+\addtolength{\textwidth}{2cm}
+\end{verbatim}
+Further support for control of page layout is provided by the 
+\htmladdnormallinkfoot{geometry}{http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/geometry.dvi} package.
+To see the current values of these dimensions, use the 
+\verb|layout| package, which defines a \verb|\layout| command. 
+
+For A3 output,  add \verb|\usepackage{a3}| to your 
+  latex source file (\texttt{foo.tex} say), run latex on it, convert the 
+resulting file to 
+  Postscript using ``\verb|dvips -t a3 foo.dvi -ofoo.ps|'' then print using 
+``\verb|lp -oa3 -dljmr2 foo.ps|''.
+
+
+
+
+\item \textbf{Title Pages} :-
+The title page of this document was created by the following \LaTeX\ commands.
+\begin{verbatim}
+\title{Advanced \LaTeX}
+\author{Tim Love}
+\date{\today}
+\maketitle
+\end{verbatim} 
+
+\item \textbf{Contents} :- Use \verb|\tableofcontents| to create a contents list 
+at that point in the document. \LaTeX\ will pick out the sections,
+subsections etc for you. You'll have to run \LaTeX\ at least twice though.
+
+\item \textbf{Page numbers and Headings} :- These are determined by the 
+argument given in \verb|pagestyle{}|.
+
+\begin{description}
+\item[ \texttt{plain} :-]  the page numbers are put at the bottom of the page.
+The top of the page is empty. This is the default mode.
+
+\item[ \texttt{empty} :-] this suppresses page numbering altogether, except
+on the title page it you're using \verb|\maketitle|. The workaround in
+this case is to do
+\begin{verbatim}
+\maketitle
+\thispagestyle{empty}
+\end{verbatim}
+with no gap between the two lines.
+
+
+\item[\texttt{headings} :-] this puts the page numbers at the top 
+and adds a header whose contents depend on the document style.
+\end{description}
+
+\htmladdnormallinkfoot{\texttt{fancyhdr}}{http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/fancyhdr.dvi}
+is a popular package that adds useful page
+headers when the command \verb|\pagestyle{fancy}| is used. This handout uses it.
+
+Long section titles can cause trouble in headers. The section commands
+let you specify an extra, shorter title for use in the header and contents 
+page. Section \ref{LONGTITLE} was specified as follows
+\begin{verbatim}
+\subsection[Pagebreaks, footnotes, etc]
+   {Pagebreaks, space, footnotes, references, boxes, etc}
+\end{verbatim}
+
+\item \textbf{Sectioning} :- To start a chapter 
+called \textbf{Life} in a \texttt{book}, just use \verb|\chapter{Life}|.
+Similar commands to start a \texttt{part}, \texttt{section} or \texttt{subsection} 
+also  exist in most document classes (articles don't have chapters or parts
+though).
+
+If you use the \texttt{*-form} of the command then the sections will not
+be numbered, neither will it appear in the table of contents.
+
+A title will only be numbered if its 'depth' isn't more than
+\texttt{secnumdepth} and will only appear in the contents page if
+the 'depth' isn't more than the value of \texttt{tocdepth}. So, for
+example, doing
+\begin{verbatim}
+\setcounter{tocdepth}{2}
+\setcounter{secnumdepth}{3}
+\end{verbatim}
+will cause section \texttt{1.4.3} to be numbered, but it won't appear in the
+contents. 
+\end{itemize}
+
+\subsection[Pagebreaks, footnotes, etc]
+   {Pagebreaks, space, footnotes, references, boxes, etc}
+\label{LONGTITLE}
+\begin{itemize}
+
+\item \textbf{Page Breaks} :- you can force a page break using \verb|\newpage|.
+\item \textbf{Preventing line breaks} :- If there's a word that you don't want broken, put it in an
+\verb|mbox|. \emph{E.g.},
+\begin{verbatim}
+One shouldn't try to break up \mbox\emph{relationships} 
+\end{verbatim}
+
+
+
+\item \textbf{Space} :-
+\begin{verbatim}
+You can create vertical space \vspace{.5cm} between lines 
+or horizontal space \hspace{1.5cm} between words. 
+The arguments to these commands can be negative. 
+\end{verbatim}
+You can create vertical space \vspace{.5cm} between lines 
+or horizontal space \hspace{1.5cm} between words. 
+The arguments to these commands can be negative. \verb|\vspace*|
+will create space even at the top of a page. It's sometimes useful
+to create stretchable space. The following creates space that pushes
+the letters to the edge of the page
+\begin{verbatim}
+\noindent A\hspace{\stretch{1}} B\\
+C\hspace{\stretch{1}} D
+\end{verbatim}
+
+\noindent A\hspace{\stretch{1}} B\\
+C\hspace{\stretch{1}} D
+
+
+\item \textbf{Footnotes} :- 
+\begin{verbatim}
+Do them like this\footnote{I told you so.}
+\end{verbatim}
+Do them like this\footnote{I told you so.}
+The footnotes are numbered by default. If you want to use symbols
+(stars, daggers etc) then you need to redefine how the \texttt{footnote}
+counter is displayed.
+\begin{verbatim}
+\def\thefootnote{\fnsymbol{footnote}}
+\end{verbatim}
+
+\item \textbf{Margin notes} :- 
+\begin{verbatim}
+Do them like this\marginpar{margin note}
+\end{verbatim}
+Do them like this\marginpar{margin note}
+
+\item \textbf{Cross References} :-
+At the end of this source file is the line
+\verb|\label{THE_END}|.
+\verb|\pageref{THE_END}| will refer to the final page by number, and 
+\verb|\ref{THE_END}| will refer to it by section number. The 
+last page (page \pageref{THE_END}) is in section \ref{THE_END}.
+You'll have to run \LaTeX\ at least twice to pick up forward references
+like these.
+
+\item \textbf{Boxed Text} :-
+For short pieces of text, use \verb|\fbox|
+\begin{verbatim}
+   Help. I'm \fbox{trapped}
+\end{verbatim}
+   Help. I'm \fbox{trapped}
+
+\item \textbf{Comments} :- Anything to the right of a \% character is ignored by \LaTeX\ .
+
+\item \textbf{Rules} :- The \verb|\rule| takes 2 arguments; a width and a 
+height, so\\  \verb|\rule{\textwidth}{1pt}| produces
+
+\noindent\rule{\textwidth}{1pt}
+\end{itemize}
+
+
+
+\section{Color and Fonts}
+\subsection{Colored text}
+Commands that control foreground and background
+colors  need 
+\begin{verbatim}
+   \usepackage[dvips]{color}
+\end{verbatim}
+after the \verb|\documentclass| line but before \verb|\begin{document}|.
+\begin{itemize}
+\item \verb|\textcolor{|\textit{colorname}\verb|}{|\textit{text}\verb|}|
+writes text in a color which can be specified by name (\texttt{black, white,
+red, green, blue} or a color name you've defined), RGB components,
+or grayscale.
+\item \verb|\colorbox{|\textit{colorname}\verb|}{|\textit{text}\verb|}|
+writes text in a box with a colored background.
+\item \verb|\fcolorbox{|\textit{colorname}\verb|}{|\textit{text}\verb|}|
+writes text in a colored frame.
+\item \verb|\pagecolor{|\textit{colorname}\verb|}| sets the color
+of the page's background.
+\item \verb|\definecolor{|\textit{colorname}\verb|}{|\textit{color specification}\verb|}| lets you define new color names.
+\end{itemize}
+
+\begin{small}
+\begin{verbatim}
+\definecolor{gold}{rgb}{0.85,.66,0}
+This is in \textcolor{red}{red} and this box is \colorbox{gold}{gold}.
+Text color can be set using RGB values 
+(\textcolor[rgb]{0,1,0}{like so}), or \textcolor[gray]{0.2}{shades} 
+\textcolor[gray]{0.5}{of} \textcolor[gray]{0.8}{grey}.
+\end{verbatim}
+\end{small}
+produces
+
+\definecolor{gold}{rgb}{0.85,.66 , 0}
+This is in \textcolor{red}{red} and this box is \colorbox{gold}{gold}.
+Text color can be set using RGB values 
+(\textcolor[rgb]{0,1,0}{like so}), or \textcolor[gray]{0.2}{shades}
+\textcolor[gray]{0.5}{of} \textcolor[gray]{0.8}{grey}.
+ 
+
+\subsection{Special characters}
+   \dag\ is created by \verb|\dag|, \ddag\ by \verb|\ddag|, \S\  by \verb|\S|, \P\ by \verb|\P|, \pounds\ by \verb|\pounds|, \"{o} by \verb|\"{o}|, 
+\copyright\ by \verb|\copyright|. 
+Many others are available 
+in the \texttt{math} environment, including all the lower case greek letters and
+most of the upper case ones. If you only want to use a few characters you
+can bracket the symbols using \verb|$| and \verb|$| rather than 
+\verb|\begin{math}|
+and \verb|\end{math}|. You can put a slash through any of these characters by prefacing them with \verb|\not|
+
+\begin{small}
+\begin{longtable}{llllll}
+$\sqrt{i} $&        \verb|\sqrt{i}| &                   
+$\sqrt[5]{x+iy} $&  \verb|\sqrt[5]{x+iy}| &      
+$\ldots $&          \verb|\ldots|\\              
+$\cdots $&         \verb|\cdots| &             
+$\vdots$&           \verb|\vdots|&               
+$\ddots$&           \verb|\ddots|\\               
+$\alpha$&           \verb|\alpha|&               
+$\beta$&           \verb|\beta|&               
+$\gamma$&           \verb|\gamma|\\               
+$\delta$&           \verb|\delta|&               
+$\omega$&           \verb|\omega|&               
+$\Gamma$&          \verb|\Gamma|\\              
+$\Theta$&           \verb|\Theta|&               
+$\Omega$&           \verb|\Omega|&               
+$\pm$&              \verb|\pm|\\                  
+$\mp$&             \verb|\mp|&                 
+$\times$&           \verb|\times|&               
+$\div$&             \verb|\div|\\                 
+$\ast$&             \verb|\ast|&                 
+$\star$&           \verb|\star|&               
+$\circ$&            \verb|\circ|\\                
+$\bullet$&          \verb|\bullet|&              
+$\cdot$&            \verb|\cdot|&                
+$\cap$&            \verb|\cap|\\                
+$\bigcap$&          \verb|\bigcap|&              
+$\cup$&             \verb|\cup|&                 
+$\bigcup$&          \verb|\bigcup|\\              
+$\uplus$&          \verb|\uplus|&              
+$\biguplus$&        \verb|\biguplus|&            
+$\sqcap$&           \verb|\sqcap|\\               
+$\sqcup$&          \verb|\sqcup|&              
+$\bigsqcup$&        \verb|\bigsqcup|&            
+$\vee$&             \verb|\vee|\\                 
+$\bigvee$&          \verb|\bigvee|&              
+$\wedge$&          \verb|\wedge|&              
+$\bigwedge$&        \verb|\bigwedge|\\            
+$\setminus$&        \verb|\setminus|&            
+$\wr$&              \verb|\wr|&                  
+$\diamond$&        \verb|\diamond|\\            
+$\bigtriangleup$&   \verb|\bigtriangleup|&       
+$\bigtriangledown$& \verb|\bigtriangledown|&     
+$\triangleleft$&    \verb|\triangleleft|\\        
+$\triangleright$&  \verb|\triangleright|&      
+%$\lhd$&             \verb|\lhd|&                 
+%$\rhd$&             \verb|\rhd|\\                 
+%$\unlhd$&           \verb|\unlhd|&               
+%$\unrhd$&          \verb|\unrhd|&              
+$\oplus$&           \verb|\oplus|\\               
+$\bigoplus$&        \verb|\bigoplus|&            
+$\ominus$&          \verb|\ominus|&            
+$\otimes$&         \verb|\otimes|\\           
+$\bigotimes$&       \verb|\bigotimes|&           
+$\oslash$&          \verb|\oslash|&              
+$\odot$&            \verb|\odot|\\                
+$\bigodot$&        \verb|\bigodot|&            
+$\bigcirc$&         \verb|\bigcirc|&          
+$\amalg$&           \verb|\amalg|\\               
+$\leq$&             \verb|\leq|&             
+$\prec$&           \verb|\prec|&               
+$\preceq$&          \verb|\preceq|\\              
+$\ll$&              \verb|\ll|&                  
+$\subset$&          \verb|\subset|&              
+$\subseteq$&       \verb|\subseteq|\\           
+%$\sqsubset$&        \verb|\sqsubset|&            
+%$\sqsubseteq$&      \verb|\sqsubseteq|&          
+$\in$&              \verb|\in|&                  
+$\vdash$&          \verb|\vdash|\\              
+$\geq$&             \verb|\geq|&                 
+$\succ$&            \verb|\succ|&                
+$\succeq$&          \verb|\succeq|\\              
+$\gg$&             \verb|\gg|&                 
+$\supset$&          \verb|\supset|&              
+$\supseteq$&        \verb|\supseteq|\\            
+%$\sqsupset$&        \verb|\sqsupset|&            
+$\sqsupseteq$&     \verb|\sqsupseteq|&
+$\ni$&              \verb|\ni|&                  
+$\dashv$&           \verb|\dashv|\\           
+$\equiv$&           \verb|\equiv|&               
+$\sim$&            \verb|\sim|&                
+$\simeq$&           \verb|\simeq|\\               
+$\asymp$&           \verb|\asymp|&               
+$\approx$&          \verb|\approx|&              
+$\cong$&           \verb|\cong|\\            
+$\neq$&             \verb|\neq|&                 
+$\doteq$&           \verb|\doteq|&               
+$\propto$&          \verb|\propto|\\              
+$\models$&         \verb|\models|&             
+$\perp$&            \verb|\perp|&                
+$\mid$&             \verb|\mid|\\               
+$\parallel$&       \verb|\parallel|&           
+$\bowtie$&         \verb|\bowtie|&             
+% $\Join$&            \verb|\Join|\\
+$\smile$&           \verb|\smile|\\              
+$\frown$&           \verb|\frown|&               
+$\leftarrow$&      \verb|\leftarrow|&
+$\Leftarrow$&       \verb|\Leftarrow|\\           
+$\rightarrow$&      \verb|\rightarrow|&          
+$\Rightarrow$&      \verb|\Rightarrow|&          
+$\leftrightarrow$& \verb|\leftrightarrow|\\     
+$\Leftrightarrow$&  \verb|\Leftrightarrow|&      
+$\mapsto$&          \verb|\mapsto|&           
+$\hookleftarrow$&   \verb|\hookleftarrow|\\    
+$\leftharpoonup$&  \verb|\leftharpoonup|&     
+$\leftharpoondown$& \verb|\leftharpoondown|&     
+$\rightleftharpoons$& \verb|\rightleftharpoons|\\ 
+$\longleftarrow$&   \verb|\longleftarrow|&
+$\Longleftarrow$&  \verb|\Longleftarrow|&    
+$\longrightarrow$&  \verb|\longrightarrow|\\      
+$\Longrightarrow$&  \verb|\Longrightarrow|&      
+$\longleftrightarrow$& \verb|\longleftrightarrow|&
+$\Longleftrightarrow$& \verb|\Longleftrightarrow|\\
+$\longmapsto$&      \verb|\longmapsto|&
+$\hookrightarrow$&  \verb|\hookrightarrow|&      
+$\rightharpoonup$&  \verb|\rightharpoonup|\\     
+$\rightharpoondown$& \verb|\rightharpoondown|& 
+%$\leadsto$&         \verb|\leadsto|&             
+$\uparrow$&         \verb|\uparrow|&   
+$\Uparrow$&         \verb|\Uparrow|\\             
+$\downarrow$&      \verb|\downarrow|&          
+$\Downarrow$&       \verb|\Downarrow|&           
+$\updownarrow$&     \verb|\updownarrow|\\         
+$\nearrow$&         \verb|\nearrow|&
+$\searrow$&        \verb|\searrow|&         
+$\swarrow$&         \verb|\swarrow|\\             
+$\nwarrow$&         \verb|\nwarrow|&            
+$\aleph$&           \verb|\aleph|&             
+$\hbar$&           \verb|\hbar|\\ 
+$\imath$&           \verb|\imath|&               
+$\jmath$&           \verb|\jmath|&               
+$\ell$&             \verb|\ell|\\               
+$\wp$&             \verb|\wp|&               
+$\Re$&              \verb|\Re|&                  
+$\Im$&              \verb|\Im|\\                  
+%$\mho$&             \verb|\mho|\\                 
+$\prime$&          \verb|\prime|&
+$\empty$&           \verb|\empty|&               
+$\nabla$&           \verb|\nabla|\\               
+$\surd$&            \verb|\surd|&             
+$\top$&            \verb|\top|&                
+$\bot$&             \verb|\bot|\\                
+$\|$&               \verb?\|?&                 
+$\angle$&           \verb|\angle|&               
+$\forall$&         \verb|\forall|\\             
+$\exists$&          \verb|\exists|&              
+$\neg$&             \verb|\neg|&                 
+$\flat$&            \verb|\flat|\\              
+$\natural$&        \verb|\natural|&            
+$\sharp$&           \verb|\sharp|&               
+$\backslash$&        \verb|\backslash|\\            
+$\partial$&         \verb|\partial|&          
+$\infty$&          \verb|\infty|&              
+%$\Box$&             \verb|\Box|&                 
+%$\Diamond$&         \verb|\Diamond|\\             
+$\triangle$&        \verb|\triangle|\\
+$\clubsuit$&       \verb|\clubsuit|&           
+$\diamondsuit$&     \verb|\diamondsuit|&         
+$\heartsuit$&       \verb|\heartsuit|\\         
+$\spadesuit$&       \verb|\spadesuit|&           
+$\sum$&            \verb|\sum|&         
+$\prod$&            \verb|\prod|\\                
+$\coprod$&          \verb|\coprod|&              
+$\int$&             \verb|\int|&                
+$\oint$&           \verb|\oint|\\               
+\end{longtable}
+\end{small}
+
+
+%One locally produced font with only one character is called \texttt{crest}.
+%\begin{verbatim}
+%\font\crest=crest
+%``This is the {\crest A} CUED crest''
+%\end{verbatim}
+%produces 
+%\font\crest=crest
+%``This is the {\crest A} CUED crest''
+\subsection{Font Sizes}
+These are the available sizes.
+
+\begin{tabular}{lllll}
+{\tiny tiny} & {\scriptsize scriptsize} & {\footnotesize footnotesize} & 
+{\small small} & {\normalsize normalsize} \\  {\large large} & {\Large Large} &
+{\LARGE LARGE} & {\huge huge} & {\Huge Huge} \\
+\end{tabular}
+
+If, for example, you want to use the smallest size, do
+\begin{verbatim}
+{\tiny ... }
+\end{verbatim}
+
+If \texttt{Huge} isn't big enough for you, you can scale a \emph{postscript}
+font up using the commands designed for graphics. 
+\verb|\resizebox{!}{5cm}{BIG}| produces
+
+\resizebox{!}{5cm}{BIG}
+
+
+\subsection{Font Types}
+Independent of size, these font types are at your disposal :-
+\verb|\textrm| \textrm{(roman)}, \verb|textit|\textit{(italic)}, 
+\verb|\textsc| \textsc{(small caps)}, \verb|\emph| \emph{(emphasis, but note that
+if you use \texttt{emph} within emphasized text, you will get \emph{roman text})},
+\verb|\textsl| \textsl{(slanting)}, \verb|\texttt| \texttt{(teletype)}, 
+\verb|\textbf| \textbf{(boldface)},
+\verb|\textsf| \textsf{(sans serif)}. As long as there's no conflict, these
+commands can be combined so that, for instance,  \textsf{\textbf{this is bold sans serif}} can be produced by 
+\verb|\textsf{\textbf{this is bold sans serif}}|.
+
+\subsection{Postscript Fonts}
+It is easy to write a document that has postscript fonts. We have
+package support for helvetica (\texttt{helvetic}), utopia, times, optima, 
+newcentury (\texttt{newcentu}), palatino and courier. To use 
+palatino, for instance, all you need to do is add
+\begin{verbatim}
+\usepackage{palatino}
+\end{verbatim}
+to your file. The \texttt{pifont} package has special commands for using the Zapf Dingbats
+font. \verb|\dingfill{40}| completes the line with the specified
+symbol \dingfill{40} 
+
+and \verb|\dingline{36}| draws a whole line of
+symbols. \dingline{36}
+
+
+It's a good idea to use a font that's installed in the
+printer you intend to use. See the table on page \pageref{LJMR1LIST}
+for information about the teaching system's \texttt{ljmr1} printer.
+
+\subsection{Font attributes}
+\emph{The commands above should give you sufficient control over fonts. If
+you don't want to know more at the moment then turn to section 
+\ref{ENVIRONMENTS}}
+
+Every text font in \LaTeX{} has five \emph{attributes}:
+\begin{description}
+
+\item[encoding] This specifies the order that characters appear in the
+   font. The most common values for the font encoding is \texttt{OT1}.
+  
+\item[family] The name for a collection of fonts, usually grouped under
+   a common name by the font foundry.  For example, `Adobe Times' and 
+Knuth's `Computer Modern Roman' are font families.
+There are far too many font families to list them all, but some common
+ones are:
+
+
+\begin{center}
+\label{LJMR1LIST}
+   \begin{tabular}{>{\ttfamily}lll}
+      \emph{Internal fontname} & \emph{Fontname} & \emph{In ljmr1?}\\
+      cmr  & Computer Modern Roman & No\\
+      cmss & Computer Modern Sans & No\\
+      cmtt & Computer Modern Typewriter & No\\
+      cmm  & Computer Modern Math Italic & No\\
+      cmsy & Computer Modern Math Symbols & No\\
+      cmex & Computer Modern Math Extensions & No\\
+      ptm  & Adobe Times & Yes\\
+      phv  & Adobe Helvetica & Yes \\
+      pcr  & Adobe Courier& Yes \\
+      pun  & Univers& No\\
+      ppl  & Palatino& Yes \\
+      pagk  & AvantGarde-Book& Yes\\
+      pagd  & AvantGarde-Demi& Yes\\ 
+      pbk  & Bookman& Yes\\
+      put & Utopia& No\\
+      pop & Optima& No\\
+      pnc & New Century Schoolbook& Yes\\
+      pzd & ZapfDingbats & Yes\\
+      rpad & Garamond & No\\
+   \end{tabular}  
+\end{center}
+
+
+\item[series] How heavy or expanded a font is.  For example, `medium
+   weight', `narrow' and `bold extended' are all series.
+The most common values for the font series are:
+\begin{center}
+\begin{minipage}{.7\linewidth}
+   \begin{tabular}{>{\ttfamily}rl}
+      m    & Medium  \\
+      b    & Bold  \\
+      bx   & Bold extended \\
+      sb   & Semi-bold \\
+      c    & Condensed
+   \end{tabular}
+\end{minipage}
+\end{center}
+
+\item[shape] The form of the letters within a font family.  For
+    example,    `italic', `oblique' and `upright' are all font shapes.
+The most common values for the font shape are:
+\begin{center}
+\begin{minipage}{.7\linewidth}
+   \begin{tabular}{>{\ttfamily}rl}
+      n    & Normal (that is `upright' or `roman') \\
+      it   & Italic \\
+      sl   & Slanted (or `oblique') \\
+      sc   & Caps and small caps
+   \end{tabular}
+\end{minipage}
+\end{center}
+
+
+\item[size] The design size of the font, for example `10pt'.
+
+\end{description}
+
+These five parameters specify every \LaTeX{} font,
+for example:
+\begin{small}
+\begin{center}
+   \begin{tabular}{llllll}
+      \multicolumn{5}{l}\emph{\LaTeX{} specification} &
+      \emph{Font} \\
+      OT1 & cmr & m & n & 10pt &
+      Computer Modern Roman 10pt \\
+      OT1 & cmss & m & sl & 12pt &
+      Computer Modern Sans Oblique 12pt \\
+      OML & cmm & m & it & 10pt &
+      Computer Modern Math Italic 10pt \\
+      T1 & ptm & b & it & 18pt &
+      Adobe Times Bold Italic 18pt\\
+   \end{tabular}
+\end{center}
+\end{small}
+
+\subsection{Selection commands}
+There are commands to set attributes one at a time:
+\begin{center}
+   \begin{tabular}{lll}
+      \emph{Command} &
+      \emph{Attribute} &
+      \emph{Value in} article \emph{class}, 10pt \\
+      \verb|\textrm{..}| or \verb|\rmfamily|    & family & \verb|cmr| \\
+      \verb|\textsf{..}| or \verb|\sffamily|    & family & \verb|cmss| \\
+      \verb|\texttt{..}| or \verb|\ttfamily|    & family & \verb|cmtt| \\
+      \verb|\textmd{..}| or \verb|\mdseries|    & series & \verb|m| \\
+      \verb|\textbf{..}| or \verb|\bfseries|    & series & \verb|bx| \\
+      \verb|\textup{..}| or \verb|\upshape|     & shape  & \verb|n| \\
+      \verb|\textit{..}| or \verb|\itshape|     & shape  & \verb|it| \\
+      \verb|\textsl{..}| or \verb|\slshape|     & shape  & \verb|sl| \\
+      \verb|\textsc{..}| or \verb|\scshape|     & shape  & \verb|sc| \\
+      \verb|\tiny|         & size   & \verb|5pt| \\
+      \verb|\scriptsize|   & size   & \verb|7pt| \\
+      \verb|\footnotesize| & size   & \verb|8pt| \\
+      \verb|\small|        & size   & \verb|9pt| \\
+      \verb|\normalsize|   & size   & \verb|10pt| \\
+      \verb|\large|        & size   & \verb|12pt| \\
+      \verb|\Large|        & size   & \verb|14.4pt| \\
+      \verb|\LARGE|        & size   & \verb|17.28pt| \\
+      \verb|\huge|         & size   & \verb|20.74pt| \\
+      \verb|\Huge|         & size   & \verb|24.88pt|
+   \end{tabular}
+\end{center}
+
+
+
+The low-level commands used to change font attributes are as follows.
+
+\begin{tabular}{l}
+\verb|\fontencoding{|\textit{encoding}\verb|}| \\
+\verb|\fontfamily{|\textit{family}\verb|}|\\
+\verb|\fontseries{|\textit{series}\verb|}|\\
+\verb|\fontshape{|\textit{shape}\verb|}|\\
+\verb|\fontsize{|\textit{size}\verb|}{|\textit{baselineskip}\verb|}|
+\end{tabular}
+
+Each of these commands sets one of the font
+attributes; \verb|\fontsize| also sets \verb|\baselineskip|. The
+actual font in use is not altered by these commands, but the current
+attributes are used to determine which font to use after the next
+\verb|\selectfont| command.
+
+\verb|\selectfont|
+selects a text font, based on the current values of the font attributes.
+There \emph{must} be a \verb|\selectfont| command
+immediately after any settings of the font parameters by (some of)
+the five \verb|\font<parameter>| commands, before any following text.
+For example, it is legal to say:
+\begin{verbatim}
+   \fontfamily{ptm}\fontseries{b}\selectfont Some text.
+\end{verbatim}
+to select bold Times Roman, but it is \emph{not} legal to say:
+\begin{verbatim}
+   \fontfamily{ptm} Some \fontseries{b}\selectfont text.
+\end{verbatim}
+
+\verb|\usefont{|\emph{encoding}\verb|}{|\emph{family}\verb|}{|\emph{series}\verb|}{|\emph{shape}\verb|}|
+
+\noindent is short hand for the equivalent \verb|\font|\ldots{} commands followed by\verb|\selectfont|.
+
+\section{Environments}
+\label{ENVIRONMENTS}
+Some examples of how to use environments are given here.
+
+\subsection{Alignments}
+In these environments \verb|\\| starts a new line.
+
+\begin{verbatim}
+\begin{flushleft}
+Some people like to stay firmly\\ on the left whereas others
+\end{flushleft}
+\begin{flushright}
+feel more at home on the right.\\ 
+\end{flushright}
+\begin{center}
+but most of us prefer to stay dead in the center.
+\end{center}
+\end{verbatim}
+
+\begin{flushleft}
+Some people like to stay firmly\\ on the left whereas others
+\end{flushleft}
+\begin{flushright}
+feel much more at home\\ on the right.\\ 
+\end{flushright}
+\begin{center}
+but most of us prefer to stay dead in the center.
+\end{center}
+
+\subsection{Listing Items}
+The items can be marked in one of three way:
+\begin{verbatim}
+\begin{itemize}
+\item just by a bullet, using \texttt{itemize}
+
+\item numbered, using \texttt{enumerate} 
+
+\begin{enumerate}
+\item one
+\item two
+\item three
+\end{enumerate}
+
+\item or with a label, using \texttt{description} 
+
+\begin{description}
+\item[itemize] bullets
+\item[enumerate] automatic numbering
+\item[description] labelling
+\end{description}
+
+\end{itemize}
+
+\end{verbatim}
+\begin{itemize}
+\item just by a bullet, using \texttt{itemize}
+
+\item numbered, using \texttt{enumerate} 
+
+\begin{enumerate}
+\item one
+\item two
+\item three
+\end{enumerate}
+
+\item or with a label, using \texttt{description}  
+
+\begin{description}
+\item[itemize] bullets
+\item[enumerate] automatic numbering
+\item[description] labelling
+\end{description}
+
+\end{itemize}
+
+The \texttt{pifont} package includes a variant of the \texttt{itemize} 
+command that will 
+replace the usual 'bullet' by a Zapf Dingbat symbol of your choice
+\begin{verbatim}
+\begin{dinglist}{43}
+\item First 
+\item Second
+\end{dinglist}
+\end{verbatim}
+
+\begin{dinglist}{43}
+\item First 
+\item Second
+\end{dinglist}
+
+and a variant of the \texttt{enumerate} command that given an 
+initial Zapf Dingbat symbol will increment the symbol for each item.
+\begin{verbatim}
+\begin{dingautolist}{172}
+\item First 
+\item Second
+\end{dingautolist}
+\end{verbatim}
+\begin{dingautolist}{172}
+\item First 
+\item Second
+\end{dingautolist}
+
+\subsection{Tabular}
+Tabular output is supported. When you create the environment you specify how 
+many columns to have and how the contents are to be aligned (use \texttt{l, c} 
+or \texttt{r} to represent each column with either left, center or right 
+alignment) and where you want vertical lines (use \verb?|?). The contents of 
+the columns are separated by a `\&' and rows by \verb|\\|. Here's a simple
+example
+\begin{verbatim}
+\begin{tabular}{l|c|r}
+left & centre & right\\
+more left & more centre & more right\\
+\end{tabular}
+\end{verbatim}
+
+\begin{tabular}{l|c|r}
+left & centre & right\\
+more left & more centre & more right\\
+\end{tabular}
+
+To draw a full 
+horizontal line, use \verb|\hline| otherwise draw a line across selected 
+columns using \verb|\cline|. The \verb|\multicolumn| command allows items to 
+span columns. It takes as its first argument the number of columns to span.
+The following, more complicated example shows how to use these 
+facilities.
+\begin{verbatim}
+\begin{tabular}{||l|lr||} \hline
+\textbf{Veg}  & \multicolumn{2}{|c||}{\textbf{Detail}}\\\hline
+carrots    & per pound & \pounds 0.75 \\ \cline{2-3}
+           & each      &         20p  \\ \hline
+mushrooms  & dozen     &         86p  \\ \cline{1-1} \cline{3-3}
+toadstools & pick your own & free     \\ \hline
+\end{tabular}
+\end{verbatim}
+
+\begin{tabular}{||l|lr||} \hline
+\textbf{Veg}  & \multicolumn{2}{|c||}{\textbf{Detail}}\\\hline
+carrots    & per pound & \pounds 0.75 \\ \cline{2-3}
+           & each      &         20p  \\ \hline
+mushrooms  & dozen     &         86p  \\ \cline{1-1} \cline{3-3}
+toadstools & pick your own & free     \\ \hline
+\end{tabular}
+
+Tables won't continue on the next page if they're too long. The 
+\texttt{longtable} or \texttt{supertabular} commands  are needed to do this. 
+See the \htmladdnormallinkfoot{Supertabular}{http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/supertab.dvi} document for details and examples.
+
+If the text in a column is too wide for the page, \LaTeX\ won't 
+automatically text-wrap. Using \verb|p{5cm}| instead of  \verb|c|,
+ \verb|l| or  \verb|r| in the \texttt{tabular} line will wrap-around
+the text in a 5 cm wide column.
+
+There are various packages to assist with table creation. The 
+\texttt{array} package adds some helpful features, including the ability
+to add formatting commands that control a whole column at a time, like
+so
+\begin{verbatim}
+\begin{tabular}{>{\ttfamily}l>{\scshape}c>{\Large}r}
+      Text  & More Text & Large Text\\
+      Left  & Centred   & Right
+\end{tabular}
+\end{verbatim}
+
+\begin{tabular}{>{\ttfamily}l>{\scshape}c>{\Large}r}
+      Text  & More Text & Large Text\\
+      Left  & Centred   & Right
+\end{tabular}
+
+The 
+\htmladdnormallinkfoot{\texttt{rotating}}{http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/rotating.ps}
+package is useful if you have a wide table that you
+want to display in landscape mode. You need to put your table inside
+\verb|\begin{sidewaystable}| and \verb|\end{sidewaystable}|.
+
+If you want the table to have a caption and \emph{float} (float up the
+page if it's started right near the foot of a page, for example), use
+\begin{verbatim}
+\begin{table}[htbp] 
+\begin{tabular}...
+...
+\end{tabular}
+\caption{...}
+\end{table}
+\end{verbatim}
+See section \ref{FIGURES} for details.
+
+\subsection{Array}
+The \texttt{array} environment (not to be confused with the \texttt{array}
+package) is similar to the \texttt{tabular} but must be within a 
+\emph{math} environment. This
+\begin{verbatim}
+\begin{math}
+\left(
+\begin{array}{clrr}
+      a+b+c & uv & x-y & 27 \\
+       x+y  & w  & +z  & 363 
+\end{array}
+\right)
+\end{math}
+\end{verbatim}
+produces
+\begin{math}
+\left(
+\begin{array}{clrr}
+      a+b+c & uv & x-y & 27 \\
+       x+y  & w  & +z  & 363 
+\end{array}
+\right)
+\end{math}
+
+\subsection{Pictures}
+\LaTeX\ has some graphics capabilities. It's much better to import an
+encapsulated postscript file.
+See the \htmladdnormallinkfoot{\textit{\LaTeX\ Maths and Graphics}}
+{http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/latex\_maths+pix/latex\_maths+pix.html} document for more details.
+\begin{verbatim}
+\newcounter{cms}
+\setlength{\unitlength}{1mm}
+\begin{picture}(50,39)
+\put(0,7){\makebox(0,0)[bl]{cm}}
+\multiput(10,7)(10,0){5}{\addtocounter
+   {cms}{1}\makebox(0,0)[b]{\arabic{cms}}}
+\put(15,20){\circle{6}}
+\put(30,20){\circle{6}}
+\put(15,20){\circle*{2}}
+\put(30,20){\circle*{2}}
+\put(10,24){\framebox(25,8){a box}}
+\put(10,32){\vector(-2,1){10}}
+\multiput(1,0)(1,0){49}{\line(0,1){2,5}}
+\multiput(5,0)(10,0){5}{\line(0,1){3,5}}
+\thicklines
+\put(0,0){\line(1,0){50}}
+\multiput(0,0)(10,0){6}{\line(0,1){5}}
+\end{picture}
+\end{verbatim}
+
+\newcounter{cms}
+\setlength{\unitlength}{1mm}
+\begin{picture}(50,39)
+\put(0,7){\makebox(0,0)[bl]{cm}}
+\multiput(10,7)(10,0){5}{\addtocounter
+   {cms}{1}\makebox(0,0)[b]{\arabic{cms}}}
+\put(15,20){\circle{6}}
+\put(30,20){\circle{6}}
+\put(15,20){\circle*{2}}
+\put(30,20){\circle*{2}}
+\put(10,24){\framebox(25,8){a box}}
+\put(10,32){\vector(-2,1){10}}
+\multiput(1,0)(1,0){49}{\line(0,1){2,5}}
+\multiput(5,0)(10,0){5}{\line(0,1){3,5}}
+\thicklines
+\put(0,0){\line(1,0){50}}
+\multiput(0,0)(10,0){6}{\line(0,1){5}}
+\end{picture}
+
+\subsection{Maths}
+Maths is dealt with in the \htmladdnormallinkfoot{\textit{\LaTeX\ Maths and Graphics}}
+{http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/latex\_maths+pix/latex\_maths+pix.html} document. Here are some examples
+\begin{verbatim}
+\begin{math}
+ \lim_{n \rightarrow \infty}x = 0 \\
+x^{2y} \\
+x_{2y} \\
+x^{2y}_{1} \\
+\frac{x+y}{1 + \frac{1}{n+1}} \\
+\end{math}
+\end{verbatim}
+produces
+\begin{math}
+ \lim_{n \rightarrow \infty}x = 0 \\
+x^{2y} \\
+x_{2y} \\
+x^{2y}_{1} \\
+\frac{x+y}{1 + \frac{1}{n+1}}
+\end{math}
+
+\subsection{Figures}
+\label{FIGURES}
+To include graphics, use the \verb|\includegraphics| command
+(provided by the \texttt{graphicx} package) inside \texttt{figure} environment. 
+The arguments to
+ \texttt{figure} specify where the space will be made, preferentially
+
+\begin{tabular}{>{\ttfamily}ll}
+h & here \\
+t & top of page \\
+b & bottom of page \\
+p & on a page with no text \\
+\end{tabular}
+
+\begin{verbatim}
+\begin{figure}[htbp]
+   \vspace{1cm}
+   \caption{1 cm of space}
+\end{figure}
+\end{verbatim}
+\begin{figure}[htbp]
+   \vspace{1cm}
+   \caption{1 cm of space}
+\end{figure}
+Putting \texttt{!} as the first argument in the square brackets will 
+encourage  \LaTeX\ to
+do what you say, even if the result's sub-optimal.
+
+If you have a label defined in the caption, \LaTeX\ may
+give an error message. \verb|\label| is a \emph{fragile} command (see the 
+\LaTeX\ book for details) so you'll need to do something like
+\begin{verbatim}
+...
+\caption{1 cm of space\protect\label{EMPTY}}
+\end{verbatim}
+or simply put the \verb|\label| command after the caption. Note that
+if you put the \verb|\label| \emph{before} the caption, the resulting reference will be the
+section number and not the figure number. See the 
+\htmladdnormallinkfoot{\textit{\LaTeX\ Maths and Graphics}}
+{http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/latex\_maths+pix/latex\_maths+pix.html} document for more details.
+
+\subsection{Tabbing}
+Within this environment tabs can be set by \verb|\=| and the next tab
+moved to by using \verb|\>|.
+\begin{verbatim}
+\begin{tabbing}
+if \= it's raining\\      % set tab here, after the 'if'
+   \> get an umbrella \=\\ % go to the defined tab and set a new one
+else\\
+   \> get wet \> * next tab is here\\
+endif
+\end{tabbing}
+\end{verbatim}
+\begin{tabbing}
+if \= it's raining\\      % set tab here, after the 'if'
+   \> get an umbrella \=\\ % go to the defined tab and set a new one
+else\\
+   \> get wet \> * next tab is here\\
+endif
+\end{tabbing}
+
+\subsection{Verbatim}
+Within this environment things come out unformatted.
+It's useful for showing examples of typed input and provides
+a way of printing characters that have a special meaning for 
+\LaTeX.
+
+\verb?\begin{verbatim}?
+\verb?caret is ^, tilde is ~ and backslash is \?
+\verb?\end{verbatim}?
+
+produces
+
+\begin{verbatim}
+caret is ^, tilde is ~ and backslash is \ 
+\end{verbatim}
+If you just want to quote a few characters, use \verb?\verb|?\textit{quoted text}\verb?|?.
+The characters delimiting the quote can be anything as long as they are the same.
+
+\subsection{Quote, abstract}
+These widen the margins and change the font. The \texttt{abstract} environment
+also adds a title.
+\subsection{Letter}
+See \texttt{letter.tex} in \texttt{/export/Examples/LaTeX} 
+
+\subsection{Curriculum Vitae}
+See \texttt{cv.tex} in \texttt{/export/Examples/LaTeX} 
+ 
+\section{Customising}
+\subsection{Macros}
+At the top of the source of this file is
+\begin{verbatim}
+\def\xdt{$\cal X\!\!$\texttt{.desktop}}
+\end{verbatim}
+which defines \verb|\xdt| to be \xdt . Using such constructions can make
+your document much tidier, and saves on typing.
+
+\subsection{Modifications}
+Many of the features of a \LaTeX{} document are easily customised, but
+you'll often have to look at the class (\verb|.cls|) files to find out what to
+do. For example, suppose you wanted to have \textbf{References} in a book
+rather than \textbf{Bibliography}. If you look in \texttt{book.cls} you'll
+see
+\begin{verbatim}
+   \newcommand\bibname{Bibliography}
+\end{verbatim}
+so adding
+\begin{verbatim}
+   \renewcommand{\bibname}{References}
+\end{verbatim}
+to your file should achieve what you want.
+
+Counters (\emph{e.g.} \texttt{figure}) have related commands 
+(\emph{e.g.} \texttt{thefigure}) to control their appearance, so 
+they're easy to customise
+\begin{verbatim} 
+   \renewcommand\thefigure{\roman{figure}}
+\end{verbatim}
+produces figure numbers in lower case roman numerals. 
+Longer commands can be adapted too. Remember however, that if the
+command involves a \verb|@| you have to enclose your changes in
+\verb|\makeatletter| ... \verb|\makeatother|. Here's an example that
+changes the appearance of section headings - 
+\begin{verbatim} 
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}
+{\baselineskip}%
+{\baselineskip}{\normalfont\normalsize\scshape\centering}}%
+\makeatother
+\begin{document}
+\end{verbatim}
+
+
+
+\subsection{New Commands}
+
+A completely new command can be created using
+
+\verb|\newcommand{\|
+\textit{commandname}\verb|[|\textit{number of arguments}\verb|]{|
+\textit{command text, using} \texttt{\#1}, \texttt{\#2} \textit{etc to denote arguments}\verb|}|
+
+For example,
+\begin{verbatim}
+\newcommand{\ve}[1]{\(#1_1 ... #1_n\)}
+\ve{x}
+\end{verbatim}
+produces as output
+\newcommand{\ve}[1]{\(#1_1 ... #1_n\)}
+\ve{x}
+
+A problem with this example is that it shouldn't change to math mode if 
+\LaTeX{} is already in that mode. A better try would be
+\begin{verbatim}
+\newcommand{\ve}[1]{\ensuremath{#1_1 ... #1_n}}
+\end{verbatim}
+which will only change to math mode if it's necessary.
+
+A new environment is just as easily created - give the name of the
+environment, and what you want to happen on entering and leaving
+the environment. The following provides a
+variant of the itemize command.
+\begin{verbatim}
+\newenvironment{emlist}{\begin{itemize} \em}{\end{itemize}}
+\begin{emlist}
+\item first comment
+\item second comment
+\end{emlist}
+The end of the environment ends the scope of the emphasis.
+\end{verbatim}
+\newenvironment{emlist}{\begin{itemize} \em}{\end{itemize}}
+\begin{emlist}
+\item first comment
+\item second comment
+\end{emlist}
+The end of the environment ends the scope of the emphasis.
+
+\subsection{Packages}
+There are many features and options not mentioned in this handout. See
+the 
+\htmladdnormallinkfoot{packages}
+{http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/LaTeX\_intro.html\#Packages} section of the online \LaTeX{} page for more details. You can 
+often find out what you want by looking at the files in the system directories.
+ If your file 
+begins 
+\begin{verbatim}
+\documentclass[12pt]{article}
+\end{verbatim}
+then various macro files are read 
+when you run \texttt{latex}, namely (\texttt{article.cls} and  \texttt{size12.sty}). Some of these files are 
+well-enough commented to be useful documentation. 
+
+\subsection{An Example}
+
+\texttt{minipage} creates a miniature page complete with its own footnotes
+etc. It can be created to any set width. Footnotes within a 
+minipage use a different counter to other footnotes\footnote{like
+this one}. This example ensures that all the numbers follow on in sequence. 
+The footnotes in minipages are marked by letters rather than numbers, so 
+here the type is changed to arabic.
+\begin{verbatim}
+\begin{minipage}{\textwidth}
+% Set the minipage footnote counter
+\setcounter{mpfootnote}{\value{footnote}}
+% Redefine the command that produces the footnote number
+\renewcommand{\thempfootnote}{\arabic{mpfootnote}}
+\begin{tabular}{|ll|}\hline
+one & two\footnote{A minipage footnote}\\\hline
+\end{tabular}
+\setcounter{footnote}{\value{mpfootnote}}
+\end{minipage}
+\end{verbatim}
+\begin{minipage}{\textwidth}
+% Set the minipage footnote counter
+\setcounter{mpfootnote}{\value{footnote}}
+% Redefine the command that produces the footnote number
+\renewcommand{\thempfootnote}{\arabic{mpfootnote}}
+\begin{tabular}{|ll|}\hline
+one & two\footnote{A minipage footnote}\\\hline
+\end{tabular}
+\setcounter{footnote}{\value{mpfootnote}}
+\end{minipage}
+
+You might find this trick useful if you want footnotes in tables. They
+don't come out otherwise.\footnote{Not for me anyway}
+
+Here's an example of using a package. The \texttt{multicol} file
+lets one change the number of columns easily. To switch into 3-column
+text use
+\begin{verbatim}
+\begin{multicols}{3}{
+Put the text here. Maths, tables, pictures etc are all ok, but not
+figures. But you have to remember to load in the \texttt{multicol}
+package at the top of your document.
+}
+\end{multicols}
+\end{verbatim}
+\begin{multicols}{3}{
+Put the text here. Maths, tables, pictures etc are all ok, but not
+figures. But you have to remember to load in the \texttt{multicol}
+package at the top of your document.
+}
+\end{multicols}
+ \LaTeX\ uses the
+value of the environmental variable \texttt{TEXINPUTS} to decide where to
+look for \texttt{sty} files. If you create a directory called (say) 
+\texttt{inputs}, copy a system \verb|*.sty| file into it and do
+\begin{verbatim} 
+export TEXINPUTS=inputs:/opt/latex/inputs:.
+\end{verbatim}
+then your copy will be read in preference to the system one and
+you can customise easily.
+
+
+\section{More Information}
+\begin{itemize}
+\item See the 
+\htmladdnormallinkfoot{LaTeX help page}{http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/LaTeX\_intro.html}.  Much of the material available from there
+isn't available in printed form. The guides to producing
+\htmladdnormallink{Posters and booklets}{http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/posters.html}
+\htmladdnormallink{Reports}{http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/reports.html}
+and
+\htmladdnormallink{OHP slides}{http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/slides.html}
+are useful.
+\item See the \htmladdnormallink{comp.text.tex}{news:comp.text.tex} newsgroup.
+\item Use the CTAN Archive 
+\htmladdnormallink{ftp.tex.ac.uk}{ftp://ftp.tex.ac.uk}
+\item Engineering Department users can see the examples in 
+\texttt{/export/Examples/LaTeX}. The
+\texttt{Tutorial} subdirectory contains exercises. 
+\item Engineering Department users can borrow a \LaTeX\ manual from the 
+machine room.
+\item Look at the \LaTeX\ files in your system. 
+\end{itemize}
+\label{THE_END}
+\end{document}

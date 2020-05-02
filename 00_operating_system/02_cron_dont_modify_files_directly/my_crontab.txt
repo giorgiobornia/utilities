@@ -1,0 +1,4 @@
+MAILTO=""
+* * * * *   /home/gbornia/popup_cron.sh
+# If you want to do something at reboot, put @reboot instead of the 5 asterisks
+# @reboot /usr/bin/touch pippo.txt

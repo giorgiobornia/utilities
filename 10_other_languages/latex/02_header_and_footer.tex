@@ -1,0 +1,73 @@
+%---------------------HEADER AND FOOTER
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+  \renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+  \renewcommand{\sectionmark}[1]{\markright{\thesection.\ #1}}
+% defaults are:
+%  \renewcommand{\chaptermark}[1]{\markboth{\MakeUppercase{\chaptername\ \thechapter.\ #1}}{}}
+%  \renewcommand{\sectionmark}[1]{\markright{\MakeUppercase{\thesection.\ #1}}}
+
+   %markboth sets head/foot both for high(\leftmark) and for low(\rightmark) level  
+
+% \lhead{}
+% \chead{}
+% \rhead{}
+% \lfoot{}
+% \cfoot{\thepage}
+% \rfoot{}
+
+\fancyhead{} % deletes all fields
+%-TWOSIDE
+\fancyhead[RO,LE]{\textbf{\thepage}}
+\fancyhead[RE,LO]{\textbf{G. Bornia}}
+% \fancyhead[RE]{\textbf{\nouppercase{\leftmark}}}
+% \fancyhead[LO]{\textit{\nouppercase{\rightmark}}}
+\fancyfoot[LE,RO]{}
+\fancyfoot[LO,CE]{}
+\fancyfoot[CO,RE]{}
+%-ONESIDE
+% \fancyhead[R]{\bfseries \thepage}
+% \fancyhead[L]{\rightmark}
+% \fancyhead[C]{}
+% \fancyfoot[L]{}
+% \fancyfoot[C]{}
+% \fancyfoot[R]{}
+\renewcommand{\headrulewidth}{0.4pt}  %ridefinisce gli spessori delle linee
+\renewcommand{\footrulewidth}{0pt}
+
+% -----------------------------------------------------
+%modo per ridefinire lo stile plain, che viene usato ad esempio dal comando chapter nelle pagine di inizio capitolo.
+% se il comando \chapter usa nella propria pagina di default lo stile plain, significa ad esempio che non mette 
+% la riga neanche a pie' di pagina; se tu ridefinisci lo stile plain allora gliela puoi mettere
+% in realta' sarebbe meglio DEFINIRE UN NUOVO STILE che caratterizzi proprio le prime pagine di un capitolo,
+% imponendo a chapter di usare quello stile, in modo
+% da non perturbare lo stile plain nel caso poi si voglia utilizzarlo
+\fancypagestyle{plain}{%
+\fancyhf{} % cancella tutti i campi di intestazione e pi\‘e di pagina
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}}
+%-----------------------------------------------------
+
+%---------------- to avoid header & footer in intentionally blank pages
+\makeatletter
+\def\cleardoublepage{\clearpage
+\if@twoside 
+   \ifodd
+      \c@page
+   \else
+      \hbox{}
+      \vspace*{\fill}
+%     \begin{center}
+%       This page intentionally contains only this sentence.
+%     \end{center}
+      \vspace{\fill}
+      \thispagestyle{empty}
+      \newpage
+        \if@twocolumn
+             \hbox{}
+             \newpage
+        \fi
+   \fi
+\fi}
+\makeatother
+%--------------------------------------------------- 

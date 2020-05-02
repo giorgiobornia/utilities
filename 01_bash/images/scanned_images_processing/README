@@ -1,0 +1,35 @@
+Download virtualbox
+Install it
+Install GuestAdditions (.iso in the same package)
+Share a folder 
+
+Install Lanier (not needed for just scanning)
+
+Install DesktopBinder
+Remember: Document Server(MFP) -> Add...
+
+
+
+--- Scan:
+
+Set scanning area dimension
+
+Testo B/N, 400|600 dpi
+
+Do not do greyscale if possible, it is much heavier.
+Well, if you are good you can try to compress later on.
+
+--- Processing .tif files:
+
+Rename the images to put them in the right number order
+
+Rotate the tif images
+   To rotate all the images: gimp script
+
+Convert them into pdf
+
+Merge them:
+ pdftk in1.pdf in2.pdf cat output out1.pdf
+
+You can use *:
+ pdftk *.pdf cat output out1.pdf

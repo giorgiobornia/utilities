@@ -1,0 +1,35 @@
+
+\usepackage{tikz}
+\usetikzlibrary{mindmap}
+
+
+ 
+ \resizebox{0.65\textheight}{!}{
+\begin{tikzpicture}
+[
+root concept/.append style={concept color=green!80!black,minimum size=0.1\textwidth,maximum size=0.1\textwidth},
+level 1 concept/.append style={sibling angle=72,level distance=0.35\textwidth,minimum size=0.15\textwidth,maximum size=0.2\textwidth},
+% every circle connection bar/.append style={color=black},
+mindmap
+]
+\node [concept] {{ \textbf{ODEs of 1st order} }}
+ [clockwise from=45]  
+ child[concept color=yellow!80!red] { node[concept] (c1) { Separable }     child { node[concept]  { Antiderivative search } }
+                                                                           child { node[concept]  { Autonomous } }
+ } 
+ child[concept color=yellow!60!red] { node[concept] (c2) { Linear } } 
+ child[concept color=yellow!40!red] { node[concept] (c3) {  Exact }        child { node[concept]  {Non-exact} }    }  
+ child[concept color=yellow!20!red] { node[concept] (c4) {  Substitution } child { node[concept]  {Homogeneous} }
+                                                                           child { node[concept]  {Bernoulli} }
+                                                                           child { node[concept]  {RHS argument is linear poly in $ x $ and $ y $} }
+ }  
+ child[concept color=yellow!20!red] { node[concept] (c5) {  Numerical } } 
+;
+% \onslide<2->{\path [draw,concept connection] (c4) edge[->,bend left] node[sloped,above of=edge] {\Large STATE EQN} (c1); }
+% \onslide<3->{\path [draw,concept connection] (c1) edge[->,bend left] node[sloped,above of=edge] {\Large ERROR} (c2); }
+% \onslide<4->{\path [draw,concept connection] (c2) edge[->,bend left] node[sloped,below of=edge] {\Large ADJOINT EQN} (c3); }
+%                              (c2)  edge[->] (c3)
+%                              (c3)  edge[->] (c4)    
+%                              (c4)  edge[->] (c1)    ;
+\end{tikzpicture}
+}

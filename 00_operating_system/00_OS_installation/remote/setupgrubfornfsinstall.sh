@@ -1,0 +1,2211 @@
+#!/bin/bash
+# Dialog based wizard to create a suitable entry in the lilo or grub config
+# Copyright (C) 2004-2014 SUSE Linux Products GmbH, Nuernberg, Germany.
+# Copyright (C) 2015 SUSE LLC
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+# Author: Ludwig Nussel  <lnussel@suse.de>
+
+# file for network installation
+#
+# sample entry for slp config on server:
+#
+# service:install.suse:ftp://192.168.1.1/SUSE-10.0-DVD/CD1,en,65535
+# description=0 SUSE LINUX 10.0 [FTP]
+#
+# via slp this script only offers http and ftp sources
+#
+# ChangeLog:
+# 19.05.2004: slp support
+# 25.08.2004: --anyarch parameter, splash support
+# 17.12.2004: verify that downloaded file is indeed a kernel instead of a error message
+# 24.02.2005: dialog replacing --anyarch, better display of slp urls
+# 03.06.2005: add --64 parameter to be able to prepare e.g. x86_64 from an i386 install
+#             add -n parameter for dry-run
+# 08.06.2005: move server list into external file
+# 10.07.2005: warn about missing GPG keys
+# 21.07.2005: don't delete image dir at exit ...
+# 09.08.2005: ask for 64bit if in 32bit mode on x86_64
+# 25.08.2005: support for entering the url manually
+#             add check for free space in /boot
+# 05.09.2005: lilo fixes
+# 16.11.2005: support 10.1 style of disc layout
+# 15.12.2005: - ... and another layout (jw)
+#             - use previous path component of an url if last one is
+#               only an arch string 12.01.2006: generate kexec script
+# 30.01.2006: support new layout via SLP
+# 17.02.2006: fix installing x86_64 version when i386 disto is booted
+# 02.03.2006: fallback to getent ahosts
+# 06.03.2006: also support files in DVD1 instead of CD1 directory
+# 28.04.2006: - use curl to probe for instead of guessing kernel
+#               location on media
+#             - add --help (yay!)
+# 19.03.2007: also grep for SLED
+# 10.04.2007: add --32 parameter to be able to prepare ix86 on x86_64 (mhopf)
+# 14.06.2007: smarter arch detection so the (any arch) menu entries are not required anymore
+# 24.07.2007: print error if serverlist is missing instead of silently not offering autofs
+#             add option to install script locally
+# 01.08.2007: initial support for qemu
+# 02.08.2007: grep for autofs in /proc/mounts instead of automount
+# 04.10.2007: support download.opensuse.org
+# 30.11.2007: add another special case for sles9
+#             fedora support just for fun
+# 18.04.2008: add opensuse factory
+#             use /boot/install_$host_$dist_* instead of /boot/loader-*
+# 10.06.2008: only run kexec -l in kexec script
+# 12.06.2008: add 11.0
+# 13.06.2008: additional grub root partition detecion
+#             add fedora 9
+#             print url of file that's currently downloaded
+#             add advanced options dialog
+# 18.06.2008: enhanced qemu support and added kvm support
+# 19.06.2008: signature verification of downloaded files
+#             generate random mac addresses for qemu installations
+# 15.07.2008: make curl follow redirects
+# 20.10.2008: add mouse as usb tablet for qemu
+#             use pcnet as default network card for qemu. better performance it seems
+#
+# ... now in git: http://github.com/lnussel/setupgrubfornfsinstall
+
+
+# by Ludwig Nussel <lnussel@suse.de>
+
+#########################
+
+unset ${!LC_*}
+export LANG=POSIX
+export LC_COLLATE=POSIX
+
+arch=${SETUP_ARCH:-`uname -m`}
+case $arch in
+	i?86) arch=i386 ;;
+esac
+ 
+shopt -s nullglob
+
+warning()
+{
+    echo "Warning:" "$*" >&2
+}
+
+error()
+{
+    echo "Error:" "$*" >&2
+}
+
+reqcmd()
+{
+	local try=
+	if [ "$1" = '-t' ]; then
+		try=1
+		shift
+	fi
+	if ! which "$1" > /dev/null 2>&1; then
+		if [ -z "$try" ]; then
+			echo "The command \"$1\" is needed for this script" >&2
+			exit 1
+		else
+			return 1
+		fi
+	fi
+	return 0
+}
+
+reqcmd dialog
+reqcmd curl
+reqcmd file
+
+shellquote_one()
+{
+	local arg
+        arg=${1//\\/\\\\}
+        arg=${arg//\$/\\\$}
+        arg=${arg//\"/\\\"}
+        arg=${arg//\`/\\\`}
+	echo -n "\"$arg\""
+}
+
+shellquote()
+{
+	local arg
+	shellquote_one "$1"
+	shift
+	for arg; do
+		echo -n ' '
+		if [ "$arg" != "${arg#-}" ]; then
+			echo -ne '\\\n\t'
+		fi
+		shellquote_one "$arg"
+	done 
+}
+
+shellfriendly()
+{
+	local arg
+	arg="${1//[^a-zA-Z0-9.\-]/_}"
+	arg="${arg//__/_}"
+	arg="${arg%%_}"
+	echo -n "$arg"
+}
+
+curl="curl -L"
+greparch=1
+is64bit=
+readonlymode=
+qemu=
+qemu_disk=
+qemu_disk_set=
+qemu_disk_size=40
+qemu_disk_type=qcow2
+qemu_virtio=yes
+have_qemu_img=
+qemu_mem=
+qemu_params=
+qemu_net_nic_mac=
+qemu_net_nic_model=virtio
+qemu_net_type=user
+qemu_vga=
+qemu_vnc=
+qemu_vnc_display=
+qemu_image_dirs=(/space "/space/$USER" /abuild "/abuild/$USER" /var/tmp /tmp)
+localinstpath=
+parted=/usr/sbin/parted
+verify_signatures=
+keyring="/usr/lib/rpm/gnupg/pubring.gpg"
+insturl=
+
+helpandquit()
+{
+	cat <<EOF
+Usage: $0 [OPTIONS]
+Downloads kernel and initrd from a network installation server and appends an
+entry to the bootloader config that starts the installation.
+
+Only i386 and x86_64 are supported at this time.
+
+OPTIONS:
+	--64		install x86_64 version even when run from an i386 install
+	--32		install i386 version even when run from an x86_64 install
+	--readonly	don't actually write files
+	--qemu[=binary]	use qemu
+	--qemu-disk=[file]  specify disk image for use with qemu
+	--url=URL       specify installation url directly
+EOF
+	exit 0
+}
+
+while [ "$#" -gt 0 ]; do
+	param="$1"
+	arg="$2"
+	shift
+	case "$param" in
+		--*=*)
+			arg=${param#*=}
+			param=${param%%=*}
+			set -- "----noarg=$PARAM" "$@"
+		;;
+	esac
+	case "$param" in
+		--anyarch) greparch=0 ;;
+		--64) is64bit=1 ;;
+		--32) is64bit=0 ;;
+		--readonly|--dry-run|-n) readonlymode='yes'; shift ;;
+		--qemu)
+			if [ -n "$arg" -a "$arg" = "${arg#-}" ]; then
+				qemu="$arg"
+				shift
+			else
+				qemu=1
+			fi
+		;;
+		--qemu-disk)
+			if [ -n "$arg" -a "$arg" = "${arg#-}" ]; then
+				qemu_disk="$arg"
+				qemu_dist_set=1
+				shift
+			else
+				die "--qemu-disk requires an argument"
+			fi
+		;;
+		--url)
+			if [ -n "$arg" -a "$arg" = "${arg#-}" ]; then
+				insturl="$arg"
+				shift
+			else
+				die "--url requires an argument"
+			fi
+		;;
+		--help|-h) helpandquit ;;
+		----noarg) echo "$arg does not take an argument"; exit 1; break ;;
+		--) break ;;
+		-*) echo "unknown option: $1"; exit 1; break ;;
+		*) break ;;
+	esac
+done
+
+removefiles=()
+declare -a  removefiles
+push_removeonexit()
+{
+    removefiles[${#removefiles[@]}]="$1"
+}
+
+pop_removeonexit()
+{
+    unset removefiles[$((${#removefiles[@]}-1))]
+}
+
+cleanup()
+{
+    local file
+    for file in "${removefiles[@]}"; do
+	    [ -z "$file" ] && continue
+	    rm -rf "$file"
+    done
+}
+trap cleanup EXIT
+
+
+TMPFILE=`mktemp -q /tmp/distinst.XXXXXX`
+if [ $? -ne 0 ]; then
+echo "$0: Can't create temp file, exiting..."
+	exit 1
+fi
+
+push_removeonexit "$TMPFILE"
+
+die()
+{
+    local ret=1
+    trap EXIT
+    cleanup
+    case "$1" in
+	[0-9]) ret="$1"; shift ;;
+    esac
+    [ -n "$*" ] && error "$*"
+    exit $ret
+}
+
+read LINES COLUMNS < <(stty size)
+
+bgt=("--backtitle" "Prepare installation of distribution")
+
+if dialog --help 2>&1 |grep -q cdialog; then
+	h=0;
+	w=0;
+	mh=0;
+	defaultno="--defaultno"
+	bgt[${#bgt[@]}]="--aspect"
+	bgt[${#bgt[@]}]="16"
+else
+	h=$((LINES-5))
+	w=$((COLUMNS-4))
+	mh=$((h-7))
+	defaultno=
+fi
+
+echo=
+
+getbootloader()
+{
+	if [ -r "/etc/sysconfig/bootloader" ]; then
+		. /etc/sysconfig/bootloader
+	else
+		LOADER_TYPE="grub"
+	fi
+
+	echo $LOADER_TYPE
+}
+
+: ${bootloader:=`getbootloader`}
+bootloaderconf=
+imagedir=/boot
+autofsbase=/mounts
+program="$0"
+serverlist="$program.serverlist"
+vga=
+splash=
+bootparams=
+baseurl=
+kernelurl=
+kernellocal=
+initrdurl=
+initrdlocal=
+host=
+basepath=
+issuse=1
+isfedora=
+ismandriva=
+isslackware=
+use_fixed_ip=
+client_ip=
+client_gateway=
+client_netmask=
+client_nameserver=
+client_domain=
+client_netdevice=
+ifaces=()
+
+vncssh=
+
+if [ -z "$qemu" -a -e /dev/kvm ] ; then
+	if reqcmd -t qemu-kvm || reqcmd -t "qemu-system-$arch"; then
+		if dialog "${bgt[@]}" --yesno "Would you like to use QEMU/KVM?" $h $w; then
+			qemu=1
+		fi
+	fi
+fi
+
+checkreadonly()
+{
+	local file="$1"
+	if [ "$readonlymode" != yes -a ! -w "$file" ]; then
+		dialog "${bgt[@]}" --msgbox "$file not writeable!\nrunning in read only demo mode." $h $w || die
+		readonlymode=yes
+	fi
+}
+
+
+if [ -z "$qemu" ]; then
+	if which stat >/dev/null 2>&1; then
+		freemb=`stat -f -c '%f*%s' /boot`
+		eval freemb="\$(($freemb/1024/1024))"
+		[ -z "$freemb" ] && freemb=0
+		if [ "$freemb" -lt 10 ]; then
+			dialog "${bgt[@]}" --yesno "/boot has only $freemb MB free which may not be sufficient for kernel and initrd. Continue anyways?" $h $w || die
+		fi
+		unset freemb
+	fi
+
+	case "$bootloader" in
+		lilo|grub|grub2) ;;
+		grub2-efi) bootloader=grub2 ;;
+		*) bootloader='' ;;
+	esac
+
+	if [ -z "$bootloader" ]; then
+		dialog "${bgt[@]}" --msgbox "Unsupported bootloader, assuming grub in read only mode" $h $w || die
+		bootloader=grub
+		readonlymode=yes
+	fi
+
+	case "$bootloader" in
+		lilo)
+			bootloaderconf=/etc/lilo.conf
+			checkreadonly "$bootloaderconf"
+			;;
+		grub)
+			bootloaderconf=/boot/grub/menu.lst
+			grubpartition=`awk '/^root/ {print $2;exit}' < /etc/grub.conf`
+			# 11.0 doesn't write root statement to grub.conf anymore
+			if [ -z "$grubpartition" ]; then
+				 grubpartition=`awk '$1 == "gfxmenu" {if(match($2, /\((hd[[:digit:]]+,[[:digit:]]+)\)/,arr)) { print arr[0];exit}}' < /boot/grub/menu.lst`
+			fi
+			checkreadonly "$bootloaderconf"
+			;;
+		grub2)
+			reqcmd grub2-mkconfig
+			bootloaderconf="/etc/grub.d/99_setupgrubfornfsinstall"
+			checkreadonly "${bootloaderconf%/*}"
+			;;
+	esac
+
+else # qemu mode
+	if [ "$qemu" != 1 ]; then
+		reqcmd $qemu
+	else
+		if reqcmd -t qemu-kvm; then
+			qemu=qemu-kvm
+		elif reqcmd -t "qemu-system-$arch"; then
+			qemu="qemu-system-$arch"
+		else
+			reqcmd qemu
+			qemu=qemu
+		fi
+	fi
+fi
+
+if [ "$readonlymode" = "yes" ]; then
+	bootloaderconf=/dev/stdout
+	echo=echo
+	bgt[1]="${bgt[1]} (dry-run)"
+else
+	if [ -n "$qemu" ]; then
+		bgt[1]="${bgt[1]} ($qemu)"
+	fi
+	curl="$curl --progress-bar"
+fi
+
+if [ -z "$is64bit" ]; then
+	case "`uname -m`" in
+		*64) is64bit=1 ;;
+		i?86)
+			if [ -z "$qemu" ] && grep -q 'flags.*\<lm\>' /proc/cpuinfo; then
+				dialog "${bgt[@]}" --yesno "Install x86_64 version?" $h $w && {
+					is64bit=1
+					arch=x86_64
+				}
+			else
+				is64bit=0
+			fi
+		;;
+		*) is64bit=0 ;;
+	esac
+fi
+if [ "$is64bit" = 0 ]; then
+	case $arch in
+		x86_64) arch=i386 ;;
+	esac
+fi
+
+
+# probe whether given url exists
+# XXX: doesn't set return value properly with older curl, e.g. on
+# 9.2. Use ranges instead?
+curlprobe()
+{
+	local url="$1"
+	$curl -o /dev/null -I -f -s "$url" || return 1
+}
+
+# return ip in $ip
+resolveordie()
+{
+	local socktype
+	local fqdn
+	while read ip socktype fqdn; do
+		[ "$socktype" = "STREAM" ] && return 0
+	done < <(getent ahostsv4 "$1")
+	while read ip socktype fqdn; do
+		[ "$socktype" = "STREAM" ] && return 0
+	done < <(getent ahosts "$1")
+	ip=
+	dialog "${bgt[@]}" --msgbox "cannot resolve IP address for $1" $h $w
+	die
+}
+
+askhost()
+{
+	local hosts
+	local hostpaths
+	local descrs
+	local rh
+	local rp
+	local rd
+	declare -a hosts
+	declare -a hostpaths
+	declare -a descrs
+
+while read rh rp rd; do
+	case "$rh" in
+		\#*) continue ;;
+	esac
+	hosts[${#hosts[@]}]="$rh"
+	hostpaths[${#hostpaths[@]}]="$rp"
+	descrs[${#descrs[@]}]="$rd"
+done < "$serverlist"
+
+	local menustr
+	local i=0
+	declare -a menustr
+	for p in "${descrs[@]}"; do
+		menustr[$((i*2))]="$i"
+		menustr[$((i*2+1))]="${descrs[$i]}"
+		i=$((i+1))
+	done
+	dialog "${bgt[@]}" --menu "Choose Installation Source" $h $w $mh "${menustr[@]}" 2> $TMPFILE || die
+
+	i=0
+	read i < $TMPFILE
+	host=${hosts[$i]}
+	[ -z "$host" ] && die
+	basepath="/$host/${hostpaths[$i]}"
+	nicename="${descrs[$i]##*/}"
+	[ -z "$basepath" ] && die
+}
+
+hostdialog()
+{
+	if [ ! -r "$serverlist" ]; then
+		dialog "${bgt[@]}" --msgbox "A list of servers ($serverlist) is required to scan autofs mounts" $h $w
+		die
+	elif [ ! -d "$autofsbase" ]; then
+		dialog "${bgt[@]}" --msgbox "The autofs directory $autofsbase does not exist" $h $w
+		die
+	else
+		askhost
+	fi
+
+	return 0
+}
+
+grepdists()
+{
+	grep -i '^[0-9]\|^full\|^stable-\|Prof\|Pers\|DVD\|FTP\|Snapshot\|Preview\|Beta\|SLES\|SLED\|-SLP$\|^next\|RC.$\|Alpha\|Build' | \
+	grep -v '\.data$' |
+	(if [ "$greparch" = 1 ]; then
+		case "$arch" in
+			*86)
+				grep '386\|i686\|x86' | grep -v 'x86[-_]64'
+			;;
+			x86_64)
+				grep 'x86_64\|x86-64\|x86'
+			;;
+			*)
+				grep "$arch"
+			;;
+		esac
+	else
+		cat
+	fi
+	) | \
+	sort -r
+}
+
+askanyarch()
+{
+	dialog "${bgt[@]}" --yesno "No distribution for this architecture found in $basepath.\n\nShow all architectures?" $h $w || die
+	greparch=0
+}
+
+distrodialog()
+{
+	local distros
+	local i
+	local d
+	local a
+	local menustr
+	declare -a distros
+	i=0
+	menustr=""
+	a="$arch"
+	[ "$a" != 'i386' ] || a='i586'
+
+	dialog "${bgt[@]}" --infobox "scanning NFS directory..." $h $w
+
+	for dist in $autofsbase$basepath/*; do
+		instpath=${dist#$autofsbase}
+		if findkernel && [ "$greparch" = 0 -o "${instpath//$arch}" != "$instpath" -o -d "$autofsbase$instpath/suse/a1" -o -d "$autofsbase$instpath/suse/$a" ]; then
+			dist=${dist##*/}
+			distros[$i]=$dist;
+			menustr="$menustr $i $dist"
+			i=$((i+1))
+		fi
+	done
+
+	numdist=$i;
+
+	if [ $numdist = 0 ]; then
+#		if [ "$greparch" != 0 ]; then
+#			askanyarch
+#			return 1
+#		else
+			dialog "${bgt[@]}" --msgbox "No $arch distributions found in $basepath" $h $w
+			die
+#		fi
+	fi
+
+	dialog "${bgt[@]}" --menu "Choose distribution" $h $w $mh $menustr 2> $TMPFILE || die
+
+	read ret < $TMPFILE
+	dist=${distros[$ret]}
+	instpath=$basepath/$dist
+
+	# beautify
+	if [ -n "$nicename" ]; then
+		case "$dist" in
+			i386|x86[-_]64|ppc|s390|s390x|ppc64|ia64|FTP|DVD|inst-source)
+				dist="$nicename/$dist"
+			;;
+		esac
+	fi
+
+	return 0
+}
+
+# set instpath and kernelpath
+findkernel()
+{
+	local cddvd
+	for cddvd in CD1 DVD1; do
+		if [ -d $autofsbase$instpath/$arch/$cddvd/boot/$arch/loader ]; then
+			instpath=$instpath/$arch/$cddvd
+			kernelpath=/boot/$arch/loader
+			return 0
+		elif [ -d $autofsbase$instpath/$cddvd/boot/$arch/loader ]; then
+			instpath=$instpath/$cddvd
+			kernelpath=/boot/$arch/loader
+			return 0
+		elif [ -d $autofsbase$instpath/$arch/$cddvd/boot/loader ]; then
+			instpath=$instpath/$arch/$cddvd
+			kernelpath=/boot/loader
+			return 0
+		elif [ -d $autofsbase$instpath/$cddvd/boot/loader ]; then
+			instpath=$instpath/$cddvd
+			kernelpath=/boot/loader
+			return 0
+		elif [ -d $autofsbase$instpath/$cddvd/suse/images/boot ]; then
+			instpath=$instpath/$cddvd
+			kernelpath=/suse/images/boot
+			return 0
+		fi
+	done
+	if [ -d $autofsbase$instpath/boot/$arch/loader ]; then
+		kernelpath=/boot/$arch/loader
+		return 0
+	elif [ -d $autofsbase$instpath/boot/loader ]; then
+		kernelpath=/boot/loader
+		return 0
+	elif [ -d $autofsbase$instpath/suse/images/boot ]; then
+		kernelpath=/suse/images/boot
+		return 0
+	elif [ -d $autofsbase$instpath/$arch/boot.prefer/loader ]; then # sles9
+		instpath=$instpath/$arch
+		kernelpath=/boot.prefer/loader
+		return 0
+	elif [ -d $autofsbase$instpath/$arch/boot/loader ]; then # sles9
+		instpath=$instpath/$arch
+		kernelpath=/boot/loader
+		return 0
+	fi
+	return 1
+}
+
+mediatypedialog()
+{
+	kernelpath=
+
+	if ! findkernel; then
+		dialog "${bgt[@]}" --msgbox "Invalid/Unsupported distribution (no kernel/initrd found)" $h $w
+		die
+	fi
+
+	if [ -z "`echo $autofsbase/$instpath/*.asc`" ]; then
+		dialog "${bgt[@]}" --msgbox "Warning: The installation source does not provide GPG keys. YOU may not work because of this." $h $w || die
+	fi
+
+	local types=(0 HTTP 1 FTP)
+	if [ -z "$qemu" ]; then
+		types[${#types[@]}]="2"
+		types[${#types[@]}]="NFS"
+		types[${#types[@]}]="3"
+		types[${#types[@]}]="SLP"
+	fi
+
+	dialog "${bgt[@]}" --menu "Choose Media Type" $h $w $mh "${types[@]}" 2> $TMPFILE || die
+	read ret < $TMPFILE
+
+	case "$ret" in
+		0)
+			resolveordie "$host"
+			insturl=http://$ip/${instpath#*/*/}
+		;;
+		1)
+			resolveordie "$host"
+			insturl=ftp://$ip/${instpath#*/*/}
+		;;
+		2)
+			resolveordie "$host"
+			insturl=nfs://$ip$instpath
+		;;
+		3)
+			insturl=slp
+		;;
+		*) die
+		;;
+	esac
+
+	localinstpath=$autofsbase$instpath
+	local suffix=''
+	if [ "$is64bit" = '1' -a -e $localinstpath$kernelpath/linux64 ]; then
+		suffix=64
+	fi
+	kernelurl=file://$localinstpath$kernelpath/linux$suffix
+	initrdurl=file://$localinstpath$kernelpath/initrd$suffix
+	baseurl=file://$localinstpath
+}
+
+partitiondialog()
+{
+	if [ "$bootloader" = grub ]; then
+		dialog "${bgt[@]}" --inputbox "grub partition, e.g. hd0,5" $h $w $grubpartition 2> $TMPFILE || die
+		read grubpartition < $TMPFILE
+		if [ -n "$grubpartition" ]; then
+			[ ${grubpartition:0-1:1} = ')' ] || grubpartition="$grubpartition)"
+			[ ${grubpartition:0:1} = '(' ] || grubpartition="($grubpartition"
+		fi
+	fi
+}
+
+autoyastdialog()
+{
+# by ories
+	dialog "${bgt[@]}" --yesno "Skip AutoYaST parameters?" $h $w
+	ret=$?
+
+	menustr="nfs nfs http http file file"
+	autoyast=""
+
+	if [ $ret -ne 0 ]; then
+		dialog "${bgt[@]}" --menu "client description source media" $h $w $mh $menustr  2> $TMPFILE || die 
+		read desc_media < $TMPFILE
+		autoyast=" autoyast=$desc_media://"
+
+		if [ "$desc_media" != "file" ]; then
+			dialog "${bgt[@]}" --inputbox "ip & path for description source server" $h $w 2> $TMPFILE || die
+			read desc_ip < $TMPFILE
+			autoyast="$autoyast$desc_ip"
+		fi
+		dialog "${bgt[@]}" --inputbox "name of description file" $h $w 2> $TMPFILE || die
+		read desc_file < $TMPFILE
+		autoyast="$autoyast/$desc_file"
+	fi
+}
+
+detect_ip()
+{
+	local line
+	local nameservers=()
+	local prefer_if
+
+	if [ -z "$client_nameserver" ]; then
+		set -- `sed -ne '/^nameserver/s/.* //p' < /etc/resolv.conf`
+		nameservers=("$@")
+		IFS=, eval client_nameserver='"$*"'
+	fi
+	if [ -z "$client_domain" ]; then
+		set -- `sed -ne '/^search /s/search *//p' < /etc/resolv.conf`
+		client_domain="$1"
+	fi
+	if [ -z "$client_gateway" ]; then
+		local ns
+		for ns in "${nameservers[@]}" 1.2.3.4; do
+			line=`ip -o r g "$ns"`
+			set -- $line
+			while [ "$#" -gt 0 ]; do
+				if [ "$1" = "via" ]; then
+					client_gateway="$2"
+					shift
+				fi
+				if [ "$1" = "dev" ]; then
+					prefer_if="$2"
+					shift
+				fi
+				shift
+			done
+			[ -z "$client_gateway" ] || break
+		done
+	fi
+
+	ip -o a s > $TMPFILE
+	while read line; do
+		set -- $line
+		iface="${2%:}"
+		[ "$iface" != lo ] || continue
+		shift 2
+		mac=
+		ip=
+		while [ "$#" -gt 0 ]; do
+			if [ "$1" = "link/ether" ]; then
+				mac="$2"
+				eval iface_${iface}_mac=\"\$mac\"
+				break
+			fi
+			if [ "$1" = "inet" ]; then
+				eval ip=\"\$iface_${iface}_ip\"
+				if [ -z "$ip" ]; then
+					ip="$2"
+					eval iface_${iface}_ip=\"\$ip\"
+				fi
+				break
+			fi
+			shift
+		done
+		if [ -n "$ip" -o -n "$mac" ]; then
+		        ifaces[${#ifaces[@]}]="$iface"
+		fi
+	done < $TMPFILE
+
+	if [ -z "$client_ip" ]; then
+		if [ -n "$prefer_if" ]; then
+			for iface in "${ifaces[@]}"; do
+				[ "$iface" = "$prefer_if" ] || continue
+				eval client_ip=\"\$iface_${iface}_ip\"
+				eval client_netdevice=\"\$iface_${iface}_mac\"
+				break
+			done
+		fi
+
+		if [ -z "$client_ip" ]; then
+			for iface in "${ifaces[@]}"; do
+				eval client_ip=\"\$iface_${iface}_ip\"
+				eval client_netdevice=\"\$iface_${iface}_mac\"
+				if [ -n "$client_ip" ]; then
+					break
+				fi
+			done
+		fi
+	fi
+}
+
+ipsettingsdialog()
+{
+	detect_ip
+
+	if dialog "${bgt[@]}" --inputbox "IP Address/maskbits" $h $w "$client_ip" 2> $TMPFILE; then
+		read client_ip < $TMPFILE
+		if [ -n "$client_ip" ]; then
+			if [ "$client_ip" = ${client_ip%%/*} ] && dialog "${bgt[@]}" --inputbox "Netmask" $h $w "$client_netmask" 2> $TMPFILE; then
+				read client_netmask < $TMPFILE
+			fi
+			if [ "${#ifaces[@]}" -gt 1 ]; then
+				if dialog "${bgt[@]}" --inputbox "Interface MAC Address" $h $w "$client_netdevice" 2> $TMPFILE; then
+					read client_netdevice < $TMPFILE
+				fi
+			fi
+			if dialog "${bgt[@]}" --inputbox "Gateway" $h $w "$client_gateway" 2> $TMPFILE; then
+				read client_gateway < $TMPFILE
+			fi
+			if dialog "${bgt[@]}" --inputbox "Nameserver" $h $w "$client_nameserver" 2> $TMPFILE; then
+				read client_nameserver < $TMPFILE
+			fi
+			if dialog "${bgt[@]}" --inputbox "DNS Search Domain" $h $w "$client_domain" 2> $TMPFILE; then
+				read client_domain < $TMPFILE
+			fi
+		else
+			client_ip=
+		fi
+	else
+		client_ip=
+	fi
+
+	if [ -z "$client_ip" ]; then
+		dialog "${bgt[@]}" --msgbox "No valid IP entered, using DHCP" $h $w
+		use_fixed_ip=
+	else
+		use_fixed_ip=1
+	fi
+}
+
+sshdialog()
+{
+	local password=
+
+	if dialog "${bgt[@]}" --inputbox "SSH password" $h $w 2> $TMPFILE; then
+		read password < $TMPFILE
+		if [ -n "$password" ]; then
+			vncssh=" usessh=1 sshpassword=$password panic=30"
+		else
+			dialog "${bgt[@]}" --msgbox "password to short" $h $w
+		fi
+	fi
+}
+
+vncdialog()
+{
+	local password=
+
+	if dialog "${bgt[@]}" --inputbox "VNC password (>= eight characters)" $h $w 2> $TMPFILE; then
+		read password < $TMPFILE
+		if [ -n "$password" -a "${#password}" -ge 8 ]; then
+			vncssh=" usevnc=1 vncpassword=$password panic=30"
+		else
+			dialog "${bgt[@]}" --msgbox "password to short" $h $w
+		fi
+	fi
+}
+
+vgadialog()
+{
+	local vgaparams
+	local descrs
+	declare -a vgaparams
+	declare -a descrs
+	if [ -n "$isfedora" ]; then
+		vgaparams=("graphical resolution=1024x768" "text" "graphical resolution=640x480" \
+			"graphical resolution=800x600" "graphical resolution=1280x1024" "")
+	elif [ -n "$ismandriva" ]; then
+		vgaparams=("vga=791" "textmode=1" "vga=785" "vga=788" "vga=794" "vga=normal")
+	else
+		vgaparams=("vga=791" "textmode=1" "vga=785" "vga=788" "vga=794" "vga=normal")
+	fi
+	descrs=("1024x768" "Textmode" "640x480" "800x600" "1280x1024" "Normal")
+
+	local menustr=""
+	local i=0
+	for p in "${descrs[@]}"; do
+		menustr="$menustr $i ${descrs[$i]}"
+		i=$((i+1))
+	done
+	dialog "${bgt[@]}" --menu "Choose Resolution" $h $w $mh $menustr 2> $TMPFILE || die
+
+	i=0
+	read i < $TMPFILE
+	vga=${vgaparams[$i]}
+	if [ "$issuse" = 1 ]; then
+		splash=${descrs[$i]}
+		case "$splash" in
+			*[0-9]x[0-9]*)
+				splash=`printf "%04d%04d.spl\n" ${splash/x/ }`
+			;;
+			*) splash="" ;;
+		esac
+	fi
+}
+
+makebootparams()
+{
+	[ -z "$bootparams" ] || return 0
+
+	if [ -n "$isfedora" ]; then
+		bootparams="$vga method=$insturl"
+	elif [ -n "$ismandriva" ]; then
+		local method=${insturl%%://*}
+		local server=${insturl#*://}
+		local dir=/${server#*/}
+		server=${server%%/*}
+		bootparams="$vga automatic=method:$method,network:dhcp,server:$server,directory:$dir"
+	elif [ -n "$isslackware" ]; then
+		bootparams="$vga SLACK_KERNEL=hugesmp.s REMOTE_URL=$insturl REMOTE_PATH=$slack_remote_path"
+	elif [ "$issuse" = 1 ]; then
+		if [ "$bootloader" != "lilo" ]; then
+			bootparams="$vga "
+		fi
+		local ipparams=''
+		if [ -n "$use_fixed_ip" ]; then
+			ipparams=" hostip=$client_ip"
+			[ -z "$client_netmask" ] || ipparams="$ipparams netmask=$client_netmask"
+			[ -z "$client_gateway" ] || ipparams="$ipparams gateway=$client_gateway"
+			[ -z "$client_nameserver" ] || ipparams="$ipparams nameserver=$client_nameserver"
+			[ -z "$client_domain" ] || ipparams="$ipparams domain=$client_domain"
+			[ -z "$client_netdevice" ] || ipparams="$ipparams netdevice=$client_netdevice"
+		fi
+
+		bootparams="${bootparams}ramdisk_size=65536 install=$insturl$autoyast$ipparams$vncssh"
+	fi
+
+	if [ -n "$qemu" ]; then
+		bootparams="${bootparams} clock=pit"
+	fi
+}
+
+bootparamdialog()
+{
+	makebootparams
+	dialog "${bgt[@]}" --inputbox "Following parameters will be used for installation.\nSee http://en.opensuse.org/Linuxrc for help" $h $w "$bootparams"  2> $TMPFILE || die
+	read bootparams < $TMPFILE
+}
+
+# returns 0 -> slp, 1 -> nfs, 2 -> manual
+autodetecttypedialog()
+{
+	local i=0
+	local haveslptool=1
+	local menu cmds
+	declare -a menustr
+	declare -a cmds
+	local msg
+
+	which "slptool" > /dev/null 2>&1 || haveslptool=0
+
+	if [ "$haveslptool" = 1 ]; then
+		msg="SLP scan"
+		if [ -e /proc/net/ip_tables_names ]; then
+			if iptables -vnL INPUT 2>/dev/null | grep -c DROP &>/dev/null; then
+				msg="$msg [may not work due to firewall]"
+			fi
+		fi
+		menu[$((i*2))]=$i
+		menu[$((i*2+1))]="$msg"
+		cmds[$i]=:
+		i=$((i+1))
+#		menu[$((i*2))]=$i
+#		menu[$((i*2+1))]="SLP scan (any arch)"
+#		cmds[$i]="greparch=0"
+#		i=$((i+1))
+	fi
+
+	if grep -q autofs /proc/mounts; then
+		msg="scan autofs NFS mounts"
+		if [ ! -r "$serverlist" -o ! -d "$autofsbase" ]; then
+			msg="$msg (unavailable)"
+		fi
+		menu[$((i*2))]=$i
+		menu[$((i*2+1))]="$msg"
+		cmds[$i]="return 1"
+		i=$((i+1))
+#		menu[$((i*2))]=$i
+#		menu[$((i*2+1))]="scan autofs NFS mounts (any arch)"
+#		cmds[$i]="greparch=0; return 1"
+#		i=$((i+1))
+	fi
+
+	menu[$((i*2))]=$i
+	menu[$((i*2+1))]="openSUSE.org"
+	cmds[$i]="greparch=0; return 2"
+	i=$((i+1))
+
+	menu[$((i*2))]=$i
+	menu[$((i*2+1))]="Fedora"
+	cmds[$i]="greparch=0; isfedora=1; issuse=0; return 3"
+	i=$((i+1))
+
+#	menu[$((i*2))]=$i
+#	menu[$((i*2+1))]="Mandriva"
+#	cmds[$i]="greparch=0; ismandriva=1; issuse=0; return 4"
+#	i=$((i+1))
+
+	menu[$((i*2))]=$i
+	menu[$((i*2+1))]="Ubuntu"
+	cmds[$i]="greparch=0; isubuntu=1; issuse=0; return 5"
+	i=$((i+1))
+
+	menu[$((i*2))]=$i
+	menu[$((i*2+1))]="Slackware"
+	cmds[$i]="greparch=0; isslackware=1;issuse=0;  return 6"
+	i=$((i+1))
+
+	menu[$((i*2))]=$i
+	menu[$((i*2+1))]="specify URL manually"
+	cmds[$i]="greparch=0; return 98"
+	i=$((i+1))
+
+	if [ "$USER" != lnussel -a "$program" != "${program#/suse/lnussel/bin/}" ]; then
+		menu[$((i*2))]=$i
+		menu[$((i*2+1))]="install this script locally"
+		cmds[$i]="return 99"
+		i=$((i+1))
+	fi
+
+	dialog "${bgt[@]}" --menu "Choose Installation Source" $h $w $mh "${menu[@]}" 2> $TMPFILE || die
+
+	i=0
+	read i < $TMPFILE
+
+	eval ${cmds[$i]}
+
+	return 0;
+}
+
+dist_name_dialog()
+{
+	dialog "${bgt[@]}" --inputbox "Displayed Name" $h $w "$dist" 2> $TMPFILE || return
+	read dist < $TMPFILE
+
+	[ -z "$qemu" ] || qemu_detect_defaults
+}
+
+qemu_detect_defaults()
+{
+	if [ -z "$qemu_net_nic_mac" ]; then
+		qemu_net_nic_mac=`printf "52:54:00:%02x:%02x:%02x\n" $((RANDOM%256)) $((RANDOM%256)) $((RANDOM%256))`
+	fi
+	if [ -z "$qemu_params" ]; then
+		qemu_params="-no-reboot -usb -usbdevice tablet"
+	fi
+
+	if [ -z "$qemu_mem" ]; then
+		qemu_mem=(`stat -f -c "%f %S" /dev/shm/`)
+		qemu_mem=$((qemu_mem[0]*qemu_mem[1]/3*2/1024/1024))
+	fi
+
+
+	if [ -z "$qemu_disk_set" ]; then
+		for i in "${qemu_image_dirs[@]}"; do
+			qemu_disk="$i/"`shellfriendly "$dist"`.img
+			if [ -e "$qemu_disk" ]; then
+				break;
+			else
+				qemu_disk=
+			fi
+		done
+
+		for i in "${qemu_image_dirs[@]}"; do
+			if [ -w "$i" ]; then
+				qemu_disk="$i/"`shellfriendly "$dist"`.img
+				break;
+			fi
+		done
+
+		if reqcmd -t qemu-img; then
+			have_qemu_img=1
+		else
+			have_qemu_img=
+		fi
+	fi
+}
+
+qemu_disk_format_dialog()
+{
+	local i=0
+	local menu
+	local formats
+	local format
+	declare -a urls
+	declare -a menu
+
+	formats=(`qemu-img --help| sed -ne '/^Supported formats:/{s/.*: //;p;q}'`)
+
+	for format in "${formats[@]}"; do
+		menu[${#menu[@]}]="$i"
+		menu[${#menu[@]}]="$format"
+		i=$((i+1))
+	done
+
+	dialog "${bgt[@]}" --menu "Choose Format" $h $w $mh "${menu[@]}" 2> $TMPFILE || die
+	i=0
+	read i < $TMPFILE
+	qemu_disk_type=${formats[$i]}
+}
+
+qemu_disk_dialog()
+{
+	while true; do
+		dialog "${bgt[@]}" --inputbox "QEMU disk image" $h $w "$qemu_disk" 2> $TMPFILE || die
+		read qemu_disk < $TMPFILE
+
+		if [ -z "$qemu_disk" ]; then
+			dialog "${bgt[@]}" --msgbox "no disk image specified" $h $w
+			continue
+		fi
+
+		if [ -e "$qemu_disk" -a ! -w "$qemu_disk" ]; then
+			dialog "${bgt[@]}" --msgbox "$qemu_disk is not writeable" $h $w
+			continue
+		fi
+
+		qemu_disk_set=1
+
+		if [ ! -e "$qemu_disk" ]; then
+			dialog "${bgt[@]}" --inputbox "QEMU disk size in GB" $h $w $qemu_disk_size 2> $TMPFILE || die
+			read qemu_disk_size < $TMPFILE
+			if [ -z "$qemu_disk_size" -o "$qemu_disk_size" -lt "2" ]; then
+				dialog "${bgt[@]}" --msgbox "'$qemu_disk_size' too small" $h $w
+				continue
+			fi
+
+			if [ -n "$have_qemu_img" ]; then
+				qemu_disk_format_dialog
+			fi
+		fi
+
+		if dialog "${bgt[@]}" --yesno "Use virtio?" $h $w; then
+			qemu_virtio="yes"
+		else
+			qemu_virtio=''
+		fi
+		break
+	done
+}
+
+# usage: variable headline items...
+generic_list_dialog()
+{
+	local i=0
+	local menu
+	local values
+	local value
+	declare -a urls
+	declare -a menu
+
+	local var="$1"
+	local headline="$2"
+	shift 2
+
+	values=("$@")
+
+	for value in "${values[@]}"; do
+		menu[${#menu[@]}]="$i"
+		menu[${#menu[@]}]="$value"
+		i=$((i+1))
+	done
+
+	dialog "${bgt[@]}" --menu "$headline" $h $w $mh "${menu[@]}" 2> $TMPFILE || die
+	i=0
+	read i < $TMPFILE
+	eval "$var=\"\${values[\$i]}\""
+	eval "${var}_idx=\"\$i\""
+}
+
+qemu_net_dialog()
+{
+	generic_list_dialog 'qemu_net_nic_model' "Choose NIC Model" 'default' `$qemu -net nic,model='?' 2>&1 |sed -ne '/Supported NIC models:/{s/.*: //;s/,/ /g;p;q}'`
+	[ "$qemu_net_nic_model" != 'default' ] || qemu_net_nic_model=
+
+	dialog "${bgt[@]}" --inputbox "qemu network type" $h $w $qemu_net_type 2> $TMPFILE || return
+	read qemu_net_type < $TMPFILE
+	: ${qemu_net_type:=user}
+}
+
+qemu_display_dialog()
+{
+	generic_list_dialog 'qemu_vga' "Choose Graphics Card" default cirrus std vmware qxl none
+	[ "$qemu_vga" != default ] || qemu_vga=
+}
+
+qemu_ram_dialog()
+{
+	dialog "${bgt[@]}" --inputbox "qemu RAM in MB" $h $w $qemu_mem 2> $TMPFILE || return
+	read qemu_mem < $TMPFILE
+}
+
+qemu_options_dialog()
+{
+	dialog "${bgt[@]}" --inputbox "Additional qemu options" $h $w "$qemu_params"  2> $TMPFILE || return
+	read qemu_params < $TMPFILE
+}
+
+qemu_prepare_disk()
+{
+	[ -n "$qemu" ] || return
+
+	[ ! -e "$qemu_disk" ] || return
+
+	[ "$readonlymode" = yes ] || > "$qemu_disk" || die
+	if [ "$qemu_disk_type" = 'raw' ]; then
+		$echo dd if=/dev/zero of="$qemu_disk" bs=1G count=1 seek="$qemu_disk_size" || die
+	else
+		$echo qemu-img create -f "$qemu_disk_type" "$qemu_disk" "$qemu_disk_size"G || die
+	fi
+}
+
+advancedoptionsdialog()
+{
+	local i=0
+	local menu cmds
+	declare -a menu
+	declare -a cmds
+
+	menu=($i "Continue")
+	cmds[$i]="return 0"
+	i=$((i+1))
+
+	if [ -n "$qemu" ]; then
+		menu[${#menu[@]}]="$i"
+		menu[${#menu[@]}]="Change Name [$dist]"
+		cmds[$i]="return 10"
+		i=$((i+1))
+	fi
+
+	if [ "$issuse" = 1 ]; then
+		menu[$((i*2))]=$i
+		menu[$((i*2+1))]="Specify IP manually"
+		cmds[$i]="return 2"
+		i=$((i+1))
+
+		if [ -n "$use_fixed_ip" ]; then
+			menu[$((i*2))]=$i
+			menu[$((i*2+1))]="Use DHCP"
+			cmds[$i]="return 3"
+			i=$((i+1))
+		fi
+
+		if [ -z "$qemu" ]; then
+			menu[$((i*2))]=$i
+			menu[$((i*2+1))]="SSH installation"
+			cmds[$i]="return 4"
+			i=$((i+1))
+
+			menu[$((i*2))]=$i
+			menu[$((i*2+1))]="VNC installation"
+			cmds[$i]="return 5"
+			i=$((i+1))
+		fi
+	fi
+
+	if [ "$bootloader" = grub -a -z "$qemu" ]; then
+		menu[$((i*2))]=$i
+		menu[$((i*2+1))]="Change grub partition [$grubpartition]"
+		cmds[$i]="return 6"
+		i=$((i+1))
+	fi
+
+	if [ -n "$qemu" ]; then
+		menu[$((i*2))]=$i
+		menu[$((i*2+1))]="qemu memory [${qemu_mem}MB]"
+		cmds[$i]="return 7"
+		i=$((i+1))
+
+		menu[$((i*2))]=$i
+		menu[$((i*2+1))]="qemu disk image [$qemu_disk, ${qemu_disk_size}GB, ${qemu_disk_type}${qemu_virtio:+, virtio}]"
+		cmds[$i]="return 8"
+		i=$((i+1))
+
+		menu[${#menu[@]}]="$i"
+		menu[${#menu[@]}]="qemu net opts [mac $qemu_net_nic_mac${qemu_net_nic_model:+, model $qemu_net_nic_model}, type ${qemu_net_type}]"
+		cmds[$i]="return 11"
+		i=$((i+1))
+
+#		menu[${#menu[@]}]="$i"
+#		menu[${#menu[@]}]="qemu graphics card [$qemu_vga]"
+#		cmds[$i]="return 12"
+#		i=$((i+1))
+
+		menu[$((i*2))]=$i
+		menu[$((i*2+1))]="qemu options [$qemu_params]"
+		cmds[$i]="return 9"
+		i=$((i+1))
+	fi
+
+	menu[$((i*2))]=$i
+	menu[$((i*2+1))]="Edit command line and continue"
+	cmds[$i]="return 99"
+	i=$((i+1))
+
+	dialog "${bgt[@]}" --menu "Expert Options" $h $w $mh "${menu[@]}" 2> $TMPFILE || die
+
+	i=0
+	read i < $TMPFILE
+
+	eval ${cmds[$i]}
+
+	return 0;
+}
+
+url2txt()
+{
+	local url txt tmp
+	url="$1"
+	case $url in 
+		*/CD1*) txt=${url%/CD1*} ;;
+		*/DVD1*) txt=${url%/DVD1*} ;;
+		*) txt="$url"
+	esac
+	txt=${txt%/}
+	case "$txt" in
+		*/i386|*/x86[-_]64|*/ppc|*/s390|*/s390x|*/ppc64|*/ia64)
+		tmp=${txt##*/};
+		txt="${txt%/$tmp} [$tmp]";;
+	esac
+	txt=${txt##*/}
+	echo "$txt"
+}
+
+# takes $insturl and creates $kernelurl and $initrdurl
+kernelurl_from_insturl()
+{
+	if curlprobe "$insturl/boot/$arch/loader/linux"; then
+		kernelurl="$insturl/boot/$arch/loader/linux"
+		initrdurl="$insturl/boot/$arch/loader/initrd"
+	else
+		kernelurl="$insturl/boot/loader/linux"
+		initrdurl="$insturl/boot/loader/initrd"
+		# method used on 9.1 - 10.0
+		if [ "$is64bit" = '1' ] && curlprobe "$kernelurl"64; then
+			kernelurl="$kernelurl"64
+			initrdurl="$initrdurl"64
+		fi
+	fi
+	host=`echo "$insturl" | sed 's#^.*:/\+##;s#/.*##'`
+	dist=`url2txt "$insturl"`
+	baseurl="$insturl"
+
+	return 0
+}
+
+kernelurl_from_insturl_mandriva()
+{
+	insturl=$insturl/$arch
+	kernelurl=$insturl/isolinux/alt0/vmlinuz
+	initrdurl=$insturl/isolinux/alt0/all.rdz
+
+	host=`echo "$insturl" | sed 's#^.*:/\+##;s#/.*##'`
+	dist=`url2txt "$insturl"`
+	baseurl="$insturl"
+
+	return 0
+}
+
+kernelurl_from_insturl_fedora()
+{
+	insturl=$insturl/$arch/os
+	kernelurl=$insturl/isolinux/vmlinuz
+	initrdurl=$insturl/isolinux/initrd.img
+
+	host=`echo "$insturl" | sed 's#^.*:/\+##;s#/.*##'`
+	dist=`url2txt "$insturl"`
+	baseurl="$insturl"
+
+	return 0
+}
+
+kernelurl_from_insturl_ubuntu()
+{
+	local a="$arch"
+	if [ "$arch" = 'x86_64' ]; then
+		a='amd64'
+	fi
+	gui="" # TODO optionally set to gtk and append video=vesa:ywrap,mtrr vga=788
+	local subdir="/installer-$a/current/images/netboot$gui/ubuntu-installer/$a"
+	kernelurl="$insturl$subdir/linux"
+	initrdurl="$insturl$subdir/initrd.gz"
+	host=`echo "$insturl" | sed 's#^.*:/\+##;s#/.*##'`
+	baseurl="$insturl"
+
+	return 0
+}
+
+slpdialog()
+{
+	local i=0
+	local menu
+	local urls
+	local url
+	local retry=2
+	declare -a urls
+	declare -a menu
+	local protocol addr txt tmp
+
+	dialog "${bgt[@]}" --infobox "scanning for SLP sources. This may take some time." $h $w
+	
+	slptool findsrvs service:install.suse | sed 's/^service:install.suse://;s/,.*$//;/^[^fh]/d' > $TMPFILE
+
+	while [ "$retry" -gt 0 ]; do
+		while read url; do
+			urls[${#urls[@]}]="$url"
+			protocol=${url%%://*}
+			addr=${url#*://}
+			addr=${addr%%/*}
+			txt=`url2txt "$url"`
+			menu[$((i*2))]=$i
+			menu[$((i*2+1))]="$protocol $txt ($addr)"
+			i=$((i+1))
+		done < <( { if [ "$retry" = 1 ]; then cat; else grepdists; fi } < $TMPFILE)
+
+		if [ "${#urls[@]}" -gt 0 ]; then
+			dialog "${bgt[@]}" --menu "Choose Installation Source" $h $w $mh "${menu[@]}" 2> $TMPFILE || die
+
+			i=0
+			read i < $TMPFILE
+			insturl=${urls[$i]}
+			retry=0
+		else
+			retry=$((retry-1))
+		fi
+	done
+
+	if [ -z "$insturl" ]; then
+		dialog "${bgt[@]}" --msgbox "No SLP source found" $h $w
+		return 1
+	fi
+
+	kernelurl_from_insturl
+}
+
+opensuse_org_dialog()
+{
+	local i=0
+	local menu=()
+	local urls
+	local url
+	local retry=2
+	declare -a urls
+
+	while read url name; do
+		urls[${#urls[@]}]="$url"
+		menu[${#menu[@]}]="$i"
+		menu[${#menu[@]}]="$name"
+		i=$((i+1))
+#FIXME: move to external file
+	done <<-EOF
+	http://download.opensuse.org/tumbleweed/repo/oss/ Tumbleweed
+	http://download.opensuse.org/distribution/leap/42.1/repo/oss/ Leap 42.1
+	http://download.opensuse.org/distribution/13.2/repo/oss/ 13.2
+	http://download.opensuse.org/distribution/13.1/repo/oss/ 13.1
+	EOF
+
+	dialog "${bgt[@]}" --menu "Choose distribution" $h $w $mh "${menu[@]}" 2> $TMPFILE || die
+	i=0
+	read i < $TMPFILE
+	insturl=${urls[$i]}
+
+	kernelurl_from_insturl
+	dist="${menu[$((i*2+1))]}"
+	case "$dist" in
+		*Milestone*)
+			dialog "${bgt[@]}" --infobox "Probing milestone version ..." $h $w
+			if $curl -f -s -o "$TMPFILE" "$insturl/README.BETA"; then
+				i=`sed -ne '/Distribution version/{s/.*version //;p}' $TMPFILE`
+				[ -z "$i" ] || dist="$i"
+			fi
+		;;
+		*Tumbleweed*) dist="openSUSE $dist `date +%Y-%m-%d`";;
+		*) dist="openSUSE $dist" ;;
+	esac
+}
+
+fedora_dialog()
+{
+	local i=0
+	local menu
+	local urls
+	local url
+	local retry=2
+	declare -a urls
+	declare -a menu
+	local mirror
+
+	while read url name; do
+		urls[${#urls[@]}]="$url"
+		menu[$((i*2))]=$i
+		menu[$((i*2+1))]="$name"
+		i=$((i+1))
+#FIXME: move to external file
+	done <<-EOF
+	/releases/23/Server Fedora Server 23
+	/releases/23/Workstation Fedora Workstation 23
+	/releases/22/Server Fedora Server 22
+	/releases/22/Workstation Fedora Workstation 22
+	/releases/21/Fedora Fedora 21
+	/releases/20/Fedora Fedora 20
+	/releases/19/Fedora Fedora 19
+	/releases/18/Fedora Fedora 18
+	/releases/17/Fedora Fedora 17
+	/releases/16/Fedora Fedora 16
+	/releases/15/Fedora Fedora 15
+	/releases/14/Fedora Fedora 14
+	/releases/13/Fedora Fedora 13
+	/releases/12/Fedora Fedora 12
+	/releases/11/Fedora Fedora 11
+	/releases/10/Fedora Fedora 10
+	/releases/9/Fedora Fedora 9
+	/releases/8/Fedora Fedora 8
+	/releases/7/Fedora Fedora 7
+	EOF
+
+	dialog "${bgt[@]}" --menu "Choose distribution" $h $w $mh "${menu[@]}" 2> $TMPFILE || die
+	i=0
+	read i < $TMPFILE
+	insturl=${urls[$i]}
+
+	dialog "${bgt[@]}" --inputbox "Coose a mirror.\nsee http://mirrors.fedoraproject.org/publiclist/Fedora/" $h $w \
+		"http://download.fedoraproject.org/pub/fedora/linux/" 2> $TMPFILE || die
+	read mirror < $TMPFILE
+
+	insturl="$mirror$insturl"
+
+	kernelurl_from_insturl_fedora
+	dist=${menu[$((i*2+1))]}
+}
+
+ubuntu_dialog()
+{
+	local i=0
+	local menu
+	local urls
+	local url
+	local retry=2
+	declare -a urls
+	declare -a menu
+	local mirror
+
+	while read url name; do
+		urls[${#urls[@]}]="$url"
+		menu[$((i*2))]=$i
+		menu[$((i*2+1))]="$name"
+		i=$((i+1))
+#FIXME: move to external file
+	done <<-EOF
+	wily Ubuntu 15.10 (Wily)
+	vivid Ubuntu 15.04 (Vivid)
+	trusty Ubuntu 14.04 LTS (Trusty)
+	precise Ubuntu 12.04 LTS (Precise)
+	EOF
+
+	dialog "${bgt[@]}" --menu "Choose distribution" $h $w $mh "${menu[@]}" 2> $TMPFILE || die
+	i=0
+	read i < $TMPFILE
+	#insturl=http://archive.ubuntu.com/ubuntu/dists/${urls[$i]}/main/installer-i386/current/images/netboot
+	#isourl=$insturl/mini.iso
+	insturl=http://archive.ubuntu.com/ubuntu/dists/${urls[$i]}/main
+
+	kernelurl_from_insturl_ubuntu
+
+	dist=${menu[$((i*2+1))]}
+}
+
+slackware_dialog()
+{
+	local i=0
+	local menu
+	local dir
+	local url
+	local retry=2
+	declare -a dir
+	declare -a menu
+
+	while read url name; do
+		dir[${#dir[@]}]="$url"
+		menu[$((i*2))]=$i
+		menu[$((i*2+1))]="$name"
+		i=$((i+1))
+	done <<-EOF
+	slackware64-14.1 Slackware 14.1 64bit
+	slackware-14.1 Slackware 14.1
+	slackware-14.0 Slackware 14.0
+	EOF
+
+	dialog "${bgt[@]}" --menu "Choose distribution" $h $w $mh "${menu[@]}" 2> $TMPFILE || die
+	i=0
+	read i < $TMPFILE
+
+	host="mirrors.slackware.com"
+	insturl="http://$host"
+	slack_remote_path="/slackware/${dir[$i]}"
+	kernelurl="$insturl$slack_remote_path/kernels/hugesmp.s/bzImage"
+	if ! curlprobe "$kernelurl"; then
+		kernelurl="$insturl$slack_remote_path/kernels/huge.s/bzImage"
+	fi
+	initrdurl="$insturl$slack_remote_path/isolinux/initrd.img"
+
+	dist=${menu[$((i*2+1))]}
+}
+
+
+mandriva_dialog()
+{
+	local i=0
+	local menu
+	local urls
+	local url
+	local retry=2
+	declare -a urls
+	declare -a menu
+	local mirror
+
+	while read url name; do
+		urls[${#urls[@]}]="$url"
+		menu[${#menu[@]}]="$i"
+		menu[${#menu[@]}]="$name"
+		i=$((i+1))
+#FIXME: move to external file
+	done <<-EOF
+	2010.0 Mandriva 2010.0
+	2009.1 Mandriva 2009.1
+	EOF
+
+	dialog "${bgt[@]}" --menu "Choose distribution" $h $w $mh "${menu[@]}" 2> $TMPFILE || die
+	i=0
+	read i < $TMPFILE
+	mandriva_version=${urls[$i]}
+
+# TODO: http://wiki.mandriva.com/en/Mirrors_API
+# http://api.mandriva.com/mirrors/basic.$mandriva_version.$arch.list
+	dialog "${bgt[@]}" --inputbox "Coose a mirror.\nsee http://api.mandriva.com/mirrors/list.php" $h $w \
+		"ftp://ftp5.gwdg.de/pub/linux/mandriva/mandrivalinux/official/$mandriva_version" 2> $TMPFILE || die
+	read mirror < $TMPFILE
+
+	insturl="$mirror"
+
+	kernelurl_from_insturl_mandriva
+	dist=${menu[$((i*2+1))]}
+}
+
+
+manualurldialog()
+{
+	dialog "${bgt[@]}" --inputbox "Please enter the full URL to the first installation CD" $h $w "" 2> $TMPFILE || die
+	read insturl < $TMPFILE
+
+	kernelurl_from_insturl
+}
+
+localinstall()
+{
+	local bindir="$HOME/bin"
+	dialog "${bgt[@]}" --yesno "install to $bindir?" $h $w || die
+	[ -d "$bindir" ] || install -d -m 755 "$bindir"
+	install -m 755 "$program" "$bindir"
+	install -m 644 "$serverlist" "$bindir"
+	echo "installed to $bindir"
+	die 0
+}
+
+setexitcode()
+{
+	return $1
+}
+
+if [ -n "$insturl" ]; then
+	setexitcode 97
+else
+	autodetecttypedialog
+fi
+case "$?" in
+	0)
+		slpdialog
+		;;
+	1)
+		if hostdialog; then
+			while ! distrodialog; do : ;done
+			mediatypedialog
+		fi
+		;;
+	2)
+		opensuse_org_dialog
+		verify_signatures=1
+		;;
+	3)
+		fedora_dialog
+		verify_signatures=
+		;;
+	4)
+		mandriva_dialog
+		verify_signatures=
+		;;
+	5)
+		ubuntu_dialog
+		verify_signatures=
+		;;
+	6)
+		slackware_dialog
+		verify_signatures=
+		;;
+
+	97)
+		kernelurl_from_insturl
+		verify_signatures=1
+		;;
+	98)
+		manualurldialog
+		verify_signatures=1
+		;;
+	99)
+		localinstall
+		;;
+esac
+
+if [ 0 = 1 ]; then
+	if [ "$kernelurl" = "${kernelurl#file://}" ]; then
+		dialog "${bgt[@]}" --msgbox "Kernel URL ist not of type 'file://'" $h $w
+		die
+	fi
+	if [ "$initrdurl" = "${initrdurl#file://}" ]; then
+		dialog "${bgt[@]}" --msgbox "Initrd URL ist not of type 'file://'" $h $w
+		die
+	fi
+
+	if [ -z "$localinstpath" ]; then
+		if [ -n "$insturl" -a "$insturl" != "${insturl#file://}" ]; then
+			localinstpath="${insturl#file://}"
+		else
+			dialog "${bgt[@]}" --msgbox "Cannot determine local mount point for installation source" $h $w
+			die
+		fi
+	fi
+	insturl=smb://10.0.2.4/qemu/${localinstpath##*/}
+fi
+
+if [ \( -z "$kernelurl" -o -z "$initrdurl" \) -a -z "$isourl" ]; then
+	dialog "${bgt[@]}" --msgbox "No installation sources found" $h $w
+	die
+fi
+vgadialog
+if [ -n "$qemu" ]; then
+	qemu_detect_defaults
+elif [ -z "$grubpartition" ]; then
+	partitiondialog
+fi
+
+advancedoptionsdialog
+ret="$?"
+while [ "$ret" != 0 ]; do
+	case "$ret" in
+		2) ipsettingsdialog ;;
+		3) use_fixed_ip='' ;;
+		4) sshdialog ;;
+		5) vncdialog ;;
+		6) partitiondialog ;;
+		7) qemu_ram_dialog ;;
+		8) qemu_disk_dialog ;;
+		9) qemu_options_dialog ;;
+		10) dist_name_dialog ;;
+		11) qemu_net_dialog ;;
+		12) qemu_display_dialog ;;
+		99) bootparamdialog; break ;;
+		*) break ;;
+	esac
+	advancedoptionsdialog
+	ret="$?"
+done
+
+if [ -n "$verify_signatures" ]; then
+	if [ ! -r "$keyring" ]; then
+		if reqcmd -t gpg; then
+			gpghome=`mktemp --tmpdir -d -q setupgrubfornfsinstall-XXXXXX`
+			rpm -qia 'gpg-pubkey' | gpg --homedir="$gpghome" --import || die
+			push_removeonexit "$gpghome"
+		else
+			dialog "${bgt[@]}" --msgbox "$keyring or gpg is not installed. Signature check disabled." $h $w || die
+			verify_signatures=
+		fi
+	elif ! reqcmd -t gpgv; then
+		dialog "${bgt[@]}" --msgbox "gpgv is not available. Signature check disabled." $h $w || die
+		verify_signatures=
+	fi
+fi
+
+makebootparams
+
+file_error_ask_continue()
+{
+	local file="$1"
+	error "downloaded file $file is not a linux initrd"
+	xxd "$initrdlocal" | head
+	read -p "--- press enter to contine..."
+	dialog "${bgt[@]}" --yesno "downloaded file $file is not a linux initrd. Continue anyways?" $h $w || die
+}
+
+skip_empty=
+compare_sha1sum()
+{
+	local contentfile="$1"
+	local file="$2"
+	local localfile="$3"
+	local checksum=''
+	local hashprog=''
+	local method=''
+	local refsum=''
+
+
+	while [ "${file:0:1}" = '/' ]; do
+		file="${file:1}"
+	done
+
+	read method refsum < <(awk -v f="$file" '$1 == "HASH" && $4 == f { print $2, $3; end }' <  "$contentfile")
+
+	if [ -z "$method" -o -z "$refsum" ]; then
+		if [ -z "$skip_empty" ]; then
+			dialog "${bgt[@]}" $defaultno --yesno "No check sum available for $file. Can't verify integrity. Continue anyways?" $h $w || die
+			skip_empty=1
+		fi
+		return 1
+	fi
+	case "$method" in
+		SHA1) hashprog=sha1sum ;;
+		SHA256) hashprog=sha256sum ;;
+		*) dialog "${bgt[@]}" $defaultno --yesno "Hash method $h for $file unsupported. Can't verify integrity. Continue anyways?" $h $w || die
+		;;
+	esac
+	read checksum dummy < <($hashprog "$localfile" 2>/dev/null)
+	if [ "$refsum" != "$checksum" ]; then
+		dialog "${bgt[@]}" $defaultno --yesno "Check sum of $file is corrupt. Continue anyways?" $h $w || die
+	fi
+}
+
+fetch_iso()
+{
+	echo "ISO: $isourl ..."
+	$echo $curl -f -o "$isolocal" "$isourl" || die
+}
+
+fetch_kernel()
+{
+	if [ -n "$isourl" ]; then
+		fetch_iso
+		return
+	fi
+	echo "Kernel: $kernelurl ..."
+	$echo $curl -f -o "$kernellocal" "$kernelurl" || die
+	echo "Initrd: $initrdurl ..."
+	$echo $curl -f -o "$initrdlocal" "$initrdurl" || die
+
+	if [ "$readonlymode" != yes ]; then
+		case `file "$kernellocal"` in
+			*Linux*[Kk]ernel*) ;;
+			*)
+				file_error_ask_continue "$kernellocal"
+			;;
+		esac
+		case "`file "$initrdlocal"`" in
+			*gzip\ compressed\ data*|*XZ\ compressed\ data|*cpio\ archive*)
+			;;
+			*)
+				file_error_ask_continue "$initrdlocal"
+			;;
+		esac
+
+		if [ -n "$splash" ]; then
+			splash="${kernelurl%/*}/$splash"
+			echo "Splash: $splash ..."
+			if $echo $curl -f -o "$initrdlocal.splash" "$splash"; then
+				case `file "$initrdlocal".splash` in
+					*data*) ;;
+					*)
+						warning "downloaded file $initrdlocal.splash doesn't look like a splash screen";
+						rm -f "$initrdlocal.splash"
+					;;
+				esac
+			else
+				echo "no splash support"
+				splash=''
+			fi
+		fi
+
+		if [ -n "$verify_signatures" ]; then
+			push_removeonexit "$kernellocal.content"
+			push_removeonexit "$kernellocal.content.asc"
+			if curlprobe "$baseurl/content" && curlprobe "$baseurl/content.asc" \
+				&& $curl -s -f -o "$kernellocal.content" "$baseurl/content" \
+				&& $curl -s -f -o "$kernellocal.content.asc" "$baseurl/content.asc"; then
+				local gpgmsg=`gpgv -q --keyring="$keyring" "$kernellocal.content.asc" "$kernellocal.content" 2>&1`
+				if [ "$?" -eq 0 ]; then
+					compare_sha1sum "$kernellocal.content" "${kernelurl#$baseurl}" "$kernellocal"
+					compare_sha1sum "$kernellocal.content" "${initrdurl#$baseurl}" "$initrdlocal"
+					if [ -n "$splash" ]; then
+						compare_sha1sum "$kernellocal.content" "${splash#$baseurl}" "$initrdlocal.splash"
+					fi
+				else
+					if [ -n "$gpgmsg" ]; then
+						gpgmsg=":\n$gpgmsg\n"
+					fi
+					dialog "${bgt[@]}" $defaultno --yesno "gpg signature check for the content file failed$gpgmsg\nContinue anyways?" $h $w || die
+				fi
+			else
+				dialog "${bgt[@]}" --msgbox "Warning: The installation source does not provide a signed content file. Can't verify integrity of the downloaded files." $h $w || die
+			fi
+		fi
+
+		if [ -n "$splash" -a -f "$initrdlocal.splash" ]; then
+			cat "$initrdlocal.splash" >> "$initrdlocal"
+			rm -f "$initrdlocal.splash"
+		fi
+	fi
+}
+
+
+echo
+echo
+
+create_libvirt_xml()
+{
+	local disk_dev="hda"
+	local disk_bus="ide"
+	if [ -n "$qemu_virtio" ]; then
+		disk_dev="vda"
+		disk_bus="virtio"
+	fi
+	cat <<EOF
+<domain type='kvm'>
+  <name>$dist</name>
+  <memory>$((qemu_mem*1024))</memory>
+  <vcpu>1</vcpu>
+  <os>
+    <type arch='${arch/i386/i686}' machine='pc'>hvm</type>
+    <boot dev='hd'/>
+  </os>
+  <features>
+    <acpi/>
+  </features>
+  <clock offset='utc'/>
+  <on_poweroff>destroy</on_poweroff>
+  <on_reboot>destroy</on_reboot>
+  <on_crash>destroy</on_crash>
+  <devices>
+    <emulator>/usr/bin/qemu-kvm</emulator>
+    <disk type='file' device='disk'>
+      <driver name='qemu' type='$qemu_disk_type'/>
+      <source file='$qemu_disk'/>
+      <target dev='$disk_dev' bus='$disk_bus'/>
+    </disk>
+EOF
+if [ "$qemu_net_type" = 'user' ]; then
+	cat <<EOF
+    <interface type='user'>
+      <mac address='$qemu_net_nic_mac'/>
+      ${qemu_net_nic_model:+<model type='$qemu_net_nic_model'/>}
+    </interface>
+EOF
+fi
+	cat <<EOF
+    <input type='tablet' bus='usb'/>
+    <graphics type='vnc' port='-1' autoport='yes' listen='127.0.0.1'/>
+  </devices>
+</domain>
+EOF
+}
+
+get_device_for_mp()
+{
+	awk -vmp="$1" '$2 == mp && substr($1,0,1) == "/" {print $1; exit}' /proc/mounts
+}
+
+gen_grub2_entry()
+{
+	if [ ! -e $bootloaderconf -o "$readonlymode" = yes ]; then
+		cat > $bootloaderconf <<-EOF
+		#!/bin/sh
+		exec tail -n +3 \$0
+		# installation entries created by setupgrubfornfsinstall
+		#
+		EOF
+		[ "$readonlymode" = yes ] || chmod 755 "$bootloaderconf"
+	fi
+	. /usr/share/grub/grub-mkconfig_lib
+
+	local loc
+	loc=`get_device_for_mp /boot`
+	[ -n "$loc" ] || loc=`get_device_for_mp /`
+	[ -n "$loc" ] || die "failed to determine root device"
+
+	title="Installation $host/$dist"
+
+	echo ''
+	echo "menuentry \"$title\" --class gnu-linux --class gnu --class os {" >> $bootloaderconf
+
+	prepare_grub_to_access_device "$loc" | sed -e 's/^/    /' >> $bootloaderconf
+
+	echo "    linux $grubpartition$kernellocal $bootparams" >> $bootloaderconf
+	echo "    initrd $grubpartition$initrdlocal" >> $bootloaderconf
+
+	echo "}" >> $bootloaderconf
+
+	return 0
+}
+
+if [ -n "$qemu" ]; then
+
+	kernellocal="$qemu_disk.install.kernel"
+	initrdlocal="$qemu_disk.install.initrd"
+	isolocal="$qemu_disk.install.iso"
+
+	fetch_kernel
+
+	qemu_prepare_disk
+
+	set -- -m $qemu_mem \
+		-net "nic${qemu_net_nic_mac:+,macaddr=$qemu_net_nic_mac}${qemu_net_nic_model:+,model=$qemu_net_nic_model}" \
+		-net "$qemu_net_type" \
+		 $qemu_params
+
+	if [ -n "$qemu_virtio" ]; then
+		set -- -drive file="$qemu_disk",if=none,id=hd1 -device virtio-blk,drive=hd1 "$@"
+	else
+		set -- -hda "$qemu_disk" "$@"
+	fi
+
+	if [ "$readonlymode" = yes ]; then
+		script="/dev/stdout"
+		install_script="/dev/stdout"
+		libvirt_file="/dev/stdout"
+	else
+		script="$qemu_disk.run"
+		install_script="$qemu_disk.install.run"
+		libvirt_file="$qemu_disk".xml
+	fi
+	create_libvirt_xml $qemu_params > $libvirt_file
+	echo "to import the image to libvirt run"
+	echo "virsh -c qemu:///system define $libvirt_file"
+	echo -ne '#!/bin/sh\nexec ' > "$script"
+	shellquote "$qemu" "$@" >> "$script"
+	echo ' "$@"'  >> "$script"
+	if [ -n "$isourl" ]; then
+		set -- $qemu "$@" -cdrom "$isolocal" -boot d
+	else
+		set -- $qemu -kernel "$kernellocal" -initrd "$initrdlocal" -append "$bootparams" "$@"
+	fi
+	echo -ne '#!/bin/sh\nexec ' > "$install_script"
+	shellquote "$@" >> "$install_script"
+	echo ' "$@"'  >> "$install_script"
+	if [ "$readonlymode" != yes ]; then
+		chmod 755 "$script"
+		chmod 755 "$install_script"
+
+		echo "running '$install_script'"
+		$echo "$install_script"
+		stat="$?"
+		if [ "$?" -ne 0 ]; then
+			echo "installation failed"
+		fi
+		echo "run '$script' to start the installed system"
+		exit $stat
+	fi
+
+else # regular setup with bootloader
+
+	set -e
+
+	imagedir="$imagedir/install_${host//[^a-zA-Z0-9.\-]/_}_"`shellfriendly "$dist"`
+	if [ "$readonlymode" != yes ]; then
+		imagedir=`mktemp -d -q $imagedir-XXXXXX`
+		if [ $? -ne 0 ]; then
+			dialog "${bgt[@]}" --msgbox "Can't create directory in /boot" $h $w
+			die
+		fi
+		echo "Copying files..."
+	fi
+
+# pop doesn't work, no idea why
+#[ "$readonlymode" != yes ] && push_removeonexit "$imagedir"
+
+	$echo mkdir -p "$imagedir"
+	initrdlocal="$imagedir/initrd"
+	kernellocal="$imagedir/linux"
+
+	fetch_kernel
+
+#[ "$readonlymode" != yes ] && pop_removeonexit
+
+	[ "$readonlymode" = yes ] && echo -e "\nAppend the following entry to your bootloader config:"
+
+	case "$bootloader" in
+		lilo)
+			lilo_label="inst_$host"
+			n=1
+			while grep -q "label = $lilo_label\$" /etc/lilo.conf; do
+				lilo_label="inst_${host}_$n"
+				n=$((n+1))
+			done
+			echo "" >> $bootloaderconf
+			echo "image = $kernellocal" >> $bootloaderconf
+			echo "	label = $lilo_label" >> $bootloaderconf
+			echo "	vga = 791" >> $bootloaderconf
+			echo "	initrd = $initrdlocal" >> $bootloaderconf
+			echo "	append = \"$bootparams\"" >> $bootloaderconf
+			;;
+		grub)
+			echo "" >> $bootloaderconf
+			echo "title Installation $host/$dist" >> $bootloaderconf
+			echo "    kernel $grubpartition$kernellocal $bootparams" >> $bootloaderconf
+			echo "    initrd $grubpartition$initrdlocal" >> $bootloaderconf
+			;;
+
+		grub2)
+			(gen_grub2_entry) || die "grub2 config failed"
+			if [ "$readonlymode" != yes ]; then
+				if dialog "${bgt[@]}" --yesno "run grub2-mkconfig now?" $h $w; then
+					grub2-mkconfig > /boot/grub2/grub.cfg
+				else
+					echo "you need to run 'grub2-mkconfig > /boot/grub2/grub.cfg' manually"
+				fi
+			fi
+			;;
+	esac
+
+	if [ "$readonlymode" != yes ]; then
+		if [ "$bootloader" = "lilo" ]; then
+			dialog "${bgt[@]}" --msgbox "You need to run 'lilo' before rebooting" $h $w || die
+		fi
+
+		cat <<-EOF > $imagedir/kexec
+			#!/bin/sh
+			exec kexec -l --reset-vga --command-line="$bootparams" --initrd="$initrdlocal" -x $kernellocal
+		EOF
+		chmod 755 $imagedir/kexec
+		echo "kexec script generated as $imagedir/kexec"
+		echo "Done"
+	fi
+fi

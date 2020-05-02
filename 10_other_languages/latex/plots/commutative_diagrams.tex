@@ -1,0 +1,22 @@
+ 
+ %in preamble
+ \usepackage{tikz-cd}
+
+ %Laplace transform for solving DEs 
+   \[
+    \begin{tikzcd}[cells={nodes={draw=gray}}]
+        \begin{cases}
+          L [ y(t) ] = f(t) \\
+        I.C.
+       \end{cases}
+      \arrow[r] 
+      \arrow[d,"\mathcal{L}"] 
+      & 
+      y(t)
+      \\
+        M [ Y(s) ] = N(s)
+      \arrow[r] 
+      & Y(s)
+    \arrow[u, "\mathcal{L}^{-1}"]       
+    \end{tikzcd}
+    \]

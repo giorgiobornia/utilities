@@ -1,0 +1,24 @@
+
+\begin{tikzpicture}
+\begin{axis}[%
+    ,axis equal=true
+    ,xlabel=$ t $
+    ,ylabel=$ f(t) $
+    ,axis x line = bottom
+    ,axis y line = left
+%     ,ytick={0.25,0.5,...,1}
+    ,ytick={\empty}
+    ,xtick={\empty}
+    ,ymin=0
+%     ,ymax=0.8 % or enlarge y limits=upper
+    ,extra x ticks={2}
+    ,extra x tick labels={$ t_0 $}
+%     ,extra y ticks={0.5}
+%     ,extra y tick labels={$ \dfrac{1}{2 a} $}
+    ]
+\addplot+[const plot, no marks, very thick, blue] coordinates { (0,0) (1,0) (1,0.5) (3,0.5) (3,0) (4,0) };
+\addplot+[const plot, no marks, very thick, green] coordinates { (0,0) (1.5,0) (1.5,1) (2.5,1) (2.5,0) (4,0) };
+\addplot+[const plot, no marks, very thick, red] coordinates { (0,0) (1.75,0) (1.75,2) (2.25,2) (2.25,0) (4,0) };
+
+\end{axis}
+\end{tikzpicture} 

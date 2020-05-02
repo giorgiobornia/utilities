@@ -1,0 +1,1866 @@
+
+# This is a shell archive.  Remove anything before this line,
+# then unpack it by saving it in a file and typing "sh file".
+#
+# Wrapped by Tim Love <tpl@anvil> on Tue Apr  9 16:28:46 1996
+#
+# This archive contains:
+#	README		personal.bib	group.bib	pic2.tex	
+#	local.tex	local_LaTeX.tex	
+#
+
+LANG=""; export LANG
+PATH=/bin:/usr/bin:$PATH; export PATH
+
+echo x - README
+cat >README <<'@EOF'
+This is the Local LaTeX guide for Cambridge University Engineering
+Department. It uses many macros, not all of which will be at all 
+sites. Contact tpl@eng.cam.ac.uk if you have problems.
+
+@EOF
+
+chmod 644 README
+
+echo x - personal.bib
+cat >personal.bib <<'@EOF'
+       @techreport(Wallen86,
+               Author = {Wallen, Lincoln A.},
+          Institution = {University of Edinburgh},
+               Number = {DAI 310},
+                Title = {Using Mathematical Knowledge},
+                 Year = {1986})
+@EOF
+
+chmod 644 personal.bib
+
+
+rm -f /tmp/uud$$
+(echo "begin 666 /tmp/uud$$\n#;VL*n#6%@x\n \nend" | uudecode) >/dev/null 2>&1
+if [ X"`cat /tmp/uud$$ 2>&1`" = Xok ]
+then
+	unpacker=uudecode
+else
+	echo Compiling unpacker for non-ascii files
+	pwd=`pwd`; cd /tmp
+	cat >unpack$$.c <<'EOF'
+#include <stdio.h>
+#define C (*p++ - ' ' & 077)
+main()
+{
+	int n;
+	char buf[128], *p, a,b;
+
+	scanf("begin %o ", &n);
+	gets(buf);
+
+	if (freopen(buf, "w", stdout) == NULL) {
+		perror(buf);
+		exit(1);
+	}
+
+	while (gets(p=buf) && (n=C)) {
+		while (n>0) {
+			a = C;
+			if (n-- > 0) putchar(a << 2 | (b=C) >> 4);
+			if (n-- > 0) putchar(b << 4 | (a=C) >> 2);
+			if (n-- > 0) putchar(a << 6 | C);
+		}
+	}
+	exit(0);
+}
+EOF
+	cc -o unpack$$ unpack$$.c
+	rm unpack$$.c
+	cd $pwd
+	unpacker=/tmp/unpack$$
+fi
+rm -f /tmp/uud$$
+
+echo x - group.bib '[non-ascii]'
+$unpacker <<'@eof'
+begin 644 group.bib
+M0&)O;VLH3&%M<&]R=#@V+ H@075T:&]R(#T@>TQA;7!O<G0L($QE<VQI97TLX
+M"B!4:71L92 @/2![5&AE(%Q,851E6%P@0F]O:WTL"B!996%R(" @/2 Q.3@VX
+M*0H*0&)O;VLH9F%V+ H@075T:&]R(#T@>T$N($XN($]T:&5R?2P*(%1I=&QEX
+;(#T@>U=H871E=F5R?2P*665A<B ](#$W,# I                        X
+                                                             X
+end
+@eof
+
+chmod 644 group.bib
+
+echo x - pic2.tex
+cat >pic2.tex <<'@EOF'
+\setlength{\unitlength}{0.0125in}%
+\begin{picture}(213,309)(72,460)
+\thicklines
+\put(250,510){\vector( 0,-1){0}}
+\multiput(250,530)(0.00000,-10.00000){2}{\makebox(0.4444,0.6667){\rm .}}
+\put(225,460){\framebox(50,45){}}
+\put(250,575){\vector( 0,-1){0}}
+\multiput(250,600)(0.00000,-8.33333){3}{\makebox(0.4444,0.6667){\rm .}}
+\put(215,530){\framebox(70,40){}}
+\multiput(250,675)(0.00000,-7.50000){3}{\makebox(0.4444,0.6667){\rm .}}
+\multiput(250,660)(-8.82353,0.00000){18}{\makebox(0.4444,0.6667){\rm .}}
+\put(100,645){\vector( 0,-1){0}}
+\multiput(100,660)(0.00000,-7.50000){2}{\makebox(0.4444,0.6667){\rm .}}
+\multiput(250,735)(0.00000,-7.50000){3}{\makebox(0.4444,0.6667){\rm .}}
+\multiput(250,720)(-8.82353,0.00000){18}{\makebox(0.4444,0.6667){\rm .}}
+\put(100,710){\vector( 0,-1){0}}
+\multiput(100,720)(0.00000,-10.00000){1}{\makebox(0.4444,0.6667){\rm .}}
+\put(140,695){\vector( 1, 0){ 65}}
+\put(140,625){\vector( 1, 0){ 65}}
+\put(140,745){\vector( 1, 0){ 65}}
+\put( 75,520){\makebox(0,0)[lb]{\raisebox{0pt}[0pt][0pt]{\rm to be performed twice}}}
+\put( 75,540){\makebox(0,0)[lb]{\raisebox{0pt}[0pt][0pt]{\rm * This step may need}}}
+\put(165,635){\makebox(0,0)[b]{\raisebox{0pt}[0pt][0pt]{\rm \LaTeX*}}}
+\put(250,470){\makebox(0,0)[b]{\raisebox{0pt}[0pt][0pt]{\rm (\sf DVILP)}}}
+\put(250,490){\makebox(0,0)[b]{\raisebox{0pt}[0pt][0pt]{\rm PRINT}}}
+\put(250,540){\makebox(0,0)[b]{\raisebox{0pt}[0pt][0pt]{\rm (\xdvi)}}}
+\put(250,555){\makebox(0,0)[b]{\raisebox{0pt}[0pt][0pt]{\rm PREVIEW}}}
+\put(100,635){\makebox(0,0)[b]{\raisebox{0pt}[0pt][0pt]{\rm \tt mysource.bbl}}}
+\put(250,635){\makebox(0,0)[b]{\raisebox{0pt}[0pt][0pt]{\rm \tt mysource.log}}}
+\put(100,700){\makebox(0,0)[b]{\raisebox{0pt}[0pt][0pt]{\rm \tt mysource.aux}}}
+\put(100,605){\makebox(0,0)[b]{\raisebox{0pt}[0pt][0pt]{\rm \tt mysource.aux}}}
+\put(250,700){\makebox(0,0)[b]{\raisebox{0pt}[0pt][0pt]{\rm \tt mysource.blg}}}
+\put(250,680){\makebox(0,0)[b]{\raisebox{0pt}[0pt][0pt]{\rm \tt mysource.bbl}}}
+\put(100,685){\makebox(0,0)[b]{\raisebox{0pt}[0pt][0pt]{\rm \tt mydb.bib}}}
+\put(165,700){\makebox(0,0)[b]{\raisebox{0pt}[0pt][0pt]{\rm \BIBTeX}}}
+\put(250,605){\makebox(0,0)[b]{\raisebox{0pt}[0pt][0pt]{\rm \tt mysource.dvi}}}
+\put(250,620){\makebox(0,0)[b]{\raisebox{0pt}[0pt][0pt]{\rm \tt mysource.aux}}}
+\put(100,620){\makebox(0,0)[b]{\raisebox{0pt}[0pt][0pt]{\rm \tt mysource.tex}}}
+\put(165,750){\makebox(0,0)[b]{\raisebox{0pt}[0pt][0pt]{\rm \LaTeX}}}
+\put(100,740){\makebox(0,0)[b]{\raisebox{0pt}[0pt][0pt]{\rm \tt mysource.tex}}}
+\put(250,740){\makebox(0,0)[b]{\raisebox{0pt}[0pt][0pt]{\rm \tt mysource.aux}}}
+\put(250,760){\makebox(0,0)[b]{\raisebox{0pt}[0pt][0pt]{\rm \tt mysource.dvi}}}
+\end{picture}
+@EOF
+
+chmod 644 pic2.tex
+
+echo x - local.tex
+sed 's/^@//' >local.tex <<'@EOF'
+% Copyright (c) 1994 by T.P.Love. This document may be copied freely 
+% for the purposes of education and non-commercial research.
+% Cambridge University Engineering Department,  
+% Cambridge CB2 1PZ, England.
+\newcommand{\man}[1]{\texttt{man #1}}
+\newcommand{\dvi}{\texttt{.dvi}\index{dvi}}
+\def\texdirectory{\texttt{/export/latex2e}}
+\newcommand{\texinputs}{\texttt{/export/latex2e/inputs}}
+\newcommand{\texdoc}{\texttt{/export/latex2e/doc}}
+\newcommand{\texexamples}{\texttt{/export/Examples/LaTeX}}
+\subsection{Introduction}
+
+Occasionally the \LaTeX\ Book refers to things that are not part
+of \LaTeX\ but complementary to it. Such things vary from place to
+place and between implementations etc., depending upon things like
+editors, computer hardware, types of laser printers and so on. Because
+of this, Lamport asks you to look for information on such things in
+this \emph{Local Guide}.  We cover here most of the things that are
+specific to the Engineering department HP Teaching System here in
+Cambridge.
+
+\subsection{Location of files etc.}
+Most of the \LaTeX/\TeX\ distribution is in the \texdirectory{}
+directory and you can browse there to see what appeals to you. Of
+particular interest is the subdirectory \verb|/inputs|, containing all
+source files used by \LaTeX\ when it runs. For example, the {\tt
+article} class is defined in the file \texttt{article.clo} in this
+directory. There are many other files here: see sections
+\ref{sec:packages} and~\ref{sec:bst} for examples.
+
+\subsection{Running \LaTeX\ on \texttt{demo0.tex}}
+This section describes how to run \LaTeX\ on the file {\tt
+demo0.tex}\index{demo0.tex}. First copy the file into
+your current directory using
+
+
+\vskip\abovedisplayskip
+\texttt{cp \texexamples/demo0.tex demo0.tex}
+\vskip\belowdisplayskip
+
+\noindent See section~\ref{sec:printing} for details of printing {\tt
+sample.dvi}.
+
+\subsubsection{From the command line}
+Execute the following commands:
+
+\vskip\abovedisplayskip
+\texttt{latex demo0}
+
+\texttt{xdvi demo0}
+\vskip\belowdisplayskip
+
+
+\subsubsection{Using \texttt{xlatex}}
+Note that there's a program called \texttt{xlatex} which is a front
+end to \LaTeX\ that also provides easy printing and previewing 
+facilities. Do
+
+\vskip\abovedisplayskip
+\texttt{xlatex demo0}
+\vskip\belowdisplayskip
+
+then use the \fbox{Process} button to run \LaTeX{}, the \fbox{View}
+button to view and the \fbox{Print} button to print some or all of
+the document. The \fbox{Check} button runs \texttt{lacheck} and
+gives you a word count.
+
+
+
+\subsection{Stopping \LaTeX}
+If \LaTeX\ goes out of control and you can't seem to stop it,
+try some of the following:\footnote{\texttt{C-c} means control `\texttt{
+c}'.}
+
+\begin{itemize}
+\item
+\verb+\stop+ (this only works if \LaTeX\ is
+giving you its `\verb+*+' prompt;
+
+\item
+\verb+C-c+\index{C-c}, which is the
+standard {\sc unix} interrupt signal;
+
+\item
+\verb+C-d+\index{C-d} which is the end of file signal.
+You'll find that \verb+C-d+ is useful if \LaTeX\ can't find a
+particular file it thinks it needs. If this occurs, it will prompt you
+for a different file name, and won't stop until it's satisfied: this
+is a job for \verb+C-d+ to end it all.
+\end{itemize}
+
+\subsection{Printing and previewing \texttt{.dvi} files}
+\label{sec:printing}
+A \dvi\ file is a \emph{device-independent\/} way of representing
+documents. All \dvi\ files conform to a standard; for each different
+device (printer, terminal etc.)\ there is a converter (called a device
+driver) between the standard \texttt{.dvi} format and the format required
+by the device.
+
+Normally the devices in question are laser printers but they can also
+be simple line printers and even graphic displays on workstations. The
+ability to display your document on the screen of a workstation using
+high-resolution graphics enables you to \emph{preview\/} your document
+before printing it.
+
+\vskip\abovedisplayskip\noindent\hrule 
+\begin{quote}
+Previewing is a very important phase of
+document preparation as it reduces your consumption of paper (and
+other valuable resources), by showing you your mistakes before
+printing. Please use this facility.
+\end{quote}
+\hrule
+
+\paragraph{Previewing under X11.}
+To display a \dvi\ file on the screen of a workstation running the X11
+windowing system, use the \xdvi\ program:
+\vskip\abovedisplayskip
+\texttt{xdvi} \emph{dvifile}
+\vskip\belowdisplayskip
+\noindent Type \man{xdvi} for details.
+
+\paragraph{Printing}
+\emph{(Remember: Always preview before printing)}.  To print a \dvi\ file you must
+convert it first into the graphics language that is understood by the
+LaserJet, and then send this file.  The program \texttt{lp} does this.
+You can also use \texttt{dvilp}. (Type \man{lp} and \man{dvilp} for details.) 
+For
+example to print \texttt{mysource.dvi} on the main LaserJet (\texttt{ljmr1})
+use:
+\vskip\abovedisplayskip
+\texttt{lp -dljmr1 -odvi < mysource.dvi}
+\vskip\belowdisplayskip
+The command \verb|dvilp| is preferable to \verb|lp|; it automatically
+selects the nearest printer for your document, and you can also give
+it more than one file to print. For example, to print
+\verb|chapter1.dvi| and \verb|chapter2.dvi| use
+\vskip\abovedisplayskip
+\texttt{dvilp chapter1 chapter2}
+\vskip\belowdisplayskip
+
+\paragraph {Using \plotview.}
+\plotview\ is provides an X11 interface the above procedures for
+previewing and then printing documents. Type \man{plotview} for more
+information.
+
+\subsection{Editing \LaTeX\ files}
+The standard editor\index{editor} in the department is
+\emacs.\footnote{If you find \emacs\ difficult to use, I recommend you
+spend more time learning it.} For \LaTeX\ users, \emacs\ provides a
+special ``major-mode'' called ``\texttt{LaTeX}'', that makes the entry of \LaTeX\
+source files less painful. To activate this mode, type:
+\vskip\abovedisplayskip
+\texttt{M-x latex-mode}
+\vskip\belowdisplayskip
+\noindent within \emacs.  For help with this mode type:
+\vskip\abovedisplayskip
+\texttt{C-h m}
+\vskip\belowdisplayskip
+\noindent from within this mode\index{latex-mode}.
+For example, \texttt{LaTeX} mode can help with the matching of braces and
+correctly defining environments.
+
+\subsection{Packages and package options}
+\label{sec:packages}
+
+As well as the standard classes\index{classes} (\texttt{article}, {\tt
+letter}, \texttt{report} \texttt{slides} and \texttt{book}), we have the following packages. 
+They are found in \texinputs.
+
+\begin{description}
+\item [\texttt{7pt}, \texttt{8pt} and \texttt{9pt}] Gives a normal text size
+of 7, 8 or 9 points; use as you would the \verb|11pt| and \verb|12pt|
+style options. In order to use this, you need to use the
+\verb|xarticle| document style. (Note that there is no \verb|10pt|
+option --- 10 point is the default.)
+\item [\tt A4paper] This is the `standard' A4 paper size option at
+CUED, and gives a reasonable A4 page layout, with room for marginal
+comments.  This option will work correctly with \texttt{xarticle}
+document style also.  Using this option, the \verb|\WideMargins|
+command gives you wider margins that you might need if you make heavy
+use of marginal notes.
+\item [\tt a3]
+For A3 documents. Add \verb|\usepackage{a3}| to your 
+  latex source file, run latex on it, convert the resulting file to 
+  Postscript using \verb|dvips -t a3 ...| then print using 
+\verb|lp -oa3 -dljmr2 | ...
+
+
+\item [\tt a4]
+Changes the standard height of text on a page to look better on A4
+size paper.
+\item [\tt a4wide]
+Same as  the \texttt{a4} option, but increases width of text also.
+\item [\tt a4\_local]
+Another A4 page package; this is an old version of the \verb|a4| package
+option. Please use \verb|A4paper| instead.
+
+\item [\tt a5comb]
+set A5 page size, with equal spaces to left and right, and twice the
+amount of centre space (for comb-bound documents).
+\item [\tt a5]
+set A5 page size, with equal spaces to left, middle and right.
+\item [\tt aaai]
+This \LaTeX\ style is for papers to be printed in the proceedings of
+{\sc aaai-88}.  Prepared by Peter F. Patel-Schn\-ei\-der, liberally using
+the ideas of other style hackers, including Barbara Beeton.  This
+style is NOT guaranteed to work.  It is provided in the hope that it
+will make the preparation of papers for {\sc aaai-88} easier. (See
+\texttt{aaai-doc.tex} for details.)
+\item [\tt aaai-names] For use with the \texttt{aaai} option and the {\tt
+aaai-named.bst} \texttt{bibtex} file. Gives citations with names in them.
+\item [\tt agugrl]
+For American Geophysical Union \emph{Geophysical Research Letters}.
+\item [\tt agujgr]
+For American Geophysical Union \emph{Journal of Geophysical Research}.
+\item [\tt aip]
+This document style is designed for manuscripts to be submitted to one
+of the journals published by the American Institute of Physics.
+\item [\tt alleqno]
+Makes all displayed equations numbered by default.
+\item [\tt alltt]
+Defines the `\verb+alltt+' environment, which is like the
+`\verb+verbatim+' environment except that `\verb+\+', `\verb+\{+', and
+`\verb+\}+' have their usual meanings.  Thus, other commands and
+environments can appear within an `\verb+alltt+' environment.
+\item [\tt amsmath] Supports Americam Mathematical Society maths.
+See the AMS LaTeX handout for details.
+\item [\tt amssymbols] This package option loads up the {\sc ams} symbol
+founts and associated symbol definitions.  See the November 1985 issue
+of {\sc TUGBoat} for a listing of these symbols.  Only certain sizes
+are catered for.  The \verb|10pt|, \verb|11pt| and \verb|12pt| document
+package options are supported.
+\item [\tt apalike] For the `apalike' bibliography style.
+\item [\tt array] A new and improved version of \LaTeX's \texttt{array}
+and \texttt{tabular} environments.
+\item [\tt authordate1-4] For more flexible ways to cite references.
+\item [\tt avantgar] For using the Avant Garde postscript font.
+\item [\tt babel] Support for non-english languages.
+\item [\tt bibunits] Allows bibliographies at the end of chapters, etc.
+\item [\tt bigre] French.
+\item [\tt biihead] For underlined headings.
+\item [\tt bitmap] For including bitmaps.
+\item [\tt bnf] To help with setting Backus-Naur Form.
+\item [\tt bookman] For using the Bookman postscript font.
+\item [\tt boxedminipage] Minipage with box around it.
+\item [\tt breakcites] Allow citations to be broken across lines.
+\item [\tt calc] Does sums.
+\item [\tt captcont] To permit the use of captions in continuations of floats.
+\item [\tt caption] Various caption options.
+\item [\tt catalan] Support for Catalan.
+\item [\tt cd]
+Commutative diagram macros modified from \AmSTeX.
+\item [\tt changebar]
+Adds change bars to documents.
+\item [\tt chapterbib]
+Allow multiple bibliographies in a \LaTeX\ document, including items
+\verb+\cite+'d in more than one bibliography.
+\item [\tt chicago] For the Chicago BibTeX styles chicago.bst and
+chicagoa.bst.
+\item [\tt chomsky] For setting grammars.
+\item [\tt cite] Good citation format; allows line breaks within
+citations and compresses consecutive citations into ranges.
+\item [\tt citesort] Sorts citations.
+
+\item[\tt color] Provides color options.
+\item [\tt courier] For using the Courier postscript font.
+\item [\tt cprog]
+Use this if you want to (easily) typeset existing C, Pascal or Modula
+programs.
+\item [\tt croatian] Support for Croatian.
+\item [\tt cropmarks] Helps with cutting and pasting.
+\item [\tt cyrillic]
+Allow \LaTeX\ to use the {\sc ams} cyrillic founts.
+\item [\tt czech] Support for Czech.
+\item [\tt c-program] To set C programs.
+
+\item [\tt doublespace]
+For doublespacing. (Not recommended.)
+\item [\tt dcolumn] For aligning columns by decimal point.
+
+\item [\tt draftcopy] Prints a large grey "DRAFT" diagonally across each 
+page.
+\item [\tt drafthead]
+Puts ``DRAFT'' with date and time at top of each page.
+\item [\tt drop]
+Macro for dropping and enlarging the first letter(s) of a paragraph.
+\item [\tt danish] Support for Danish.
+\item [\tt dutch] Support for Dutch.
+\item[\tt ebar] Histograms. An english version of \texttt{bar}. See the example in \texexamples.
+\item [\tt eepicemu]
+{\sc eepic} emulation.
+\item [\tt eepic]
+Improved drawing of circles and sloped lines (used in conjunction with
+drawing packages).
+\item [\tt endfloat] Puts all figures on pages by themselves at the end 
+of an article. Likewise for tables.
+\item [\tt endnotes] Places endnotes (like footnotes) at end of
+chapters.
+\item [\tt enumerate] Extends standard \LaTeX\ \texttt{enumerate}
+environment. This package option gives the \texttt{enumerate} environment
+an optional argument which determines the style in which the counter
+is printed.
+\item [\tt epic] Improved drawing.
+\item [\tt epigram] Sets epigrams.
+\item [\tt epsf]
+Include an encapsulated {\sc PostScript} file in the current page.
+
+\item [\tt equations]
+Help with \LaTeX\ equations; this is worth using if you typeset
+displayed equations.
+\item [\tt esperant] Support for Esperanto.
+\item [\tt example] Typesets twice, once properly, once verbatim.
+
+\item [\tt fancyheadings]
+Fancy headers and footers (as used by this document).
+\item [\tt finnish] Support for Finnish.
+\item [\tt float] To define new classes of floats.
+\item [\tt floatfig] > To put text around figures.
+
+\item [\tt fnpara] Makes multiple footnotes run together.
+\item [\tt footnpag] Numbers footnotes subsequently per page.
+\item [\tt format]
+Floating point numbers in fixed format.
+\item [\tt francais] Support for French.
+\item [\tt frontiers]
+This is a document style option, for camera-ready copy for the
+Frontiers '88 symposium (and other {\sc ieee} conferences), to be
+used with the \verb|article| document style and the \verb|proc| document style
+option.
+\item [\tt fullpage] Yet another A4 option.
+\item [\tt galician] Support for Gallician.
+\item [\tt geophysics]
+For Geophysics, a publication of the Society of Exploration Geophysicists.
+\item [\tt germanb]
+For writing german texts with \TeX\ or \LaTeX.
+\item [\tt graphics] Provides extensive graphics facilities.
+\item [\tt hangcaption] Defines a variant of the caption command to
+produce captions with hanging indentation.
+\item [\tt harvard] The harvard family of bibliography styles. See
+the  \htmladdnormallinkfoot{Harvard bibliography style}
+{http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/harvard.dvi}
+documentation.
+\item [\tt headerfooter] To do headers and footers.
+\item [\tt helvetic] For using the Helvetica postscript font.
+\item [\tt here] Gives environments such as \texttt{figure} and {\tt
+table} an \texttt{[H]} option which means `PUT IT HERE'. As opposed to
+the standard \texttt{[h]} option which means `You may put it here if you
+wish'. This has been superceded by the  \texttt{[!h]} option.
+\item [\tt hhline]  more options for horizontal lines.
+\item [\tt histogr]
+Histograms within \LaTeX\ \verb+\picture+ environment.
+\item [\tt hssvita] A class for CV writing.
+\item [\tt html] Help with writing documents destined for conversion into
+HTML.
+\item [\tt hvdashln] Allows dashed lines in tables.
+\item [\tt icassp] 
+Style option for camera-ready copies the ICASSP~'89
+conference (and other {\sc ieee} conferences), to be used with the
+\verb|article| document style and the \verb|proc| document style
+option.
+\item [\tt ijcai89]
+For IJCAI conference submissions.
+\item [\tt indentfirst] Always indent a paragraph's first line.
+\item [\tt ipa] Phonetic fonts.
+\item [\tt ist21]
+This style option produces a title appropriate for BSI IST/21
+documents, and general memos.
+\item [\tt isucaption]
+Clever captions for figures.
+\item [\tt italian] Support for Italian.
+\item [\tt jbs]
+Article document style for the \emph{Journal of Business Strategies}.
+\item [\tt jeep]
+Useful style file that slightly modifies the standard document classes
+of \LaTeX.
+\item [\tt jims] A class for Judge Institute Management Studies
+working papers.
+\item [\tt jmb] Journal of Molecular Biology style.
+\item [\tt lambda] $\lambda$-calculus stuff.
+\item [\tt layout] Shows the various page dimensions 
+\item [\tt letterspace] Puts space between letters.
+\item [\tt lcustom] This package contains a whole bunch of useful little
+command definitions.  The \verb|\inputverbatim{|{\it file\/}\verb|}|
+command inserts the file in verbatim mode.  However, it is usually
+better to use the \verb|\lgrind| package described later in this section
+for this purpose.  A number of further commands provide a clean way of
+introducing diagrams and tables from subsidiary files.
+\item [\tt lgrind] For formatting source code. Type \texttt{man lgrind} for
+details.
+\item [\tt llncs] A Springer-Verlag style 
+\item [\tt longtable] Alternative tables on separate page.
+\item [\tt lscape] Makes the production of landscape pages easier.
+\item [\tt ltugboat] Typesetting articles for {\sc TUGBoat}.
+\item [\tt magyar] Support for Hungarian.
+\item [\tt manual]
+Style for manuals (similar to a book).
+\item [\tt memo]
+For memos.
+\item [\tt merge]
+Combines letter bodies with lots of addresses.
+\item [\tt mitpress]
+MIT Press format.
+\item [\tt mitthesis]
+MIT Thesis format.
+%FIX
+%\item [\tt mf.sty] Defines {\logo METAFONT} logo in all sizes.
+%
+\item [\tt moreverb] More verbatim options (\textit{e.g.} line numering).
+\item [\tt multibox] Makes boxes in \LaTeX's \texttt{picture}
+environment.
+
+\item [\tt multicol]
+For multiple page columns.
+\item [\tt multirow]
+For spanning multiple rows of a table.
+\item [\tt multind]
+Style option for producing multiple indexes.
+\item [\tt named]
+Named bibliography style.
+\item [\tt nar] Nucleic Acid Research style.
+\item [\tt natsci]
+Correctly formats citations in the NATSCI bibliography style.
+\item [\tt nature] For writing articles to Nature.
+\item [\tt newcentu] For using the New Century postscript font.
+
+\item [\tt nofm]
+For `$n$ of $m$' style pagination.
+\item [\tt nomathitalic] Make math mode use normal italic and not math italic.
+\item [\tt norsk] Support for Norwegian.
+\item [\tt numline] Puts line numbers on output. 
+\item [\tt openbib]
+Open style bibliographies.
+\item [\tt optima] For using the Optima postscript font.
+\item [\tt overcite] Cites are superscripts rather than bracketted numbers.
+\item [\tt palatino] For using the Palatino postscript font.
+\item [\tt pifont] Makes use of the Zapf Ding-bats font easier.
+\item [\tt polish] Support for Polish.
+\item [\tt portland]
+For switching between portrait and landscape mode of printing.
+\item [\tt portuges] Support for Portuguese.
+\item [\tt program]
+For typesetting programs.
+\item [\tt proof] Typesetting proof trees.
+\item [\tt remark]
+For remark environments.
+\item [\tt resume]
+For formatting resumes.
+\item [\tt res]
+Ditto.
+\item [\tt romanian] Support for Romanian.
+\item [\tt romanneg]
+Negative roman numbers
+\item[\tt rotating] Provides a few more rotation options than
+the \texttt{graphics} package provides. 
+\item [\tt sc21]
+This style option produces a cover page appropriate for documents
+conforming to the ISO/TC97/SC21 standard.
+\item [\tt schedule]
+Defines macros to draw a schedule.
+\item [\tt seceqn]
+Package option for use with \verb+article+ style to cause equations to
+be numbered within sections.
+\item [\tt seminar] For producing OHP slides with notes.
+\item [\tt shapepar] For producing paragraphs in certain shapes (diamonds etc).
+\item [\tt sfwmac] Defines a set of macros which are useful when
+writing program documentation.  The \verb|\pgm{|{\it
+program\/}\verb|}| command expects a program name as an argument.  The
+name in printed (in italics) and an index entry is made for it.
+Similarly, the \verb|\man{|{\it program\/}\verb|}(|{\it
+section\/}\verb|)| command may be used to produce references to manual
+page entries.  The \verb|\arg{|{\it argument\/}\verb|}|,
+\verb|\switch{|{\it switch\/}\verb|}| and \verb|\file{|{\it
+file\/}\verb|}| commands may be used when referring to program
+arguments and switches and to filenames. These produce no index entry.
+
+\item [\tt showlabels]
+Change \verb+\label+, \verb+\ref+, and \verb+\pageref+ to show labels
+in line. (For debugging.)
+
+\item [\tt siam]
+For {\sc siam} journals. (See other files for documentation.)
+\item [\tt slem]
+Makes \verb+\em+ use \verb+\sl+ rather than \verb+\it+.
+\item [\tt slovak] Support for Slovakian.
+\item [\tt slovene] Support for Slovenian.
+\item [\tt spacecites]
+Space out citations in the report style.
+\item [\tt spanish] Support for Spanish.
+\item [\tt sshdbk10]
+Sans serif headings for book style.
+
+\item [\tt subeqnarray]
+Renumbering of sub-arrays in math-mode.
+\item [\tt subeqn]
+Different numbering sub-arrays.
+
+\item [\tt subfigure]
+Provides figures within figures.
+\item [\tt supertabular] Much like \texttt{longtable}.
+\item [\tt suthesis]
+Stanford University Thesis style.
+\item [\tt svlncs]
+For Springer-Verlag's Lecture Notes in Computer Science.
+\item [\tt swedish] Support for Swedish.
+\item [\tt tables]
+Useful for tables.
+\item [\tt texnames]
+Defines things like \verb+\AmSTeX\+ and \verb+\BIBTeX+.
+\item [\tt tgrind]
+It is useful to be able to include program fragments as figures in a
+text.  The \texttt{tgrind} package option can be used to accomplish this
+fairly painlessly (but see also \texttt{lgrind}) by defining the 
+\verb|\tagrind| command.
+
+The \verb|\tagrind| command has the following proforma:
+\begin{itemize} \tt
+\item[]
+\verb|\tagrind*|[{\it loc\/}]\{{\it file\/}\}\{{\it caption \/}\}\{{\it
+label \/}\}
+\end{itemize}
+
+As usual,
+\begin{itemize}
+\item in two-column format, the ordinary form produces a
+single-column listing and the $\ast$-forms produces a double-column listing;
+
+\item {\it loc\/}
+is a sequence of one to four of the letters \verb|h| ({\it here\/}),
+\verb|t| ({\it top\/}), \verb|b| ({\it bottom\/}) and \verb|p| ({\it
+page\/}) specifying where the listing may be placed.
+
+\item {\it file} specifies the file from which the ground listing
+is to be taken.
+
+\item {\it caption} produces a numbered caption.
+
+\item {\it label} assigns a label to the listing, so that it may be
+referred to by means to the \verb|\ref{|{\it label\/}\verb|}| command.
+\end{itemize}
+The listing file should be generated using \texttt{tgrind} and removing
+the first and last lines of the resulting file. For example, if the C
+source file \texttt{file.c} were to be used as a listing,
+\begin{verbatim}
+     tgrind -f -lc file.c | sed -e 1d -e \$d >file.tex
+\end{verbatim}
+would generate a file \texttt{file.tex} suitable for use
+with \verb|tagrind|. For example,
+\begin{verbatim}
+\tagrind{file}{This is an example}{eg}
+\end{verbatim}
+NB: \texttt{lgrind} is worth a look too.
+\item [\tt theorem] gives more choice in theorem layout.
+
+\item [\tt threeparttable ] Creates tables with titles, the table itself,
+and notes.
+\item [\tt times] For using the Times postscript font.
+\item [\tt trademarks] Defines a number of trademarks and trade names.
+For example, \Unix/ (note the automatically defined footnote) was
+produced by a \verb|\Unix/| command.  Note that there is no need to
+append \verb*|\ | or \verb|{}| to prevent the swallowing up of
+succeeding spaces.
+
+\item [\tt trees]
+Makes tree-like pictures.
+\item [\tt turkish] Support for Turkish.
+\item [\tt ucthesis]
+University of California Thesis style.
+
+\item [\tt ukdate]
+Gives an English-style date.
+\item [\tt ulem] Replaces italics with underlining in emphasized text
+\item [\tt undhead] Underline page headings
+\item [\tt univer] For using the Universe postscript font.
+\item [\tt utopia] For using the Utopia postscript font.
+\item [verbatim] Produces extra verbatim options
+\item [version]  Version control macros.
+\item [\tt vdm] The \texttt{vdm} package option aids typesetting of VDM
+specifications: it provides macros for typesetting formulae, data
+types, functions, operations and proofs in whatever the currently
+approved VDM manner happens to be. 
+
+\item [\tt version] Version control macros. These let you define
+environments whose contents will be optionally added to or deleted
+from the text when you run \LaTeX.
+\item [\tt vmargin]  provides macros to aid margin setting. Also
+introduces paper sizes.
+
+\item [\tt wrapfig] Produces figures which text can flow around.
+See the example in \texexamples.
+\item [\tt xarticle] Allows use of the \verb|7pt|, \verb|8pt| and
+\verb|9pt| style options.  If you use \verb|xarticle|, you may run
+into problems with other options.
+\end{description}
+
+If you want to use these files it's a good idea to read through them
+first, as most have some explanatory comments in them.  Many of them
+have documentation files of the form `\texttt{\emph{style-name}.doc}' or
+`\texttt{*\emph{style-name\/}-doc.txt}'. Check for these in the
+documentation directory, \texdoc, and also the inputs directory.
+
+Remember, the class is selected using the \verb+\documentclass+ command.
+Packages can be added using the \verb+\addpackage+ command. You 
+should be able to use the packages with any class.
+Note that the majority of these packages have not been tried (not to
+mention tested) by the author, so exercise caution\ldots you have been
+warned! If you can't find the facility you want, look into a 
+\texttt{CTAN} site. Suppose you want to find support for icelandic. Do
+\begin{verbatim}
+  ftp ftp.tex.ac.uk
+\end{verbatim}
+and login as \texttt{ftp}, giving your e-mail address as password. Then
+type
+\begin{verbatim}
+  quote site index iceland
+\end{verbatim}
+to get a list of files with \texttt{iceland} in their name. You might be
+lucky.
+\subsection{Other languages}
+The \texttt{babel} package provides support for other
+languages\index{languages}, because (as yet) we don't have a version
+of \LaTeX\ that will correctly hyphenate anything other than
+(American) English. The quality of the hyphenation will vary according
+to the language.
+
+\subsection{Departmental letterheads}
+
+The standard \LaTeX\ \verb|letter| style is rather boring and doesn't
+have a nice CUED letterhead, so one has been installed.  The class is
+called \verb|deptletter|, and is used instead of the standard
+\verb|letter| class:
+\vskip\abovedisplayskip
+\verb|\documentclass[|\ldots\verb|]{deptletter}|
+\vskip\belowdisplayskip
+This class places the University crest in the top-left of the page,
+and your name and the Department's address in the top-right.  You can
+use the \verb|handouts| command (see section~\ref{sec:hand}) to view
+this letter style on-line. This is by no means an officially endorsed
+letterhead, and I do not claim it to be so. The format is customizable
+with the following commands:
+
+\vskip\abovedisplayskip
+\begin{table}[H]\centering
+\begin{tabular}{|l|p{0.5\textwidth}|}
+\hline
+\emph{Command\/} & \emph{Specifies\/} \\\hline\hline
+\verb|\address {|\emph{address\/}\verb|}| & The Department address. \\
+\verb|\telephone {|\emph{number\/}\verb|}| & Your full telephone number.\\
+\verb|\fax {|\emph{number\/}\verb|}| & Department fax number.\\
+\verb|\email {|\emph{net address\/}\verb|}| & Your email address.\\
+\verb|\name {|\emph{name\/}\verb|}| & Your name.\\\hline
+\end{tabular}
+\caption {Commands to configure the \texttt{deptletter} document style.}
+\end{table}
+\vskip\belowdisplayskip
+
+Use these commands in your own letters to change them.  For example I
+might use:
+{\small\begin{verbatim}
+\telephone {\small\sl Tel.:\/ \rm \up[+44\up] 223 33\thinspace 2639}
+\fax       {\small\sl Fax:\/ \rm \up[+44\up] 223 33\thinspace 2662}
+\email     {\small\sl email:\/ \rm \texttt{img}@\texttt{eng.cam.ac.uk}}
+\name      {Ian Green}
+\end{verbatim}}
+
+The \verb|\address| command has as default
+\begin{verbatim}
+\address {\sc Department of Engineering\\
+          \sc Trumpington Street\\
+          \sc Cambridge, CB2 1PZ\\
+          \sc England}
+\end{verbatim}
+so you probably won't need to change this.
+
+\subsection{Report templates}
+We don't yet have a set of templates for report writing.
+The \texttt{IIBproject} class may be useful to 4th years.
+\texttt{/export/Examples/LaTeX/IIBproject.tex} shows how it can
+be used.
+
+\subsection{Using \texttt{lablst.tex} and \texttt{idx.tex}}
+\subsubsection{\texttt{lablst.tex}}
+\texttt{lablst.tex} is a utility program written in \LaTeX\ which lists
+of all the arguments of \verb+\label+ commands in a document.  To use
+it, simply type
+\vskip\abovedisplayskip
+\texttt{latex lablst}
+\vskip\belowdisplayskip
+\noindent and you'll be prompted for the name of the file you want to
+search for labels and the style of that file (\emph{i.e.\/}\ the
+argument to the \verb+\documentstyle+ command.  Beforehand you must
+run \LaTeX\ on the file you wish to scan. Another point is that the
+\verb+lablst+ program doesn't expect you to type the extension of your
+filename (the
+\verb+.tex+ bit), so don't.  For example, finding the labels in the
+file \verb+sem.tex+:
+\vskip\abovedisplayskip
+\texttt{latex sem}
+
+latex lablst
+
+@...
+
+\verb+\filename=sem+
+
+@...
+
+\verb+\docsty=article+
+\vskip\belowdisplayskip
+This produces a file \verb+lablst.dvi+ that you can preview in order
+view the list of labels used.
+
+\subsubsection{\texttt{idx.tex}}
+The process of obtaining a listing of all indexed entries (\emph{i.e.},
+arguments to \verb+\index+ commands) in a \LaTeX\ file is similar to
+the above for labels, using \verb+idx+ instead of \verb+lablst+.  You
+enter the name of the file (without the extension) and it produces the
+file \verb+idx.dvi+ which you can preview to obtain a list of all
+index entries.
+
+\subsection{Bibliography styles}
+\label{sec:bst}
+Here we describe some of the bibliography style files (\verb+.bst+) we
+have. Note that many of them are associated with a corresponding
+\verb+.sty+ file, and they may need to be used in conjunction with one
+another.  There are some however that can be used `stand-alone'. We do
+not mention here the standard \LaTeX\ \verb+.bst+ files. 
+\begin{description}
+\item [\tt aaai-named.bst]
+Designed for use with \texttt{aaai.sty} for {\sc aaai} publications. Can
+be used without. (See this file for details.)
+\item [\tt acm.bst]
+{\sc acm} Transactions bibliography style. Like \verb+abbrv.bst+, but
+names come out ``Last, initials'', and in \verb+\sc+.  Some dates are
+parenthesized.
+\item [\tt agsm.bst] (Harvard)
+\item [\tt apalike.bst]
+This style should be used with the `\verb+apalike+' \LaTeX\ style.
+\verb+\cite+'s come out like ``(Jones, 1986)'' in the text but there
+are no labels in the bibliography, and something like ``(1986)'' comes
+out immediately after the author.  Author (and editor) names appear as
+last name, comma, initials.  A `\verb+year+' field is required for
+every entry, and so is either an author (or in some cases, an editor)
+field or a key field.
+\item [\tt dcu.bst] (Harvard)
+
+\item [\tt ieeetr.bst]
+{\sc ieee} Transactions bibliography style.  Otherwise, much like the
+standard, \verb+plain.bst+, from which it is adapted.
+\item [\tt kluwer.bst] (Harvard)
+\item [\tt local\_plain.bst] Variation on \verb+plain.bst+ style.
+\item [\tt local\_sc\_plain.bst] Variation on \verb+plain.bst+ style.
+\item [\tt local\_sc\_plain2.bst] Variation on \verb+plain.bst+ style.
+\item [\tt named.bst] Variation on \verb+aaai-named.bst+.
+\item [\tt nederlands.bst] (Harvard)
+\item [\tt physics.bst]
+This is a good starting point if you want to design your own
+\verb+.bst+ file. It requires you to know what you're doing.
+
+\item [\tt siam.bst]
+For use with \verb+siam.sty+. Numeric labels, alphabetic order,
+Mathematical Reviews abbreviations, names in \verb+\sc+, titles in
+italics, book titles mixed upper-lower and article titles lowercase,
+commas separate all fields except before `notes'.
+\end{description}
+
+\noindent To use bibliography style \emph{this-style\/} put the command
+\vskip\abovedisplayskip
+\verb+\bibliographystyle{+\emph{this-style\/}\verb+}+
+\vskip\belowdisplayskip
+\noindent in your document (not in the preamble).
+
+\paragraph{A comment}
+If you want to write your own \verb+.bst+ file, then go ahead. I might
+warn you that it can take some time, so you ought to make sure it's
+time well spent. Also, try to modify an existing one rather than start
+from scratch. 
+
+\subsection{Compiling an Index}
+Compiling an index to your document is hard work, but the {\sf MAKEINDEX}
+program is available to help.  I refer potential index-builders to the
+(on-line) documentation for this program, ``\emph{MakeIndex\/}: An Index
+Processor For \LaTeX'' by Leslie Lamport, which is available via the
+\verb|handouts| comamnd.
+
+\subsection{\emacs\ bibtex support}
+When \emacs{} is asked to edit a \texttt{*.bib} file it goes into 
+\texttt{bibtex} mode. This, amongst other things, provides templates
+for entries with the appropriate optional and obligatory fields. 
+
+
+Table~\ref{figexp} on page~\pageref{figexp} lists the predefined
+abbreviations of journals etc.\ in the \verb+plain+ bibliography
+style. (To add your own, you can ask Tim Love to add them to the
+file, or copy the file, rename it, edit it\footnote{They are called
+`\texttt{MACROS}' in the \texttt{.bst} file, the syntax is obvious.} and
+use that one instead.)
+
+\vskip\abovedisplayskip
+\begin{table}[htbp]\centering
+\small\tt\begin{tabular}{l|l}
+\emph{Abbreviation} & \emph{Expansion}\\ \hline
+jan & January\\
+feb & February\\
+$\vdots$&$\vdots$\\
+dec& December\\ \hline
+acmcs & ACM Computing Surveys\\
+acta & Acta Informatica\\
+cacm & Communications of the ACM\\
+ibmjrd & IBM Journal of Research and Development\\
+ibmsj & IBM Systems Journal\\
+ieeese&IEEE Transactions on Software Engineering\\
+ieeetc&IEEE Transactions on Computers\\
+ieeetcad&IEEE Transactions on Computer-Aided Design of\\
+&\hspace{4ex}Integrated Circuits\\
+ipl&Information Processing Letters\\
+jacm&Journal of the ACM\\
+jcss&Journal of Computer and System Sciences\\
+scp&Science of Computer Programming\\
+sicomp&SIAM Journal on Computing\\
+tocs&ACM Transactions on Computer Systems\\
+tods&ACM Transactions on Database Systems\\
+tog&ACM Transactions on Graphics\\
+toms&ACM Transactions on Mathematical Software\\
+toois&ACM Transactions on Office Information Systems\\
+toplas&ACM Transactions on Programming Languages and Systems\\
+tcs&Theoretical Computer Science
+\end{tabular}
+\caption{List of abbreviations defined in \texttt{plain.bst}.}
+\label{figexp}
+\end{table}
+\vskip\belowdisplayskip
+
+\section {Additional sources of information}
+For a general introduction to \LaTeX, including the new features of
+\LaTeXe, you should read \emph{The \LaTeX{} Book} (second edition)
+by Leslie Lamport.
+
+A more detailed description of the new features of \LaTeX, including
+an overview of more than 150 packages, is to be found in
+\emph{The \LaTeX{} Companion} by Michel Goossens, Frank Mittelbach and Alexander
+Samarin.
+
+\label {sec:hand}
+Some examples are in \verb|/export/Examples/LaTeX|.
+The material shown in table~\ref{tab:more} on page~\pageref{tab:more}
+may also be of use. Some of it's available by the machine room of
+the department's DPO. A much wider selection is online. Look at the
+\htmladdnormallinkfoot{LaTeX page}{http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/LaTeX\_intro.html}
+ in the help system to give you access to everything we have 
+online.
+
+
+\vskip\abovedisplayskip
+\begin{table}[htbp]
+\begin{small}
+\begin{center}
+\begin{tabular}{l|p{0.4\textwidth}|l}
+\emph{Name\/} & \emph{Title\/} & \emph{Author(s)\/}\\\hline
+\texttt{bibtex}&	bibtex-ing & Oren Patashnik\\
+\texttt{dvips}& DVIPS: A \TeX\ Driver & Tomas Rokicki\\
+\texttt{exletter}& (an example letter)& Prof.\ Grantgetter, III\\
+\texttt{harvard} & The Harvard Family of Bibliography Styles & Peter Williams\\
+\texttt{latex\_basic} & Word Processing Using \LaTeX & Richard Prager \& Tim Love\\
+\texttt{latex\_advanced}& Advanced \LaTeX & Tim Love\\
+\texttt{latex\_maths+pix}&\LaTeX\ Maths and Graphics & Tim Love\\ 
+\texttt{latex\_gnuplot}&\LaTeX\ and the GNUPLOT Plotting Program& 		David Kotz\\
+\texttt{local\_LaTeX} & C. U. E. D. Document Preparation Facilities and
+Local Guide&  							Ian Green \& Tim Love\\
+\texttt{makeindex}&\emph{MakeIndex\/}: An Index Processor For \LaTeX&Leslie Lamport\\
+\texttt{sanskrit}& Using Devanagari fonts&  Frans J. Velthuis\\
+\texttt{seminar} & The seminar style & van Zandt\\
+\texttt{longtable}& The longtable package & David Carlisle\\
+\texttt{clsguide}&\LaTeXe{} for class and package writers& The \LaTeX 3 Project\\
+\texttt{fntguide}&\LaTeXe{} font selection& The \LaTeX 3 Project\\
+\texttt{usrguide}&\LaTeXe{} for authors& The \LaTeX 3 Project\\
+\end{tabular}
+\end{center}
+\end{small}
+\caption {Hardcopy documents available}
+\label{tab:more}
+\end{table}
+
+@EOF
+
+chmod 644 local.tex
+
+echo x - local_LaTeX.tex
+cat >local_LaTeX.tex <<'@EOF'
+% Copyright (c) 1994, 1995 by T.P.Love. This document may be copied freely 
+% for the purposes of education and non-commercial research.
+% Cambridge University Engineering Department,  
+% Cambridge CB2 1PZ, England.
+
+\documentclass[11pt,twoside]{article}
+\usepackage{titlepage,a4,texnames,fancyheadings,example,trademarks,tgrind,here,html}
+
+\font\crest=crest\font\ninrm=cmr9
+\def\up#1{\leavevmode \raise.16ex\hbox{#1}}
+%\font\tit=cmssdc10  % used only on the title page
+%\font\stit=cmssdc10 % used only on the title page
+%\font\auth=cmssdc10 % used only on the title page
+%\font\elevenbf=cmbx10  % ditto
+%\font\elevenit=cmti10  % ditto
+%\font\elevenrm=cmr10 % ditto
+
+\addtolength{\headheight}{1.59999pt}
+\newcommand{\LB}{\LaTeX\ Book}
+\newcommand{\LC}{\LaTeX\ Companion}
+\newcommand{\xfig}{{\sf XFIG}}
+\newcommand{\emacs}{{\sf EMACS}}
+\newcommand{\xdvi}{{\sf XDVI}}
+\newcommand{\ispell}{{\sf ISPELL}}
+\newcommand{\plotview}{{\sf PLOTVIEW}}
+\newcommand{\lacheck}{{\sf LACHECK}}
+
+\newcounter{tmpsect}
+\newcounter{tmpssect}
+\newcounter{tmpeqn}
+\typeout{}
+\typeout{By Ian Green, CUED 4/10/90}
+\typeout{(updated to LaTeX2e by Tim Love, Sept 1994, Aug 1995, Mar 1996)}
+\typeout{CUED document preparation facilities, including Local Guide}
+\typeout{}
+\typeout{}
+\pagestyle{fancy}
+\newlength{\oldpi}
+\setlength{\oldpi}{\parindent}
+
+\begin{document}
+%\halign to\hsize{#\hfil\tabskip 0pt plus 1fil&#\hfil\tabskip0pt\cr
+%& \tit C. U. E. D\cr\noalign{\vskip 20pt}
+%& \tit Document Preparation Facilities\cr\noalign{\vskip 20pt}
+%& \stit and\cr\noalign{\vskip 20pt}
+%& \tit Local Guide\cr\noalign{\vskip 80pt}
+%& \auth Ian Green\cr\noalign{\vskip 20pt}
+%& \large\it 5 September 1991 (updated October 1992)\cr
+%\noalign{\vfill}
+%& \vtop {\hrule height0pt width0pt depth0pt\hbox{\crest C}}\hfill
+%\vtop {\hrule height0pt width0pt depth0pt\tabskip=0pt
+%       \halign{#\hfil\cr
+%         {\bf DEPARTMENT OF ENGINEERING}\cr\noalign{\vskip10pt}
+%         {\bf UNIVERSITY OF CAMBRIDGE}\cr\noalign{\vskip10pt}
+%         {\bf CAMBRIDGE, ENGLAND}\cr}}\cr}
+%\halign to\hsize{#\hfil\tabskip 0pt plus 1fil&#\hfil\tabskip0pt\cr
+
+\title{C. U. E. D Document Preparation Facilities\\
+       and Local Guide}
+\author{Ian Green, 5 September 1991, December 1992.\\
+        Updated by Tim Love, Sept 1994, Aug 1995, Mar 1996}
+\maketitle
+
+\begin{table}[b]
+Copyright \copyright 1994, 1995, 1996 by I.M.~Green and T.P.~Love.
+This document may be copied freely for the purposes 
+of education and non-commercial research.
+Cambridge University Engineering Department,  
+Cambridge CB2 1PZ, England.
+\end{table}
+
+\thispagestyle{empty}
+\begin{abstract}
+\vspace{1cm}
+\hrule
+
+\vspace{2ex}
+
+\noindent
+The process of document preparation is described.  A brief description
+of the use of the \LaTeX\ document preparation system is given to
+illustrate the ease with which well-typeset documents can be created.
+Other topics include the incorporation of graphics from the drawing
+program \xfig, the use of \BIBTeX\ for bibliography management, using
+\xdvi\ to preview documents prior to printing, and printing documents on a
+laser printer. For experienced users, an appendix provides a \emph{CUED
+Local Guide\/} that covers topics unique to the CUED \LaTeX\ system.
+In summary this document covers:
+\begin{center}
+\begin{itemize}
+\item \LaTeX --- A powerful document preparation system.
+\item \BIBTeX\ --- Managing bibliographies and citations within \LaTeX.
+\item \xdvi\ --- Previewing \LaTeX\ documents before printing them.
+\item \xfig\ --- Incorporating \xfig\ drawings into \LaTeX\ documents.
+\item \emph{Local Guide\/} --- Getting the most out of \LaTeX\ at CUED.
+\end{itemize}
+\end{center}
+
+\vspace{2ex}
+
+\hrule
+\end{abstract}
+
+\newpage
+\pagenumbering{roman}
+\tableofcontents
+\listoffigures
+\listoftables\newpage
+
+\section{Introduction}
+\typeout{}
+\typeout{Introduction }
+\pagenumbering{arabic}
+Writing documents---reports, papers and the like, can be a real hassle
+if you don't make use of computing facilities. Producing and placing
+figures/diagrams, constructing tables and lists, inserting and
+numbering footnotes, writing equations, sectioning, cross-referencing,
+referencing etc., all require effort on behalf of the author. Authors
+can spend more time producing a document than they spend writing it.
+
+This document is intended to familiarize the reader with some of the
+computing facilities available here at the CUED to assist with the
+tiresome aspects of document preparation. It is in two
+parts: the main part is an beginners guide to using the CUED
+facilities; an Appendix includes detailed and advanced material that
+you may need in the future.
+
+As a result this document contains much information; we think it's
+worth spending some time going through it.  For example, if you've to
+write a first year report, then time spent now will save a lot of
+stress and frustration later next term! Note however that this is by
+no means the definitive reference for the programs etc.\ described
+here, the reader is advised to refer to other sources if need be.  We
+include in marginal notes\marginpar{\small\raggedright This is a
+marginal note.} pointers to more specific material.
+
+\vskip2\belowdisplayskip \noindent If you find any errors or omissions
+in this document, please let Tim Love know ({\tt tpl@eng}).
+
+\section{\LaTeX}
+\typeout{}
+\typeout{LaTeX }
+\subsection{Introduction}
+You'll soon become familiar with the \LaTeX\ logo. To put you in the
+picture, I'll say a little bit about where \LaTeX\ comes from.  In the
+beginning, a chap called Donald Knuth designed and wrote a typesetting
+program called \TeX, which is pronounced like the first syllable of
+``technique''.  \TeX\ is a very low-level language and even simple
+aspects of producing documents can take a long time to figure out and
+write down. Luckily however, \TeX\ is expandable; you can parameterize
+frequently used sequences of \TeX\ code into \emph{macros\/}; these
+macros can be used over and over again in a variety of ways. Macros
+make writing documents easier. You can write your own, or use someone
+else's---one particular set of macros is referred to as ``Plain \TeX'';
+it provides a more user-friendly way of writing documents, but is
+still rather primitive.
+
+Later, another chap by the name of Leslie Lamport, wrote another macro
+package, even more user-friendly than Knuth's Plain \TeX. He called it
+\LaTeX.  It provides a natural way of writing documents, without the
+need to worry about the detail required when using Plain \TeX. 
+
+Over the
+years many extensions have been developed for \LaTeX.  In 1994 
+\LaTeXe{} was installed at CUED; it brings all such extensions 
+back under a single format and adds many new features.
+
+So, in summary, \TeX\ is an executable program providing primitive
+typesetting commands; these primitive commands may be grouped into
+more powerful macros, which can then be used as commands; Plain \TeX\
+and \LaTeX\ are examples of existing sets of macros. This document
+looks at the more user-friendly of the two, \LaTeX. We won't talk any
+more about Plain \TeX.
+
+The definitive user guide and reference for \LaTeXe\ is the \LB{} (second edition),
+written by Leslie Lamport. In marginal notes where only section
+numbers are mentioned, they refer to this book. Copies of the \LB\ may
+be found in the machine room. The \LC{} by Goossens \emph{et al} is also
+very useful.
+
+\subsubsection{The \emph{Local Guide}}
+Occasionally the \LB\ refers to things that are not part
+of \LaTeX\ but complementary to it. Such things vary from place to
+place and between implementations etc., depending upon things like
+editors, computer hardware, types of laser printers and so on. Because
+of this, Lamport asks you to look for this information in the {\em
+Local Guide}.  The \emph{CUED Local Guide\/} documents details all of
+the things that are specific to the Engineering Department HP Teaching
+System here in Cambridge.  As a casual user, you'll rarely need to
+refer to the \emph{CUED Local Guide}.
+
+\subsubsection{Using \LaTeX}
+\LaTeX\ is takes an input text file and processes it to
+produce a new file that can be sent to a laser printer to create a
+professional-looking document. \LaTeX\ `\emph{source files\/}' as they
+are known, describe your document in every detail to \LaTeX: they
+include normal paragraphs, words and characters, as well as special
+\LaTeX\ \emph{commands}, which let \LaTeX\ know \emph{how\/} the final
+document will appear.
+
+\subsubsection{Conventions}
+Below we present a series of examples of \LaTeX-source, starting with
+simple ideas and developing them quite quickly into all you'll need to
+know to write your own documents.  These examples have have the
+following format:\footnote{If things appear in examples that you don't
+understand, don't worry, they won't be important.}
+
+\begin{example}
+We shall give example uses of \LaTeX\ commands by placing on the
+left-half of the page an example of \LaTeX\ output, while on the
+right-half of the page we give the \LaTeX-source which produced it.
+\end{example}
+We use a ``{\tt typewriter typeface}'' to indicate things that might
+appear in a \LaTeX\ source file, and a ``roman typeface'' to indicate
+\LaTeX\ output (as you might guess, the document you're now reading was
+produced with \LaTeX).
+
+\newpage\subsection{Sentences and paragraphs}
+Just type what you want, for example:
+
+\begin{example}
+The ends of words and sentences are marked by spaces. It doesn't
+matter how many you type; 1 is as good as          10.
+
+
+
+One or more blank lines denote the end of a paragraph.
+\end{example}
+
+\LaTeX\ ignores the format of your input, so you can arrange it how
+you like, paying attention only to the logical structure of words,
+sentences and paragraphs.
+
+If you need to enter comments into your source file that you don't
+want to appear in the document, use the \verb+%+ character; any text
+from a \verb+%+ to the end of that line is ignored by \LaTeX.
+
+\subsection{Quotation marks}
+This example illustrates the various quotation marks and their use:
+
+\begin{example}
+\LaTeX\ distinguishes between four types of quotation marks, unlike
+many other word processing systems. They are like ``this'' and `this'.
+\end{example}
+
+\noindent An apostrophe is simply a single right quotation mark `\verb+'+'.
+
+\subsection{Dashes}
+Another difference between \LaTeX\ and lesser programs is its
+distinction between the various types of dash.  There are three types,
+and you ought to know when to use each:
+
+\begin{example}
+An intra-word dash or hyphen, as in X-ray.
+
+A medium dash for number ranges, like 1--2.
+
+A punctuation dash---like this.
+\end{example}
+
+\subsection{Ties and hyphenation}
+Ordinarily\marginpar{\small Page~18.} \LaTeX\ will split words on a
+line so that the resulting paragraph is correctly formatted. In some
+cases it's inadvisable to do this and you may need to prevent adjacent
+words from being broken across a line. A `tie' is a means of doing
+this---use the `\verb+~+' character (a tilde) to tie things together.
+You'll encounter ties in the examples that follow.
+
+\subsection{Text-generating commands}
+\LaTeX\ 
+allows \marginpar{\small\raggedright Page~16.} you insert text using special
+commands. For example, the \LaTeX\ and
+\BIBTeX\ logos are produced by the commands
+\verb+\LaTeX+ and \verb+\BIBTeX+.  \LaTeX\ may require you to terminate
+a command using `\verb+\+${}_\sqcup$' (where the `${}_\sqcup$'
+character indicates a space) otherwise the spaces after the the
+command will be lost:
+
+\begin{example}
+Document preparation is easy if you use \LaTeX\ and \BIBTeX\ together. 
+\end{example}
+
+\subsection{Special symbols}
+The following symbols have a special meaning to \LaTeX, so in order to
+put them into your document, you need some special commands:
+
+\begin{example}
+The symbols \$, \&, \%, \#, \_, \{ and \} are easily produced.
+\end{example}
+
+\subsection{Changing type style}
+\label{sec:em}
+You may need to add emphasis to certain words; you can do this is by
+using the \verb+\emph+ command. 
+
+\begin{example}
+This is, as \emph{you} can see, \emph{emphasized text}.
+\end{example}
+
+The format is simply \verb+\emph{+ followed by the text you want to
+emphasize, followed by a closing \verb+}+ character. The command
+\verb+\textbf+ selects a bold typeface, \verb+\textsl+ a slanted typeface,
+\verb+\textsf+ a typeface without serifs and \verb+\textsc+ gives small
+capitals.
+
+\begin{example}
+Similar commands can be used to change the type style to \textbf{bold},
+\textsl{slanted}, \textsf{sans serif} and \textsc{Small Caps}.
+\end{example}
+
+\subsection{Scope of declarations}
+The \verb+\emph+ command (see above) is a good example of a \LaTeX\
+command that produces neither text nor space, instead, it affects the
+way other text is typeset.  These commands are called \emph{
+declarations}. Much of the final look of your document is determined
+by the declarations you use---for example, the type style, the margin
+width, headers and footers etc.  The braces\marginpar{\small Page~17.}
+\verb+{+ and \verb+}+ delimit the scope of declarations: when \LaTeX\
+reads the \verb+}+ it reverts to the declaration that was in effect
+\emph{before\/} the matching \verb+{+.
+
+Note that besides delimiting the scope of declarations, braces are
+also used to denote \emph{arguments\/} to commands. The \verb+\LaTeX+
+and \verb+\BIBTeX+ commands described above are examples of commands
+that don't have arguments. Optional arguments are enclosed within
+brackets,
+\verb+[+ and \verb+]+; an optional argument may be omitted if it's not
+needed: typically some \emph{default\/} value for that argument will be
+used if it's omitted. For example, the
+\verb+\framebox+\marginpar{\small\raggedright Page~97.} command can be
+used to draw boxes around pieces of text. \verb+\framebox+ has an
+argument that is the text around which the box is to be drawn;
+optional arguments can be used to specify the size of this box, and
+where within the box the text is placed. The default for these optional
+arguments is a box just the right size for the given text, with the
+text centered within the box. Take a look at an example:
+
+\begin{example}
+The word \framebox[1in][l]{boxed} is in a one-inch box, left
+justified. Here the box is \framebox{just} right.
+\end{example}
+
+\subsection{Footnotes}
+Footnotes make your documents look really fancy; in \LaTeX\ they are
+very easy to use but you have to control your use of them. Too many
+tend to distract the reader and the page can appear cluttered. 
+
+To create a footnote, use the \verb+\footnote+ command:\footnote
+{Footnotes are usually numbered in order of appearance in the
+document.}
+
+\begin{example}
+When using footnotes, put them immediately after the word you want to
+place the footnote against\footnote{Like this.} unless that word is
+followed a punctuation mark.\footnote{Like this.}
+\end{example}
+
+\subsection{Sectioning}
+\label{exlabel}
+One of the compelling reasons for using \LaTeX\ is the support it
+provides for high-level document structures like chapters and
+sections. (This is where \LaTeX\ comes into its own over things like
+Plain \TeX.)  \LaTeX\ understands how to format chapters, sections and
+other \emph{sectional units\/}\marginpar{\small\raggedright Page~23.}
+as they're called. It can number them too.
+
+What you're reading now is a section, section~\ref{exlabel} to be
+precise. There are many commands related to sectional units: their
+argument is the name of the section. They are numbered automatically
+and you can cross-reference this number to use elsewhere (see
+section~\ref{sec:xref}).  The sectioning commands include
+\verb+\chapter+, \verb+\section+,
+\verb+\subsection+, {\tt \verb+\+subsub\-section} and \verb+\paragraph+.
+
+See section~\ref{sec:xref} for a sample use of the \verb+\subsection+
+command. (The sectioning commands are all essentially the same, but
+for the style in which they typeset their argument.
+
+If you prefer not to have the section unit numbered, some of the
+sectioning commands have a `\verb+*+-form' (\emph{e.g.}\
+\verb+section*+), which don't typeset the section number.
+
+\subsection{Environments}
+You've seen environments already in section~\ref{sec:em} where we
+looked at the \verb+{\em+\ldots\verb+}+ construct. An environment {\em
+name\/} has the general form:
+\vskip\abovedisplayskip
+\verb+\begin{+\emph{name}\verb+}+\ldots\verb+\end{+\emph{name}\verb+}+
+\vskip\belowdisplayskip
+As an example, here are some {\em
+list-making\/}\marginpar{\small\raggedright Page~112.} environments:
+
+\begin{exampleb}
+\begin{itemize}
+ \item Each list item is marked with a \emph{label}. The labels in this
+list are called \emph{bullets}.
+ \item You can nest list environments.
+ \begin{enumerate}
+  \item Like this for example.
+  \item The items can be numerals or letters.
+  \item Here the labels are numbers: they are generated
+	automatically (of course), and can be cross-referenced.
+  \end{enumerate}
+  \LaTeX\ can handle at least four levels of nesting of lists; each list
+ought to have two or more items.
+ \item Blank lines before items are ignored.
+\end{itemize}
+\end{exampleb}
+
+\subsection{Mathematics}
+See Tim Love's \htmladdnormallinkfoot{\LaTeX\ Maths and Graphics}
+{http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/latex\_maths+pix/latex\_maths+pix.html}
+ handout.\marginpar{\small\raggedright Page~41.}
+
+\subsection{Tables and Figures}
+\subsubsection*{Tables}
+\LaTeX\ 
+provides\marginpar{\small\raggedright Page~63.} special environments
+for tables and figures. Here's a simple example of a \verb+tabular+
+environment:
+
+\begin{exampleb}
+\begin{tabular}{|l|c|}\hline
+ \emph{Bicycle Colour} & \emph{Number}\\
+              \hline\hline
+ Blue                 & 32          \\
+ Red                  & 35          \\
+ Black                & 76          \\
+               \hline
+\end{tabular}
+\end{exampleb}
+
+The `\verb+|+' characters in the argument indicate that a vertical
+line is to be drawn between columns, and the `\verb+l+' and `\verb+c+'
+mean that things in those columns (\emph{i.e.}\ the first and second)
+must be \emph{left-justified\/} or \emph{centered\/} (`\verb+r+' is,
+wait for it, \emph{right-justified\/}).  There are many other entries
+besides these.  The `\verb+\\+' command denotes the end of a row, and
+\verb+\hline+ means draw a horizontal line.  Two \verb+\hline+'s
+together gives two horizontal lines.  The `\verb+&+' command separates
+entries on the same row (see how `\verb+Blue+' and `\verb+32+' are
+separated).
+
+\subsubsection*{Figures}
+Figures are made with the \verb+figure+ environment. What you put in a
+figure is up to you---\LaTeX\ will treat it as a large box. See the
+ \htmladdnormallinkfoot{\LaTeX\ Maths and Graphics}
+{http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/latex\_maths+pix/latex\_maths+pix.html}
+ handout for details.  It's worth pointing out that the
+\verb+figure+ environment \emph{does not\/} center its contents on the
+page so you may need to use the \verb+center+ environment. The
+figure environment automatically generates its own figure number that
+you can cross-reference with. Examples of the use of the \verb+figure+
+environment will be given in the section on \xfig\ (see
+figure~\ref{fig:sample} on page~\pageref{fig:sample}).
+
+\subsection{Cross-referencing}
+\label{sec:xref}
+One\marginpar{\small\raggedright Page~71.} reason for numbering things
+like figures and equations is to refer the reader to them, as in ``See
+figure~3 for more details''. You don't want the `3' to appear in the
+input file because adding another figure might make this one become
+figure~4. Instead you can assign a \emph{key\/} of your choice to this
+figure and refer to it by that key, letting \LaTeX\ translate the
+reference into the figure number. The key is assigned with the
+\verb+\label+ command, and is referred to using the \verb+\ref+
+command. A \verb+\label+ command appearing in ordinary text is
+assigned the current sectional unit number; inside a numbered
+environment (like \verb+enumerate+) assigns that number to the key.
+For example:
+
+\begin{example}
+Equation~\ref{eq:euler} in section~\ref{sec-results} below is Euler's
+famous result.
+
+\label{sec-results}
+Euler's equation
+\begin{equation}
+e^{i\pi}+1 = 0    \label{eq:euler}
+\end{equation}
+combines the five most important numbers in mathematics in a single
+equation.
+\end{example}
+
+The \verb+\pageref+ command is like the \verb+\ref+ command except it
+produces the page number of the place in the text where the
+corresponding \verb+\label+ command appears.  This makes it easy to say
+things like see ``section~2.3.5 on page~45 for more information''.
+
+\subsection{The document and preamble}
+We're\marginpar{\small\raggedright Page~21.} now ready to take a look
+at producing a whole document. The text of every document starts with
+a \verb+\begin{document}+ command and finishes with an
+\verb+\end{document}+ command (\LaTeX\ will ignore anything coming
+after this command). The part of the document before the
+\verb+\begin{document}+ command is called a \emph{preamble}.
+
+The preamble can only contain declarations, not normal text. The
+preamble starts with a \verb+\documentclass+ command whose argument
+chooses one of the predefined classes.  The file
+`\verb+introduction.tex+' uses the {\tt article} class. (As does this
+document.)  In the {\tt article} class, you can declare things like
+the author(s) names, title and date. Use the \verb+\maketitle+ command
+\emph{after\/} the \verb+\begin{document}+ command to actually make the
+title. Here's an example document:
+\begin{figure}[H]
+\small\centering
+\begin{verbatim}
+               \documentclass[12pt]{article}
+               \usepackage{a4}
+               \title{A sample document}
+               \date{\today}
+               \author{A. N. Other}
+               \begin{document}
+               \maketitle
+               Here is some text.
+                
+               This is another paragraph.
+               \end{document}
+\end{verbatim}
+\caption {A simple example document.}
+\end{figure}
+
+Note that the argument to the \verb+\documentclass+ command is the
+style for the entire document; the optional argument, \verb+[12pt]+
+indicates that a slightly larger, twelve-point typeface is to be used
+instead of the default ten-point.
+Also the article is to be formatted
+for A4 size paper. This is done by using a \emph{package} called 
+\verb+a4+. See the \emph{CUED Local Guide\/} for a list of
+packages and package options.
+
+The \verb+\title+ command defines a title for the article, the date
+and author are defined in a similar way. \emph{Remember\/}: Text
+defined using these \emph{title-making\/} commands appears only when
+you use the \verb+\maketitle+ command.
+
+\section{Incorporating figures from \xfig}
+\typeout{}
+\typeout{Incorporating figures from xfig }
+\label{sec:graphics}
+\LaTeX\ provides a simple environment for creating pictures, called
+(not surprisingly) the {\tt picture} environment.\marginpar{\small
+Page~101.} It provides circles, lines, boxes, text placement and a few
+other things. 
+
+A coordinate system is used to specify where things go, as if you were
+drawing on graph paper. For complex drawings you are often forced into
+using graph paper initially and then converting it (manually) into
+\LaTeX\ source. This is very inconvenient.
+
+A better approach is to use the \xfig\ program to produce drawings in
+an interactive manner, using a mouse and graphic display.  Once the
+drawing is complete it can be converted into an equivalent \LaTeX\
+source file and subsequently included within your document. We do not
+describe here how to use \xfig. Once you have a file {\tt drawing.fig} 
+as output from \xfig, convert
+it into \LaTeX\ using the {\tt export} menu.
+The resulting {\tt drawing.latex} file can be included in your document
+in the following way:
+\begin{figure}[H]\small\centering
+\begin{verbatim}
+               \include{transfig}
+               ...
+               \begin{figure}[htbp]
+                \centering                  % center it
+                \input{drawing.latex}         % input drawing
+                \caption{This is my drawing.}
+                \label{pic:drawing}         % for x-refs
+               \end{figure}
+\end{verbatim}
+\caption{Example use of {\tt figure} environment.}
+\label{fig:sample}
+\end{figure}
+The \verb|[htbp]| options show your preferences regarding whether the
+figure should be placed \emph{h}ere, at the \emph{t}op of the page,
+the \emph{b}ottom, or on the next free \emph{p}page
+Note the use within the {\tt figure} environment of the
+\verb+\caption+ command which places a numbered caption beneath the
+figure; the label {\tt pic:drawing} is assigned this number.
+
+Beware when using \xfig\ that your drawing isn't wider than an A4
+page---you can't enlarge or reduce it.
+
+\LaTeX\ can't reproduce all the features that \xfig\ can. To get
+perfect, easily scaled hardcopy you really need to convert into Postscript 
+using \xfig's {\tt export} menu. See the 
+ \htmladdnormallinkfoot{\LaTeX\ Maths and Graphics}
+{http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/latex\_maths+pix/latex\_maths+pix.html} handout and
+ for details and examples of how to add Postscript to 
+\LaTeX\ documents.
+
+\section{Automated checking}
+\typeout{}
+\typeout{Checking spelling }
+\subsection{Spelling}
+It's nice to use a spell-checker once in a while to make sure that
+your document won't contain lots of mistakes when it's finally
+printed.  Checking by hand is almost impossible, so we've installed a
+clever program to do it for you. 
+
+The program is called `\ispell' and you can use it from within
+the \emacs\ editor by choosing \texttt{spell} from the \texttt{Edit}
+menu or typing
+\vskip\abovedisplayskip
+{\tt M-x ispell-buffer}
+\vskip\belowdisplayskip
+\noindent which you can use while editing (see the \emph{CUED Local
+Guide for more details}). We recommend that you don't do it too often
+as it can be rather slow for large files. \ispell\ is clever because
+it knows that you don't want to check the spelling of \LaTeX\
+commands---instead it skips over them, and indeed, any arguments that
+can safely be ignored. This way you only have to worry about text, not
+commands. (Of course, \ispell\ gets it wrong sometimes\ldots)
+\subsection{Consistency}
+\lacheck{} is  general purpose consistency checker for \LaTeX{} 
+documents. To use it, just replace \texttt{latex} by \texttt{lacheck}
+on the command line.
+
+
+\section{\BIBTeX}
+\typeout{}
+\typeout{BIBTeX }
+\BIBTeX\ is a program used in conjunction with \LaTeX\ to make it easy
+to use \LaTeX's built-in bibliography and citation mechanisms. When
+you cite the work of others, the citation often appears appears like
+this~[2], or this [4, 6, 20].\footnote{There are other ways of citing
+work; see the \emph{CUED Local Guide\/} for alternatives.} To number
+these manually is a big problem, but not as big as the other problem
+of typing in the references at the end of your document.  Typically,
+you will compile a large number of references into a \emph{bibliography
+database}, from which you extract those cited in your document.
+\BIBTeX\ works with \LaTeX\ to \emph{automatically\/} extract those
+references you require, \emph{and\/} puts them into your document,
+correctly numbered, sorted and formatted.  All you have to do is
+identify each reference within the bibliography database with a unique
+(and for your own sake, informative) key.  You can then use the
+\verb+\cite{+\emph{key\/}\verb+}+ command to cite that particular
+reference. When you run \LaTeX\ on your file, it collects all of these
+keys; you then run \BIBTeX\ to scan your bibliography database for
+them. \BIBTeX\ extracts and formats them according to certain styles.
+By running \LaTeX\ a second time the reference list is incorporated
+into your document.
+
+For a thorough description of \BIBTeX\ and how to use it, refer to
+ \htmladdnormallinkfoot{\BIBTeX ing}
+{http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/bibtex.dvi}
+document by Oren Patashnik, which is available in the
+Department.
+
+\subsection{The bibliography database}
+The database contains a description of all the book, papers,
+conference proceedings, theses etc.\ that you've ever read (and
+probably some you haven't!)  Let's take a look at an example database
+(remember that the \BIBTeX\ database is \emph{not\/} a \LaTeX\ source
+file).
+
+\begin{figure}[H]\small\centering
+\begin{verbatim}
+       @book(Aho86,
+              Address = {Reading, Mass., USA},
+               Author = {Aho, A. V. and Sethi, and Ullman, J. D.},
+            Publisher = {Addison-Wesley},
+                Title = {Compilers: Principles, Techniques, and Tools},
+                 Year = {1986})
+       @inproceedings(Giunchiglia89,
+               Author = {Giunchiglia, Fausto and Walsh, Toby},
+            Booktitle = {Proceedings IJCAI-89},
+                Title = {Abstract Theorem Proving},
+                 Year = {1989})
+       @techreport(Wallen86,
+               Author = {Wallen, Lincoln A.},
+          Institution = {University of Edinburgh},
+               Number = {DAI 310},
+                Title = {Using Mathematical Knowledge},
+                 Year = {1986})
+\end{verbatim}
+\caption{Extract from sample bibliography database}
+\label{fig:bib}
+\end{figure}
+
+This database contains references with the keys
+\verb|Aho86|, {\tt Giunchiglia89} and \verb+Wallen86+.
+The keys have been chosen to reflect the authors of the reference, and
+the year it was published.  The `\verb+@+'\marginpar{\small Page~140.}
+character denotes the start of a reference, and is followed by the
+\emph{type\/} of the entry (there are many possible entries).  The {\em
+fields\/} of each entry are things like \verb+Author+ and \verb+Year+;
+different types of entry have different required and allowable fields.
+The \verb+\bibliographystyle+ command indicates the style of the
+formatting of the references. The standard one is {\tt plain}. See the
+\emph{CUED Local Guide\/} for others.
+
+\subsection{Citing references}
+The \verb+\cite+ command is used to cite a reference within a \LaTeX\
+source file. In the \LaTeX\ source file the argument(s) of the
+\verb+\bibliography+ command specify one or more files containing the
+bibliography database. These files are assumed to have the extension
+`\verb+.bib+'. For example, the command
+
+\vskip\abovedisplayskip
+\verb+\bibliography{personal,group}+
+\vskip\abovedisplayskip
+\noindent
+indicates that the references of this document are to be found in
+either of the bibliography databases \verb+personal.bib+ and
+\verb+group.bib+. Let's assume that one of these databases contains
+the above three references. The example below illustrates how the cite
+command is used:
+
+\begin{example}
+See Wallen~\cite{Wallen86}
+for a proof.
+
+
+\bibliographystyle{plain}
+\bibliography{personal,group}
+\end{example}
+
+Note that the \verb+\bibliography+ command incorporates the reference
+list automatically and titles it. Typically the \verb+\bibliography+
+command appears at the end of the \LaTeX\ source file.
+
+\section{Using \LaTeX\ and \BIBTeX\ together}
+\typeout{}
+\typeout{Using LaTeX and BIBTeX together }
+We've\marginpar{\small\raggedright Page~28.} looked at what goes into
+both \LaTeX\ source files (those ending in a `{\tt .tex}' extension),
+and \BIBTeX\ database files (ending in `{\tt .bib}'). Here we take a
+look at running these programs on these files.
+
+\emph{Attention\/}; \LaTeX\ is clever because it allows you to make
+\emph{forward\/} citations and cross-references (as we saw in
+section~\ref{sec:xref}) to arbitrary pieces of information. Thus, in
+order to correctly compile your document \LaTeX\ may need to scan it
+more than once; this is done \emph{explicitly\/} by running \LaTeX\
+\emph{multiple times\/} (\LaTeX\ will inform you if this is necessary
+with an appropriate output message when it runs).  Don't be confused
+when we indicate that \LaTeX\ ought to be run again---it's not a
+mistake!
+
+We assume the following files exist in the current directory, and that
+things are set up so you can execute \LaTeX\ and \BIBTeX.
+Table~\ref{tab:files} describes some of the files that will appear in your
+directory when you use \LaTeX\ and \BIBTeX. (You may like to follow
+this process diagrammatically; see figure~\ref{fig:dpc} on
+page~\pageref{fig:dpc}.)
+
+\vskip\abovedisplayskip
+\begin{table}[H]\centering
+\begin{tabular}{p{3in}|l}
+\emph{File description} & \emph{Filename} \\ \hline
+\LaTeX\ source file & {\tt mysource.tex}\\
+\BIBTeX\ database   & {\tt mydb.bib} \\
+\raggedright\LaTeX\ log file: reports status of \LaTeX\ execution & {\tt mysource.log}\\
+\raggedright\BIBTeX\ log file: reports status of \BIBTeX\ execution & {\tt
+mysource.blg} \\
+\LaTeX\ output & {\tt mysource.dvi}\\
+\LaTeX\ auxiliary file & {\tt mysource.aux}\\
+\BIBTeX\ output & {\tt mysource.bbl}
+\end{tabular}
+\caption {Files generated when \LaTeX\ runs.}
+\label{tab:files}
+\end{table}
+
+The following describes how to arrive at the file {\tt mysource.dvi}
+which can be then sent off for laser printing. (See the \emph{CUED
+Local Guide\/} for more details.)
+
+\begin{enumerate}
+\item Execute \LaTeX\ on your source file:
+You can do this using \texttt{xlatex} or by typing
+
+\hspace*{\oldpi}{\tt latex mysource}
+
+\noindent
+producing some new files ({\tt aux}, {\tt .dvi} and {\tt .log}). The
+{\tt .log} file is simply a transcript of the \LaTeX\ run, an
+abbreviated version of which will be shown on your terminal. The {\tt
+mysource.aux} file includes information about cross-referencing labels
+and citation keys.  If you have used the
+\verb+\bibliography+ command in {\tt mysource.tex} you must use
+\BIBTeX\ to extract the relevant references from {\tt mydb.bib}. (If
+you haven't, simply go to step~3.)
+
+\item (Omit this step if you haven't used a \verb+\bibliography+
+command.) Execute \BIBTeX:
+\vskip\abovedisplayskip
+\hspace*{\oldpi}{\tt bibtex mysource}
+\vskip\belowdisplayskip
+\noindent
+causing \BIBTeX\ to read {\tt mysource.aux} in order to find which
+references from {\tt mydb.bib} you have cited. It compiles these into
+a bibliography file, {\tt mysource.bbl}.  Run \LaTeX\
+again, as in step~1 to include this \verb+.bbl+ file in your document.
+
+\item
+If the terminal output of \LaTeX\ (from either step~1 or step~2)
+indicates you must run \LaTeX\ a second time, do so. (\LaTeX\ will
+output something like:
+\vskip\abovedisplayskip
+\hspace*{\oldpi}{\tt LaTeX Warning: ... Rerun to get cross-references right.}
+\vskip\belowdisplayskip
+to indicate you must do this.) If you're not sure, just run it again
+anyway, it does no harm.
+
+You now have a file {\tt mysource.dvi} which describes your document
+completely. You can't directly read this file, but you can \emph{
+preview} it to see how your document will look when printed, or you
+can simply print it.  We STRONGLY suggest that you DO preview before
+printing to ensure that you don't waste paper and other resources by
+printing out a document containing many errors.
+\end{enumerate}
+
+\begin{figure}[H]\small\centering
+\input{pic2.tex}
+\caption{Diagram illustrating document preparation cycle.}
+\label{fig:dpc}
+\end{figure}
+
+
+\newpage
+\section{Appendix: A \emph{Local Guide}}
+\typeout{}
+\typeout{and finally... The Local Guide }
+\input{local.tex}
+\end{document}
+
+@EOF
+
+chmod 644 local_LaTeX.tex
+
+rm -f /tmp/unpack$$
+exit 0
