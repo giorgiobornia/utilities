@@ -4,15 +4,20 @@
  
  
    void fixed_point(FILE * outfile, 
-                   const int counter_max, 
-                   const double eps, 
-                   const double x_in,
-                   double  (* myf_ptr)( double )
-                  ) {
+                    const int counter_max, 
+                    const double eps, 
+                    const double x_in,
+                    double  (* myf_ptr)(const double ),
+                    double * x_n,
+                    unsigned int * counter_end
+                   ) {
       
-      double x_old = x_in;
+       fprintf(outfile, "***** Fixed point method *****\n");
+
+       
+       double x_old = x_in;
       
-      double x_new;
+      double x_new = x_old;
        
        
       double  err = eps + 10.;
@@ -20,6 +25,8 @@
       
        int  counter = 0;
 
+      x_n[counter] = x_new;
+      fprintf(outfile, "Iteration %d, x = %16.10e\n", counter, x_new);
       
       
           while ( err > eps && counter < counter_max ) {
@@ -35,16 +42,18 @@
         
         
         counter++;
+        
+        x_n[counter] = x_new;
 
-        //         printf("Iteration %d, x_new %16.10e\n", counter, x_new);
+
         fprintf(outfile, "Iteration %d, x = %16.10e\n", counter, x_new);
         
         
     }
  
-       x_new = x_old;
         fprintf(outfile, "Conclusion: Iteration %d, x = %16.10e\n", counter, x_new);
    
+      * counter_end = counter;
       
       
   }
@@ -56,11 +65,14 @@
                    const double eps, 
                    const double a0,
                    const double b0,
-                   double  (* fun)( double )
+                   double  (* fun)(const double ),
+                   double * x_n,
+                   unsigned int * counter_end
                   ) {
 
-      
-	int n;
+       fprintf(outfile, "***** Bisection method *****\n");
+     
+	int counter;
     double a, b, c, err;
     
     a = a0;
@@ -72,11 +84,17 @@
 	}
 	
 	err = eps + 10.; 
-	n = 0;
     
-	while(err > eps && n < counter_max) {
+	counter = 0;
+    
+    c = a;
+
+    x_n[counter] = c;
+      fprintf(outfile, "Iteration %d, x = %16.10e\n", counter, c);
+
+    
+	while(err > eps && counter < counter_max) {
         
-		n++;
         
 		c = .5 * (a + b);
         
@@ -91,12 +109,17 @@
 //         err = fabs(b - a);
         err = fabs(fun(c));  /*measure error based on ordinate*/
 
+		counter++;
+        x_n[counter] = c;
 
-        fprintf(outfile, "Iteration %d, x = %16.10e\n", n, c);
+        fprintf(outfile, "Iteration %d, x = %16.10e\n", counter, c);
                 
 	}
 	
-	printf("The zero is %f (err = %f, iteration %d)\n", c, err, n);    
+        fprintf(outfile, "Conclusion: Iteration %d, x = %16.10e\n", counter, c);
+        
+      * counter_end = counter;
+      
    }
    
  
@@ -105,17 +128,25 @@
                    const int counter_max, 
                    const double eps, 
                    const double x_in,
-                   double  (* myf_ptr)( double ),
-                   double  (* myf_ptr_der)( double )
+                   double  (* myf_ptr)(const double ),
+                   double  (* myf_ptr_der)(const double ),
+                    double * x_n,
+                    unsigned int * counter_end
                   ) {
       
+      fprintf(outfile, "***** Newton's method *****\n");
+   
+        
+        
       double x_old = x_in;
       
-      double x_new;
+      double x_new = x_old;
        
       double  err = eps + 10.;
       
        int  counter = 0;
+        x_n[counter] = x_new;
+      fprintf(outfile, "Iteration %d, x = %16.10e\n", counter, x_new);
       
           while ( err > eps && counter < counter_max ) {
         
@@ -128,16 +159,121 @@
         
         
         counter++;
+        x_n[counter] = x_new;
 
         fprintf(outfile, "Iteration %d, x = %16.10e\n", counter, x_new);
         
         
     }
  
-       x_new = x_old;
         fprintf(outfile, "Conclusion: Iteration %d, x = %16.10e\n", counter, x_new);
    
+      
+      * counter_end = counter;
+      
+  }
+  
+  
+  
+  
+    void secant(FILE * outfile, 
+                   const int counter_max, 
+                   const double eps, 
+                   const double x_old_in,
+                   const double x_oldold_in,
+                   double  (* myf_ptr)(const double ),
+                    double * x_n,
+                    unsigned int * counter_end
+                  ) {
+      
+      fprintf(outfile, "***** Secant method *****\n");
+      
+      double x_old = x_old_in;
+      double x_oldold = x_oldold_in;
+      
+      double x_new = x_old;
+       
+      double  err = eps + 10.;
+      
+       int  counter = 0;
+        x_n[counter] = x_new;
+      fprintf(outfile, "Iteration %d, x = %16.10e\n", counter, x_new);
+      
+          while ( err > eps && counter < counter_max ) {
+        
+        x_new = x_old - myf_ptr(x_old) * (x_old - x_oldold) / ( myf_ptr(x_old) - myf_ptr(x_oldold) ) ;
+        
+        /* error update */
+        err = fabs( x_new - x_old );
+        
+      x_oldold =  x_old;
+      x_old = x_new;
+
+        
+        counter++;
+        x_n[counter] = x_new;
+
+        fprintf(outfile, "Iteration %d, x = %16.10e\n", counter, x_new);
+        
+        
+    }
+ 
+        fprintf(outfile, "Conclusion: Iteration %d, x = %16.10e\n", counter, x_new);
+   
+      * counter_end = counter;
       
       
   }
   
+
+  
+  
+      void chord(FILE * outfile, 
+                   const int counter_max, 
+                   const double eps, 
+                   const double x_old_in,
+                   const double a0,
+                   const double b0,
+                   double  (* myf_ptr)(const double ),
+                    double * x_n,
+                    unsigned int * counter_end
+                  ) {
+      
+      fprintf(outfile, "***** Chord method *****\n");
+      
+      double x_old = x_old_in;
+      
+      double x_new = x_old;
+       
+      double  err = eps + 10.;
+      
+       int  counter = 0;
+        x_n[counter] = x_new;
+      fprintf(outfile, "Iteration %d, x = %16.10e\n", counter, x_new);
+      
+      const double q = (b0 - a0) / ( myf_ptr(b0) - myf_ptr(a0) );
+      
+          while ( err > eps && counter < counter_max ) {
+        
+        x_new = x_old - myf_ptr(x_old) * q;
+        
+        /* error update */
+        err = fabs( x_new - x_old );
+        
+      x_old = x_new;
+
+        
+        counter++;
+        x_n[counter] = x_new;
+
+        fprintf(outfile, "Iteration %d, x = %16.10e\n", counter, x_new);
+        
+        
+    }
+ 
+        fprintf(outfile, "Conclusion: Iteration %d, x = %16.10e\n", counter, x_new);
+   
+      * counter_end = counter;
+      
+      
+  }

@@ -11,7 +11,7 @@
   
 #uncomment one of these, depending on your package management system
 INSTALL_COMMAND="zypper --non-interactive install"  #for opensuse
-# INSTALL_COMMAND="apt-get --yes install"           #for ubuntu
+# INSTALL_COMMAND="apt-get --yes install"           #for ubuntu/kubuntu
 
 
 # Development packages (compilers, libraries, etc) ==================
@@ -101,8 +101,10 @@ $INSTALL_COMMAND openmpi
 $INSTALL_COMMAND openmpi-devel
 $INSTALL_COMMAND libpsm_infinipath1
 
+$INSTALL_COMMAND bc  #basic calculator
 
-# Office packages (latex, libreoffice, etc) ==================================
+
+# Office ==================================
 $INSTALL_COMMAND pdftk
 $INSTALL_COMMAND pdfmod
 $INSTALL_COMMAND gnuplot
@@ -112,6 +114,7 @@ $INSTALL_COMMAND acroread
 $INSTALL_COMMAND doxygen
 $INSTALL_COMMAND graphviz
 $INSTALL_COMMAND inkscape
+# Office - LaTeX ==================================
 # $INSTALL_COMMAND kile   #with Qt4
 $INSTALL_COMMAND kile5    #with Qt5
 $INSTALL_COMMAND kbibtex
@@ -167,10 +170,6 @@ $INSTALL_COMMAND texlive-musixtex
 $INSTALL_COMMAND texlive-musixtex-fonts
 $INSTALL_COMMAND texlive-doublestroke
 $INSTALL_COMMAND texlive-draftwatermark
-$INSTALL_COMMAND eog  #lightweight slideshow
-$INSTALL_COMMAND bc  #basic calculator
-
-
 
 
 
@@ -181,7 +180,8 @@ $INSTALL_COMMAND sqlitebrowser
 $INSTALL_COMMAND postgresql10-devel  #ecpg
 
 
-# Multimedia packages ====================================================
+# Multimedia ====================================================
+$INSTALL_COMMAND eog  #lightweight slideshow
 $INSTALL_COMMAND aegisub
 $INSTALL_COMMAND python3-SpeechRecognition
 $INSTALL_COMMAND wxcam                 #some problem launching it
