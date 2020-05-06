@@ -8,7 +8,7 @@
 
 int main() { 
 
-double a = 5;
+double a = 5.;
 
 return 0;
 

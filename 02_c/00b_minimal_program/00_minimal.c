@@ -2,6 +2,7 @@
 int main() {
  
  /*  return 0;  */
+ /*  return(0);  */ /* What is the difference with the previous? */
   
 }
 

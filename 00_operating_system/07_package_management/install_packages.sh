@@ -105,8 +105,9 @@ $INSTALL_COMMAND bc  #basic calculator
 
 
 # Office ==================================
-$INSTALL_COMMAND pdftk
+$INSTALL_COMMAND pdfshuffler
 $INSTALL_COMMAND pdfmod
+$INSTALL_COMMAND pdftk
 $INSTALL_COMMAND gnuplot
 $INSTALL_COMMAND libreoffice
 $INSTALL_COMMAND gimp
