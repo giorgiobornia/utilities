@@ -4,7 +4,7 @@
 #include "21_integration_methods.h"
 
 
-#define NREF  1
+#define NREF  7
 
    int main() {
        
@@ -19,8 +19,8 @@
        
        for (unsigned j = 0; j < NREF; j++) {
            
-       const int n = 1;
-//        const int n = 10 * exponent;
+//        const int n = 1;
+       const int n = 10 * exponent;
 //        const int n = 10 * pow(2,j);
        
        const double h = (b - a)/n;
@@ -44,13 +44,13 @@
        }
        
        
-//        for (unsigned j = 0; j < NREF - 2; j++) {
-//        
-//         double conv_order =  log( fabs( ( integrals[j] - integrals[j+1] ) / (integrals[j+1] - integrals[j+2]) ) ) /log(2.);   
-//            
-//        fprintf(outfile, "The convergence order starting at refinement level %d is %25.17e\n", j, conv_order);
-//        
-//        }
+       for (unsigned j = 0; j < NREF - 2; j++) {
+       
+        double conv_order =  log( fabs( ( integrals[j] - integrals[j+1] ) / (integrals[j+1] - integrals[j+2]) ) ) /log(2.);   
+           
+       fprintf(outfile, "The convergence order starting at refinement level %d is %25.17e\n", j, conv_order);
+       
+       }
        
        
        
