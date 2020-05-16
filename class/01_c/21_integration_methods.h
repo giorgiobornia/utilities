@@ -1,5 +1,27 @@
 
-double rectangle(const double a, const double b, double  (* f)(const  double )) {
+double rectangle_lower(const double a, const double b, double  (* f)(const  double )) {
+    
+   double integral = 0.;
+   
+   integral = (b - a) * f(a);
+   
+ 
+  return integral;    
+    
+}
+
+double rectangle_upper(const double a, const double b, double  (* f)(const  double )) {
+    
+   double integral = 0.;
+   
+   integral = (b - a) * f(b);
+   
+ 
+  return integral;    
+    
+}
+
+double rectangle_midpoint(const double a, const double b, double  (* f)(const  double )) {
     
    double integral = 0.;
    
@@ -38,7 +60,7 @@ double simpson(const double a, const double b, double  (* f)(const  double )) {
 double gauss_1n(const double a, const double b, double  (* f)(const  double )) {
     
  
-    return rectangle(a, b, f);
+    return rectangle_midpoint(a, b, f);
     
 }
 

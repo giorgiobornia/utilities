@@ -79,6 +79,7 @@ $INSTALL_COMMAND unzip
 $INSTALL_COMMAND unrar 
 $INSTALL_COMMAND exfat-utils
 $INSTALL_COMMAND fuse-exfat 
+$INSTALL_COMMAND kernel-devel 
 
 $INSTALL_COMMAND fparser-devel
 $INSTALL_COMMAND flex
@@ -105,6 +106,7 @@ $INSTALL_COMMAND bc  #basic calculator
 
 
 # Office ==================================
+$INSTALL_COMMAND xournalpp
 $INSTALL_COMMAND pdfshuffler
 $INSTALL_COMMAND pdfmod
 $INSTALL_COMMAND pdftk
