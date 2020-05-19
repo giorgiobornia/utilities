@@ -1,6 +1,3 @@
-/* Visualizza un rettangolo di cornice *
-   e parte interna Q; le dimensioni del rettangolo
-   sono decise dall'utente                        */
 
 #include <stdio.h>
 main()

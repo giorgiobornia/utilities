@@ -1,5 +1,4 @@
-/* Visualizza tanti rettangoli quanti ne desidera l'utente
-   con caratteri e dimensioni scelti a tempo di esecuzione */
+
 
 #include <stdio.h>
 main()

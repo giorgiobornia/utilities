@@ -1,7 +1,7 @@
-/* Determina il maggiore, il minore e la media dei valori immessi */
 
 #include <stdio.h>
 #include <limits.h>
+
 main()
 {
 int i, n, numero, max, min, media;

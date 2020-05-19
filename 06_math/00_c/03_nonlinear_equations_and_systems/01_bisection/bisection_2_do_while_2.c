@@ -1,4 +1,4 @@
-/* Determina lo zero della funzione f(x) = 2x3-4x+1 */
+/* Determina lo zero della funzione f(x) = 2x^3-4x+1 */
 
 #include <stdio.h>
 #include <math.h>
