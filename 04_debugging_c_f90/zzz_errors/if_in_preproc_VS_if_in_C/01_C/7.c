@@ -11,7 +11,7 @@ int main()
         printf("The currency is Dollar\n");
     else if (AREA == EU)
         printf("The currency is Euro\n");
-    else if
+    else
         printf("The currency is Pound\n");
     return 0;
 }

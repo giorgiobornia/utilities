@@ -1,9 +1,0 @@
-Variables in the preprocessor are not even typed (int, double, etc)... they are more MACROS 
-
-does it make any difference to do
-
-#define MYVAR   7.
-
-#define MYVAR()  7.
-
-?

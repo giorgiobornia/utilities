@@ -5,8 +5,8 @@
 
 void alloca_double(double* *ppvet, unsigned int n)
 {
-*ppvet = (double*) calloc(n,sizeof(double));
-if( !(*ppvet) )
+  *ppvet = (double*) calloc(n,sizeof(double));
+  if( !(*ppvet) )
    { fprintf(stderr,"calloc error\n"); exit(0); }
 }
 
@@ -50,31 +50,28 @@ int main() {
 unsigned int n;
 double *v1, *v2, *v3,  seme, f;
 
-unsigned char op1=128, op2=240, op3;
-op3 = op1 >> 1;
-printf("%d\n", (int)op3);
-return;
+ printf("dimensione vettori ? ");
+ scanf("%d",&n);
 
-while(1){
-    
-	printf("%lf\n", f = frand(10000.0) );
-	if(f < 0.) exit(1);
-	if(f > 10000.) exit(1);
-	}
+ alloca_double(&v1,n);
+ alloca_double(&v2,n);
+ alloca_double(&v3,n);
 
-printf("dimensione vettori ? ");
-scanf("%d",&n);
-alloca_double(&v1,n);
-alloca_double(&v2,n);
-alloca_double(&v3,n);
-seme=1.0;
-srand(seme);
-init_vect_random(v1,n);
-stampa_vet(n,v1);
-init_vect_random(v2,n);
-stampa_vet(n,v2);
-somma_vet(n,v1,v2,v3);
-stampa_vet(n,v3);
+ seme = 1.0;
+ 
+ srand(seme);
+ 
+ init_vect_random(v1,n);
+ 
+  stampa_vet(n,v1);
+  
+  init_vect_random(v2,n);
+  
+  stampa_vet(n,v2);
+  
+  somma_vet(n,v1,v2,v3);
+  
+  stampa_vet(n,v3);
 
   return 0;
 }

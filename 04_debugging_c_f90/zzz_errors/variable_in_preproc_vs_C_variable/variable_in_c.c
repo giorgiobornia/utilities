@@ -3,7 +3,8 @@
  /* Thanks to having declared h and w as double, this program is correct */
  
  int main(){
-    double h = 6;
+     
+    double h = 7;
     double w = 23;
     double area;
     
@@ -12,6 +13,6 @@
     
     area = (w * h) / 2;
     
-    printf("The area of the triangle is: %lf", area);
+    printf("The area of the triangle is: %lf\n", area);
     return 0;
 }

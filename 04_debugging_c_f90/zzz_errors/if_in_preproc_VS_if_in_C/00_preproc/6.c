@@ -11,6 +11,7 @@ int main()
         printf("The currency is Dollar\n");
     #elif (AREA == EU)
         printf("The currency is Euro\n");
+        efgergerg
     #elif (AREA == UK)
         printf("The currency is Pound\n");
     #endif
