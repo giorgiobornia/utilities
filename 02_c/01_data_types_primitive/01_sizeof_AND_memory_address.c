@@ -63,10 +63,6 @@ address of f: -1073745092
 
  
 Note:
-- The keyword sizeof(...) returns the number of bytes of the argument
-- It works both with types and with variables
-- variables (nomi simbolici): a-z, A-Z, 0-9 (ma non come primo carattere)
-- data types: int, float, double, char
 - &: address operator
 - &a: memory address of a
 */
