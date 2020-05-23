@@ -5,7 +5,7 @@
 //  same as wc -c file
 
  
-main()
+int main()
 {
 long nc;
 nc = 0;
