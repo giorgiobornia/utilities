@@ -2,30 +2,31 @@
 #include <stdio.h>
 
 double absolute_value(double);
-double square (double);
+double square(double);
 double cube(double); 
+
+typedef double (* my_func_pointer_type)(double );  /* can be placed outside or inside the main, as long as it is before its use */
 
 
 int main ()
 {
    
   double val1, val_input;
+  
+  
+  my_func_pointer_type   my_func_pointer;   /* declaration of a function pointer */
+
+  /* assignment of a function pointer: both ways work */
+  my_func_pointer = & absolute_value;
+  /*   my_func_pointer = absolute_value;  */
 
   printf("Write the number: ");
   scanf ("%lf", & val_input);
 
   val1 = val_input;
-  val1 = absolute_value(val1);
-  printf("Absolute value: %lf\n", val1);
+  val1 = my_func_pointer(val1);   /* call with function pointer */
+  printf("Value: %lf\n", val1);
 
-  val1 = val_input;
-  val1 = square(val1);
-  printf("Square: %lf\n", val1);
-
-  val1 = val_input;
-  val1 = cube(val1);
-  printf("Cube: %lf\n", val1);
-  
   return 0;
     
 }

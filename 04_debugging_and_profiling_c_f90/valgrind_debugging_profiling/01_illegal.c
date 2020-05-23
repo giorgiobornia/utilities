@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
+
 #define DIM 1039596
+
 /** 
    Show a SIGSEGV due to an oob 
    printf() version
@@ -28,6 +30,7 @@ int main(int argc, char *argv[])
   printf("%s", errmsg);
 
   j = mydim;
+  
   for(i=0; i<mydim; i++)
     {
       a[i] = i;

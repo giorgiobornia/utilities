@@ -21,16 +21,24 @@ double cclock_()
     return sec;
 }
 
-int main (int argc, char *argv[]){
+int main (int argc, char *argv[]) {
+    
 double start, finish;
+
 float A[5000][600];
+
 int i,j;
+
 printf("\t\n");
+
 printf("\tUtilizzo di gettimeofday\n");
 
 start = cclock_();
+
 printf("\tSTART = %lf\n",start);
+
 A[0][0]=1.0;
+
 for (i=1;i<600;i++){
 	for(j=1;j<5000;j++)
 		A[j][i]=(float)(i+j)+A[i-1][j-1];
@@ -40,5 +48,7 @@ finish = cclock_();
 printf("\tEND = %lf\n",finish);
 printf("\tTOT = %lf\n",finish-start);
 printf("\t\n");
+
 return 0;
+
 }

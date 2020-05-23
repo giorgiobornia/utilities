@@ -10,18 +10,18 @@ valgrind -v --show-reachable=yes --leak-check=yes --leak-resolution=high --log-f
 #include <stdlib.h>
 #include <stdio.h>
   
-  int main()
-{
+  int main() {
+      
    int i;
    float x,y; 
    FILE *fd;
-   y=10.0;
-   y=x;
-   printf ("x = %f\n",x);
-   fprintf (stderr,"i = %d\n",i);
+   y = 10.0;
+   y = x;
+   printf("x = %f\n", x);
+   fprintf(stderr,"i = %d\n", i);
    fflush(stderr);
    
-   fd= fopen("file.dat", "w");
+   fd = fopen("file.dat", "w");
 //    x=0;
    fwrite(&x, sizeof(float), 1, fd);
    
@@ -29,4 +29,6 @@ valgrind -v --show-reachable=yes --leak-check=yes --leak-resolution=high --log-f
    
    
  return 0;  
+ 
 }
+
