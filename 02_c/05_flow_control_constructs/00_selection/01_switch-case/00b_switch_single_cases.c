@@ -1,4 +1,4 @@
-/* Enter a digit with scanf and print to terminal the string if it is in the range 0-5, otherwise print "Not included". Use swutch-case */
+/* Enter a digit with scanf and print to terminal the string if it is in the range 0-5, otherwise print "Not included". Use switch-case */
 #include <stdio.h>
 
 int main() {

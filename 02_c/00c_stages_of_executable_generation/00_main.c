@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 /*   Assembly code is still human-readable, but much worse...  */
 
 int main() {
@@ -14,6 +16,8 @@ int main() {
   printf("summands, a:%2d, b:%5d;",a,b);
   printf(" their sum:%2d \n",c);
 
+  return 0;
+  
 }
 
 

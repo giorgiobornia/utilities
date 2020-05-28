@@ -104,6 +104,7 @@ $INSTALL_COMMAND libpsm_infinipath1
 
 $INSTALL_COMMAND bc  #basic calculator
 
+$INSTALL_COMMAND vncmanager
 
 # Office ==================================
 $INSTALL_COMMAND xournalpp

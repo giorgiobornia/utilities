@@ -4,9 +4,11 @@
 char c;
 unsigned long int n=0;
 
-void main(){
-	printf("Vuoi che scriva qualcosa o no?  (s=si n=no) ");
-	c=getchar();
+int main() {
+
+    printf("Vuoi che scriva qualcosa o no?  (s=si n=no) ");
+    
+	c = getchar();
         switch (c) {
 	case 's':
 	case 'S':	
@@ -18,4 +20,7 @@ void main(){
 	default:
 		printf("\n come non detto!");
 	}
+	
+	return 0;
+    
 }

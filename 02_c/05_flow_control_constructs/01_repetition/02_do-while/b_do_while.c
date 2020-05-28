@@ -1,8 +1,7 @@
-/* ------------------------------------ *
- * Scrittura e compilazione di c5.c:    *
- * ciclo con il do                      *
- * ------------------------------------ */
-main ()
+
+  /* Do-while is performed at least once */
+
+int main ()
 {
   int in,digit,tmp;
   int out = 0;

@@ -11,6 +11,7 @@
 #include <stdio.h>
 
 int main() {
+    
 int i;
 
 printf("Dammi un intero: ");

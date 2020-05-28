@@ -36,4 +36,7 @@ int main() {
       printf("operatore sconosciuto\n");
       break;
     }
+
+  return 0;  
+    
 }
