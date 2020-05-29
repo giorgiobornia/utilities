@@ -2,17 +2,18 @@
 
 /* First arguments to the right are evaluated, then to the left */
 
-/* le espressioni passate come
-argomenti alle funzioni sono prima valutate, ed il risultato della
-valutazione viene scritto sullo stack per essere disponibile al codice che
-implementa la funzione stessa.
-Sorgono due problemi:
-- in che ordine vengono valutate le espressioni ?
-- in che ordine vengono scritti sullo stack i risultati delle valutazioni ?
-La risposta alle due domande è la stessa:
-vengono prima valutate (e il risultato scritto sullo stack) le
-espressioni passate come ultimo argomento della funzione (le più a
-destra), e poi via via quelle più a sinistra.
+/* Expressions that are passed as function arguments are first evaluated,
+ * and the result of the evaluation is written to the stack so that is it available to the function.
+ * 
+ Two questions arise:
+- in what order are the expressions evaluated?
+- in what order are the results written in the stack?
+
+ The answer for both is:
+  expressions to the RIGHT (last function argument) are first evaluated, and their result written to the stack,
+  then the ones going left.
+  
+  Why was it chosen like this? Because of the default arguments that go to the end?
 */
 
 

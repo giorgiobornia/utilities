@@ -19,6 +19,6 @@ int main() {
   printf("%s\n", array_of_char);
     
     
-    return 0.;
+    return 0;
     
 }
