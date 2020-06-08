@@ -107,6 +107,7 @@ $INSTALL_COMMAND bc  #basic calculator
 $INSTALL_COMMAND vncmanager
 
 # Office ==================================
+$INSTALL_COMMAND kchmviewer # view Microsoft Compressed HTML files
 $INSTALL_COMMAND xournalpp
 $INSTALL_COMMAND pdfshuffler
 $INSTALL_COMMAND pdfmod
