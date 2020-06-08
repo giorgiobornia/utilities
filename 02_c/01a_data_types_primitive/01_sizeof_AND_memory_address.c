@@ -19,7 +19,6 @@ int main()  {
   b = 1.321;
   c = 44.332211;
   d = 's';
-  f = b;
 
   /* see their dimension */
   printf("bytes per int          : %d \n", sizeof(int));
@@ -40,6 +39,7 @@ int main()  {
   printf("bytes per long int: %d \n",    sizeof(long int));
   printf("bytes per long double: %d \n", sizeof(long double));
 
+  printf("bytes per void: %d \n",    sizeof(void));
 
   /* see their address */
   printf("address of a: %d \n", &a);
@@ -47,8 +47,8 @@ int main()  {
   printf("address of b: %d \n", (long int) &b);
   printf("address of c: %d \n", (long int) &c);
   printf("address of d: %d \n", (long int) &d);
-  printf("address of f: %d \n", (long int) &f);
-
+  
+  return 0;
   
 }
 
