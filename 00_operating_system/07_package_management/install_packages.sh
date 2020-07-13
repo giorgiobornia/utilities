@@ -81,6 +81,7 @@ $INSTALL_COMMAND exfat-utils
 $INSTALL_COMMAND fuse-exfat 
 $INSTALL_COMMAND kernel-devel 
 
+$INSTALL_COMMAND bzr
 $INSTALL_COMMAND fparser-devel
 $INSTALL_COMMAND flex
 $INSTALL_COMMAND libtool
@@ -112,6 +113,8 @@ $INSTALL_COMMAND xournalpp
 $INSTALL_COMMAND pdfshuffler
 $INSTALL_COMMAND pdfmod
 $INSTALL_COMMAND pdftk
+$INSTALL_COMMAND okular
+$INSTALL_COMMAND evince
 $INSTALL_COMMAND gnuplot
 $INSTALL_COMMAND libreoffice
 $INSTALL_COMMAND gimp
@@ -175,7 +178,7 @@ $INSTALL_COMMAND texlive-musixtex
 $INSTALL_COMMAND texlive-musixtex-fonts
 $INSTALL_COMMAND texlive-doublestroke
 $INSTALL_COMMAND texlive-draftwatermark
-
+$INSTALL_COMMAND texlive-alegreya
 
 
 # Web ====================================================
