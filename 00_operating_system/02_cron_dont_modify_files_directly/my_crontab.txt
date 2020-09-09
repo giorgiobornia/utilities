@@ -1,4 +1,19 @@
-MAILTO=""
-* * * * *   /home/gbornia/popup_cron.sh
-# If you want to do something at reboot, put @reboot instead of the 5 asterisks
-# @reboot /usr/bin/touch pippo.txt
+# * * * * *   /home/***/popup_cron.sh
+# Format:
+# MIN HOUR DOM MON DOW CMD
+# 
+# Field    Description    Allowed Value
+# MIN      Minute field    0 to 59
+# HOUR     Hour field      0 to 23
+# DOM      Day of Month    1-31
+# MON      Month field     1-12
+# DOW      Day Of Week     0-6 (0 is Sunday, 1 is Monday, etc.)
+# CMD      Command         Any command to be executed.
+# 
+# Cron special keywords and its meaning
+# Keyword    Equivalent
+# @yearly    0 0 1 1 *
+# @daily     0 0 * * *
+# @hourly    0 * * * *
+# @reboot    Run at startup.
+00 16 * * 5  /home/***/***
