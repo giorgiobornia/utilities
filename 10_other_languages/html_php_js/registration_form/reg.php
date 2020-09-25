@@ -60,8 +60,8 @@
 <body style="text-align: center; color: #000000;">
 
 <div>
-  <h1 class="auto-style2">Event Title</h1>
-  <h2><span class="auto-style2">Event Date</span> <span class="auto-style2"><br /></span></h2>
+  <h1 class="auto-style2"> Event Title </h1>
+  <h2><span class="auto-style2"> Event Date </span> <span class="auto-style2"><br /></span></h2>
 </div>
 
 <p>
@@ -69,16 +69,16 @@
  <span class="auto-style1"> Online Registration Form </span>
 </p>
 
-<form action="./send_email_and_collect_info_to_file.php" method="post" name="RR2018 Registration">
+<form action="./send_email_and_collect_info_to_file.php" method="post" name="Event Registration">
 
-<input class="auto-style1" type="hidden" value="RR2018" name="Form" />
+<input class="auto-style1" type="hidden" value="Event" name="Form" />
 
 <table style="width: 650;">
 
 <tbody>
 <tr>
 <td>
-<h4 class="auto-style2">Please provide the following contact information:</h4>
+<h4 class="auto-style2"> Please provide the following contact information: </h4>
 
 
 <table style="width: 600;">

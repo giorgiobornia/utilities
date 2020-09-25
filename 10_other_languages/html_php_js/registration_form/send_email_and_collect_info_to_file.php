@@ -7,6 +7,8 @@
 
 <body>
 
+
+
 <?php
 
 ////////////// SQL ////////////
@@ -71,6 +73,8 @@
 echo "<p> Return to <a href=\"$referringURL\"> $referringpage </a>";
 
 ?>
+
+
 
 </body>
 
