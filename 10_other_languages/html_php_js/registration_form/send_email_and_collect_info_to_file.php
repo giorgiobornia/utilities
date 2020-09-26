@@ -18,7 +18,7 @@
 //////////////////////////
 
 // Configurable parameters:
- $file_to_store_regs="./registration.log"; //this doesn't seem to be working, maybe they don't allow to write files
+ $file_to_store_regs = "./registration.log";   //this doesn't seem to be working: I think the user should have write permission to append this file
 
 	$toaddress  = "nome.cognome@site";
 	$mailsubject = "Registration";
@@ -52,7 +52,7 @@
 
 //---------------------
 //send email
-        $mail_status = mail($toaddress, $mailsubject, $displaymsg);
+        $mail_status = mail($toaddress, $mailsubject, $displaymsg); //for this to be working, I think there must be some mail server running...
 	
 	if( $mail_status ) {
             echo $displaymsg;
@@ -62,11 +62,6 @@
 		echo "<p> Something is wrong. Your information could not be sent. <br>";
                 echo "<p> Contact $toaddress <br>";
 	};
-
-
-//	if( strlen($toaddress)>0 ) {
-//	    mail($toaddress, $mailsubject, $mailmsg);
-//	};
 //---------------------
 
 		

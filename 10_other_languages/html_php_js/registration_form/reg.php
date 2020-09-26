@@ -69,7 +69,7 @@
  <span class="auto-style1"> Online Registration Form </span>
 </p>
 
-<form action="./send_email_and_collect_info_to_file.php" method="post" name="Event Registration">
+<form action="http://localhost/php_exec.php?f=/home/gbornia/software/utilities/10_other_languages/html_php_js/registration_form/send_email_and_collect_info_to_file.php" method="post" name="Event Registration">
 
 <input class="auto-style1" type="hidden" value="Event" name="Form" />
 
