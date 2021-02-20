@@ -10,7 +10,7 @@
 
    	y'(x) = f(x,y(x)) ,  x0 <= x <= b ,  y(x0) = y0.
    	
-	The function f(x,z) is defined below, along with the true solution y(x).
+	The function f(x,y) is defined below, along with the true solution y(x).
 	The number of the problem to be solved is specified by the input variable 'numde', 
     which is used in the functions 'f' and 'y'.
     The program will request the problem parameters, along with the values of 'h' and 'iprint'.  
@@ -23,9 +23,38 @@
 
 
 
- void set_initial_condition(double * const xzero, double * const yzero, int const numde) {
-	/*  This prints the analytical problem */
 
+	/*  This defines the right side of the differential equation  */
+double f(double x, double y, const int numde) {
+
+	const double one = 1.0, two = 2.0;
+
+	double rhs;
+
+	switch (numde)  
+	{
+	case 1: rhs = -y;
+			break;
+            
+	case 2: rhs = (y + x*x - two)/(x + one);
+			break;
+            
+	case 3: rhs = cos(y) * cos(y);
+			break;
+            
+	case 4: rhs = (y - 1) * (y - 1);
+			break;
+            
+	case 5: rhs = (3. * y) / x;
+			break;
+	}
+	
+	return(rhs);
+}
+
+
+
+ void set_initial_condition(double * const xzero, double * const yzero, int const numde) {
 
 
 	switch (numde)  
@@ -41,31 +70,16 @@
     case 3: * xzero = 0.;
             * yzero = 0.;
 			break;
-	}
-	
-}
 
-
-	/*  This defines the right side of the differential equation  */
-double f(double x, double z, const int numde) {
-
-	const double one = 1.0, two = 2.0;
-
-	double result;
-
-	switch (numde)  
-	{
-	case 1: result = -z;
+    case 4: * xzero = 0.;
+            * yzero = 2.;
 			break;
-            
-	case 2: result = (z + x*x - two)/(x + one);
-			break;
-            
-	case 3: result = pow(cos(z), 2.0);
+
+    case 5: * xzero = -1.;
+            * yzero = -1.;
 			break;
 	}
 	
-	return(result);
 }
 
 
@@ -86,6 +100,12 @@ double true_solution( double x , const int numde) {
 			break;
             
 	case 3: result = atan(x);
+			break;
+            
+	case 4: result = 1 - 1./(x - 1.);
+			break;
+            
+	case 5: result =  x * x * x;
 			break;
 	}
 	
@@ -115,9 +135,20 @@ double true_solution( double x , const int numde) {
             printf("y(0) = 0\n");
             printf("Solution: y(x) = atan(x)\n");
 			break;
+
+    case 4: printf("y' = (y-1)^2\n");
+            printf("y(0) = 2\n");
+            printf("Solution: y(x) = 1 - 1./(x - 1.)\n");
+			break;
+
+    case 5: printf("y' = 3. * y / x\n");
+            printf("y(-1) = -1\n");
+            printf("Solution: y(x) = x^3\n");
+			break;
 	}
 	
 }
+
 
 
 
@@ -126,8 +157,9 @@ int main() {
 	double xzero, yzero, b, h, truevalue, error;
 	double x1, y1, x0, y0;
 	int iprint, k;
-    int numde;
+    int i_numde, numde;
     int method;
+    int compute_error;
 
                 
 		/*  Description */
@@ -135,23 +167,17 @@ int main() {
     printf(" y'(x) = f(x, y(x)) , \n");
     printf(" y(x0) = y0 , \n");
     printf(" x0 <= x <= b . \n");
+    printf("\n The reason to have an upper bound \"b\" on the interval is to avoid infinitely many iterations\n");
 
-        
-    printf("\n Choose the numerical method:\n");
-    printf("\n 0 = forward Euler:\n");
-    printf("\n 1 = Heun (explicit trapezoid)\n");
-	scanf("%d", & method);
-        
-        char filename[31];
-        if (method == 0)      sprintf(filename, "euler.out");
-        else if (method == 1) sprintf(filename, "heun.out");
-
-            
-        FILE * file = fopen(filename, "w");
     
 		/*  Input problem parameters */
-
-		printf("\n Number of the ODE = [1, 2, 3]? Give 0 to stop : ");
+		printf("\n These are the implemented IVPs\n ");
+        for (i_numde = 1; i_numde <= 5; i_numde = i_numde + 1) {
+			printf("******* IVP # %3d \n", i_numde);
+           print_IVP_and_analytical_solution(i_numde);       
+		printf("\n ");       }
+        
+		printf("\n Number of the ODE = [1, 2, 3, 4, 5]? Give 0 to stop : ");
 		scanf("%d", &numde);
         
 		if (numde == 0) return 0;
@@ -166,9 +192,22 @@ int main() {
 		scanf("%lf", &h);
             
 
-        printf("\n\n Give how many iterations you want after which you want to print (iprint - press Enter after the input): ");
+        printf("\n\n Give the number of iterations after which you want to print (press Enter after the input): ");
 		scanf("%d", &iprint);
 			
+		/*  **************************** */
+    printf("\n Choose the numerical method:\n");
+    printf("\n 0 = forward Euler:\n");
+    printf("\n 1 = Heun (explicit trapezoid)\n");
+	scanf("%d", & method);
+        
+        char filename[31];
+        if (method == 0)      sprintf(filename, "euler.out");
+        else if (method == 1) sprintf(filename, "heun.out");
+		/* ******************************  */
+
+            
+        FILE * file = fopen(filename, "w");
 
 		/*  Initialize  */
             set_initial_condition(& xzero, & yzero, numde);
@@ -185,6 +224,9 @@ int main() {
 			printf("Print Parameter = %3d \n", iprint);
 
 
+		printf("\n Would you like to compute the absolute error? 1 = yes, 0 = no ");
+		scanf("%d", &compute_error);
+        
 			/*  Begin the main loop for computing the solution of the differential equation  */
 
             x1 = x0;
@@ -207,16 +249,20 @@ int main() {
 				}
 
 
+//             printf("\n Print abscissas and ordinates to file \n");
+				fprintf(file, " %10.3e %21.10e \n", x1, y1);
+
+                
+        
+		if (compute_error == 0) return 0;
 				/*  Calculate error wrt. the analytical solution */
 				truevalue = true_solution(x1, numde);
 				error = truevalue - y1;
                 
-				/*  Print results to terminal */
-				printf("x = %10.3e     y(x) = %21.10e   true  %21.10e", x1, y1, truevalue);
+				/*  Print  to terminal */
+				printf("x = %10.3e     y(x) = %21.10e       f(x,y) = %21.10e   true  %21.10e", x1, y1, f(x1,y1, numde), truevalue);
 				printf("     Error = %12.2e\n", error);
                 
-				/*  Print results to file */
-				fprintf(file, " %10.3e %21.10e \n", x1, y1);
                 
 			}
 
